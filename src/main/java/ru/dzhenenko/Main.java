@@ -186,7 +186,6 @@ public class Main {
         ps1.close();
         rs.close();
     }
-
     public static void createAccount(Connection conn, String name, int balance, Integer testId) throws SQLException {
         PreparedStatement st = conn.prepareStatement("INSERT INTO account(name, balance, id_users) VALUES (?, ?, ?)");
         st.setString(1, name);
