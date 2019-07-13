@@ -26,34 +26,26 @@ public class Main {
             System.out.println("You are successfully registered!");
 
             // Sign Up(Регистрация пользователя)
-
-
-            Connection conn4 = null;
+            Connection conn = null;
             try {
-                conn4 = DriverManager.getConnection(
+                conn = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/postgres",
                         "postgres",
                         "postgres"
                 );
 
                 // метод для регистрации
-                signUp(conn4,first_name,last1_name,phone,mail,pass);
+                signUp(conn,first_name,last1_name,phone,mail,pass);
 
             } catch (SQLException e) {
                 e.printStackTrace();
-            } finally {
-                if (conn4 != null) {
-                    try {
-                        conn4.close();
-                    } catch (SQLException ignore) { }
-                }
             }
             //-------------------------------------------------------------------------------------------------------------
         } else if (number == 2) {
             // Sign In(Авторизация пользователя)
-            Connection conn3 = null;
+            Connection conn = null;
             try {
-                conn3 = DriverManager.getConnection(
+                conn = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/postgres",
                         "postgres",
                         "postgres"
@@ -69,17 +61,10 @@ public class Main {
                 System.out.println("======= Main menu =======");
 
                 // метлод для авторизации
-                signIn(conn3, email1, passwordHex1);
+                signIn(conn, email1, passwordHex1);
 
             } catch (SQLException e) {
                 e.printStackTrace();
-            } finally {
-                if (conn3 != null) {
-                    try {
-                        conn3.close();
-                    } catch (SQLException ignore) {
-                    }
-                }
             }
             // Личный кабинет(показать все счета пользователя. Создать счет. Удалить счет)
             Scanner sc1 = new Scanner(System.in);
@@ -98,27 +83,20 @@ public class Main {
                 //System.out.println("Your password: ");
                 //String password;
                 //String passwordHex = md5Hex(password);
-                Integer test_id = 1;
+                Integer testId = 1;// id юзера
 
-                Connection conn = null;
+                //Connection conn = null;
                 try {
-                    conn3 = DriverManager.getConnection(
+                    conn = DriverManager.getConnection(
                             "jdbc:postgresql://localhost:5432/postgres",
                             "postgres",
                             "postgres"
                     );
                     // метод выбора пользователя
-                    personalAccount(conn3, test_id);
+                    personalAccount(conn, testId);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } finally {
-                    if (conn3 != null) {
-                        try {
-                            conn3.close();
-                        } catch (SQLException ignore) {
-                        }
-                    }
                 }
             } else if (number1 == 2) {
                 //----------------------------------------------------------------------------------------------------------
@@ -129,28 +107,21 @@ public class Main {
                 String name = scanner1.nextLine();
                 System.out.println("Amount account: ");
                 int balance = scanner1.nextInt();
-                Integer test_id = 1;
+                Integer testId = 1;
 
                 System.out.println("Your account is successfully created!");
 
-                Connection conn1 = null;
+                //Connection conn = null;
                 try {
-                    conn1 = DriverManager.getConnection(
+                    conn = DriverManager.getConnection(
                             "jdbc:postgresql://localhost:5432/postgres",
                             "postgres",
                             "postgres"
                     );
                     // метод создания счета
-                    createAccount(conn1, name, balance, test_id);
+                    createAccount(conn, name, balance, testId);
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } finally {
-                    if (conn1 != null) {
-                        try {
-                            conn1.close();
-                        } catch (SQLException ignore) {
-                        }
-                    }
                 }
             } else  if ( number1 == 3) {
                 //------------------------------------------------------------------------------------------------------
@@ -162,25 +133,18 @@ public class Main {
 
                 System.out.println("Your account is successfully deleted!");
 
-                Connection conn2 = null;
+                //Connection conn = null;
                 try {
-                    conn2 = DriverManager.getConnection(
+                    conn = DriverManager.getConnection(
                             "jdbc:postgresql://localhost:5432/postgres",
                             "postgres",
                             "postgres"
                     );
                     // метод удаления счета
-                    deleteAccount(conn2, name1);
+                    deleteAccount(conn, name1);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } finally {
-                    if (conn2 != null) {
-                        try {
-                            conn2.close();
-                        } catch (SQLException ignore) {
-                        }
-                    }
                 }
             }
         }
@@ -192,55 +156,55 @@ public class Main {
     }
 
     // метод для выбора пользователя
-    public static void personalAccount(Connection conn3, Integer test_id) throws SQLException {
-        PreparedStatement preparedStatement = conn3.prepareStatement("select * from account where id_users = ?");
-        preparedStatement.setInt(1, test_id);
+    public static void personalAccount(Connection conn, Integer testId) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("select * from users where id = ?");
+        preparedStatement.setInt(1, testId);
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
         }
         preparedStatement.close();
 
-        PreparedStatement ps = conn3.prepareStatement("select * from account where id_users = ?");
-        ps.setInt(1,test_id);
+        PreparedStatement ps = conn.prepareStatement("select * from users where id = ?");
+        ps.setInt(1,testId);
         rs = ps.executeQuery();
 
 
         if (rs.next()) {
-            test_id = rs.getInt("id");
+            testId = rs.getInt("id");
             System.out.println("**********************");
             System.out.println("Your accounts: ");
         } else {
             System.out.println("Access denied!");
 
         }
-        PreparedStatement ps1 = conn3.prepareStatement("select * from account where id_users = ?");
-        ps1.setInt(1, test_id);
+        PreparedStatement ps1 = conn.prepareStatement("select * from account where id_users = ?");
+        ps1.setInt(1, testId);
         rs = ps1.executeQuery();
         while (rs.next())
 
-            System.out.println(rs.getString("name") + " " + rs.getInt("balance"));
+            System.out.println("Id = " + rs.getInt("id_users")+ " " + rs.getString("name") + " " + rs.getInt("balance"));
         ps1.close();
         rs.close();
     }
 
-    public static void createAccount(Connection conn1, String name, int balance, Integer test_id) throws SQLException {
-        PreparedStatement st = conn1.prepareStatement("INSERT INTO account(name, balance, id_users) VALUES (?, ?, ?)");
+    public static void createAccount(Connection conn, String name, int balance, Integer testId) throws SQLException {
+        PreparedStatement st = conn.prepareStatement("INSERT INTO account(name, balance, id_users) VALUES (?, ?, ?)");
         st.setString(1, name);
         st.setInt(2, balance);
-        st.setInt(3, test_id);
+        st.setInt(3, testId);
         st.executeUpdate();
         st.close();
     }
 
-    public static void deleteAccount(Connection conn2, String name1) throws SQLException {
-        PreparedStatement st1 = conn2.prepareStatement("delete from account where name = ?");
+    public static void deleteAccount(Connection conn, String name1) throws SQLException {
+        PreparedStatement st1 = conn.prepareStatement("delete from account where name = ?");
         st1.setString(1, name1);
         st1.executeUpdate();
         st1.close();
     }
 
-    public static void signIn(Connection conn3, String email1, String passwordHex1) throws SQLException {
-        PreparedStatement ps = conn3.prepareStatement("select * from users where email = ? and password = ?");
+    public static void signIn(Connection conn, String email1, String passwordHex1) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("select * from users where email = ? and password = ?");
         ps.setString(1, email1);
         ps.setString(2, passwordHex1);
         ResultSet rs = ps.executeQuery();
@@ -253,8 +217,8 @@ public class Main {
         ps.close();
         rs.close();
     }
-    public static void signUp(Connection conn4, String first_name, String last1_name, String phone, String mail, String pass) throws SQLException {
-        PreparedStatement st = conn4.prepareStatement("INSERT INTO users (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?,?)");
+    public static void signUp(Connection conn, String first_name, String last1_name, String phone, String mail, String pass) throws SQLException {
+        PreparedStatement st = conn.prepareStatement("INSERT INTO users (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?,?)");
         st.setString(1, first_name);
         st.setString(2, last1_name);
         st.setString(3, phone);
