@@ -1,0 +1,70 @@
+package ru.dzhenenko.dao;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import ru.dzhenenko.exeption.CustomExeption;
+
+import javax.sql.DataSource;
+import java.sql.*;
+
+public class UserDao {
+    private final DataSource dataSource;
+
+    public UserDao() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
+        config.setUsername("postgres");
+        config.setPassword("postgres");
+
+        dataSource = new HikariDataSource(config);
+    }
+
+    // поиск пользователя по почте и хэшу
+    public UserModel findByEmailAndHash(String email, String hash) {
+        UserModel userModel = null;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("select * from users where email = ? and password = ?");
+            ps.setString(1, email);
+            ps.setString(2, hash);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                userModel = new UserModel();
+                userModel.setId(rs.getLong("id"));
+                userModel.setFirstName(rs.getString("first_name"));
+                userModel.setLastName(rs.getString("last_name"));
+                userModel.setPhone(rs.getString("phone"));
+                userModel.setEmail(rs.getString("email"));
+                userModel.setPassword(rs.getString("password"));
+            }
+        } catch (SQLException e) {
+            throw new CustomExeption(e);
+        }
+
+        return userModel;
+    }
+
+    public UserModel insert(String email, String hash) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("insert into users (email, password) value (?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, email);
+            ps.setString(2, hash);
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                UserModel userModel = new UserModel();
+                userModel.setId(rs.getLong(1));
+                userModel.setEmail(email);
+                userModel.setPassword(hash);
+
+                return userModel;
+            } else {
+                throw new CustomExeption("Can't generate id!");
+            }
+        } catch (SQLException e) {
+            throw new CustomExeption(e);
+        }
+    }
+}

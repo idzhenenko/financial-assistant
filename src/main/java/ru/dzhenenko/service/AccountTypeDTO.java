@@ -1,0 +1,30 @@
+package ru.dzhenenko.service;
+
+
+import ru.dzhenenko.dao.AccountTypeModel;
+
+public class AccountTypeDTO {
+    private long id;
+    private String name;
+
+    public AccountTypeDTO(AccountTypeModel accountTypeModel) {
+        this.id = accountTypeModel.getId();
+        this.name = accountTypeModel.getName();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
