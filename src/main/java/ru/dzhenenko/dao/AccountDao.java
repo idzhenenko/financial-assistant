@@ -35,7 +35,7 @@ public class AccountDao {
                 accountModel.setId(rs.getLong(1));
                 return accountModel;
             } else {
-                throw new CustomExeption("Че то не так!");
+                throw new CustomExeption("The account is not found!");
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
