@@ -45,17 +45,23 @@ public class UserDao {
         return userModel;
     }
 
-    public UserModel insert(String email, String hash) {
+    public UserModel insert(String firstName, String lastName, String phone, String email, String hash) {
         try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("insert into users (email, password) value (?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, email);
-            ps.setString(2, hash);
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO users (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,firstName);
+            ps.setString(2,lastName);
+            ps.setString(3,phone);
+            ps.setString(4, email);
+            ps.setString(5, hash);
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 UserModel userModel = new UserModel();
                 userModel.setId(rs.getLong(1));
+                userModel.setFirstName(firstName);
+                userModel.setLastName(lastName);
+                userModel.setPhone(phone);
                 userModel.setEmail(email);
                 userModel.setPassword(hash);
 

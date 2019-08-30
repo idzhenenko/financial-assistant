@@ -7,9 +7,8 @@ public class AccountTypeDTO {
     private long id;
     private String name;
 
-    public AccountTypeDTO(AccountTypeModel accountTypeModel) {
-        this.id = accountTypeModel.getId();
-        this.name = accountTypeModel.getName();
+    public AccountTypeDTO() {
+
     }
 
     public long getId() {

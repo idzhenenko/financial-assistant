@@ -4,10 +4,6 @@ public class AccountTypeModel {
     private long id;
     private String name;
 
-    public AccountTypeModel(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public long getId() {
         return id;

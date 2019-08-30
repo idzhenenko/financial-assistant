@@ -1,17 +1,12 @@
 package ru.dzhenenko.dao;
 
+import java.util.Objects;
+
 public class AccountModel {
     private long id;
     private String name;
-    private int balance;
+    private long balance;
     private long userId;
-
-    public AccountModel(long id, String name, int balance, long userId) {
-        this.id = id;
-        this.name = name;
-        this.balance = balance;
-        this.userId = userId;
-    }
 
     public AccountModel() {
 
@@ -33,11 +28,11 @@ public class AccountModel {
         this.name = name;
     }
 
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
@@ -45,8 +40,52 @@ public class AccountModel {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int id, long userId) {
         this.userId = userId;
+    }
+
+    public void getInt(String id_users) {
+    }
+
+    public void getId(int id) {
+    }
+
+    public void getInt(int balance) {
+    }
+
+    public void getBalance(int balance) {
+    }
+
+    public void getName(String name) {
+    }
+
+    public void setUserId(long id_users) {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountModel)) return false;
+        AccountModel that = (AccountModel) o;
+        return getId() == that.getId() &&
+                getBalance() == that.getBalance() &&
+                getUserId() == that.getUserId() &&
+                getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getBalance(), getUserId());
+    }
+
+    @Override
+    public String toString() {
+        return "AccountModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                ", userId=" + userId +
+                '}';
     }
 }
 

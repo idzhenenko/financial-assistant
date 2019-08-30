@@ -1,21 +1,22 @@
 package ru.dzhenenko.view;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import ru.dzhenenko.service.UserDTO;
+import ru.dzhenenko.service.*;
 
-import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
-import static ru.dzhenenko.service.AccountService.createAccount;
-import static ru.dzhenenko.service.AccountService.deleteAccount;
-import static ru.dzhenenko.service.AccountTypeService.*;
-
 public class TerminalView {
-    public static Integer testId3 = 1;
+    private static AccountService accountService;
+    private static AccountTypeService accountTypeService;
+    private static AuthService authService;
 
-    public static void start(UserDTO userDto, long testId) throws SQLException {
+    public TerminalView(AccountService accountService, AccountTypeService accountTypeService, AuthService authService) {
+        this.accountService = accountService;
+        this.accountTypeService = accountTypeService;
+        this.authService = authService;
+    }
+    public static void start(long userId1) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         boolean menuStatus = true;
         while (menuStatus) {
@@ -26,7 +27,22 @@ public class TerminalView {
             int input = scanner.nextInt();
             switch (input) {
                 case 1:
-                    final DataSource dataSource;
+//------------------------------------------------------------------------------
+                    System.out.println("Твои счета: ");
+                    List<AccountDTO> userAccounts = accountService.viewAccount(userId1);
+                    for (AccountDTO userAccount : userAccounts) {
+                        System.out.println(userAccount.getId());
+                        System.out.println(userAccount.getBalance());
+                        System.out.println(userAccount.getName());
+                        System.out.println(userAccount.getUserId());
+                    }
+                    //AccountService accountService = new AccountService();
+                    //accountService.viewAccount(userId1);
+                    //System.out.println(AccountDTO);
+
+
+
+                    /*final DataSource dataSource;
                     // метод для просмотра счетов
                     HikariConfig config = new HikariConfig();
                     config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
@@ -63,7 +79,8 @@ public class TerminalView {
                             System.out.println("Id = " + rs.getInt("id_users") + " " + rs.getString("name") + " " + rs.getInt("balance"));
                         ps1.close();
                         rs.close();
-
+                    }*/
+//-----------------------------------------------------
 
                         System.out.println("1: Создать счет");
                         System.out.println("2: Удалить счет");
@@ -77,27 +94,18 @@ public class TerminalView {
                                     System.out.println("Пожалуйста, введите детали счета:");
                                     System.out.println("Имя:");
                                     Scanner nameScan = new Scanner(System.in);
-                                    String name = nameScan.next();
+                                    String name1 = nameScan.nextLine();
 
                                     System.out.println("Баланс:");
                                     Scanner balScan = new Scanner(System.in);
-                                    int balance = balScan.nextInt();
-                                    long testId4 = userDto.getId();
+                                    int balance1 = balScan.nextInt();
+                                    //long testId5 = userDto.getId();
 
                                     System.out.println("Your account is successfully created!");
 
-                                    Connection conn1 = null;
-                                    try {
-                                        conn1 = DriverManager.getConnection(
-                                                "jdbc:postgresql://localhost:5432/postgres",
-                                                "postgres",
-                                                "postgres"
-                                        );
-                                        // метод создания счета
-                                        createAccount(conn, name, balance, (int) testId4);
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                    }
+                                    // метод создания счета
+                                    accountService = new AccountService();
+                                    accountService.createAccount(name1, balance1);
                                 }
 
                                 break;
@@ -110,25 +118,16 @@ public class TerminalView {
 
                                 System.out.println("Your account is successfully deleted!");
 
-                                Connection conn1 = null;
-                                try {
-                                    conn1 = DriverManager.getConnection(
-                                            "jdbc:postgresql://localhost:5432/postgres",
-                                            "postgres",
-                                            "postgres"
-                                    );
-                                    // метод удаления счета
-                                    deleteAccount(conn, name1);
+                                // метод удаления счета
+                                accountService = new AccountService();
+                                accountService.removeAccount(name1);
 
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
                                 break;
                             case 3:
                                 System.out.println("GOOD BYE!");
                                 break;
                         }
-                    }
+                    //}
                     break;
                 case 2:
                     System.out.println("**********************************");
@@ -150,23 +149,12 @@ public class TerminalView {
 
                                 Scanner scanner3 = new Scanner(System.in);
                                 System.out.println("Введите тип транзакции: ");
-                                String name5 = scanner3.nextLine();
+                                String name2 = scanner3.nextLine();
 
                                 System.out.println("Your type account is successfully created!");
-
-                                config = new HikariConfig();
-                                config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-                                config.setUsername("postgres");
-                                config.setPassword("postgres");
-
-                                dataSource = new HikariDataSource(config);
-                                try (Connection conn = dataSource.getConnection()) {
-                                    // метод создания транзакции
-                                    createAccountType(conn, name5, testId3);
-
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
+                                // метод создания транзакции
+                                AccountTypeService accountTypeService = new AccountTypeService();
+                                accountTypeService.createTypeAccount(name2);
                             }
                             break;
                         case 2:
@@ -175,50 +163,27 @@ public class TerminalView {
 
                             Scanner scanner3 = new Scanner(System.in);
                             System.out.println("Введите тип транзакции: ");
-                            String name5 = scanner3.nextLine();
-
+                            String name3 = scanner3.nextLine();
                             System.out.println("Your type account is successfully created!");
 
-                            config = new HikariConfig();
-                            config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-                            config.setUsername("postgres");
-                            config.setPassword("postgres");
-
-                            dataSource = new HikariDataSource(config);
-                            try (Connection conn = dataSource.getConnection()) {
-                                // метод удаления транзакции
-                                deleteAccountType(conn, name5);
-
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
+                            // метод удаления транзакции
+                            AccountTypeService accountTypeService = new AccountTypeService();
+                            accountTypeService.removeAccountType(name3);
 
                             break;
                         case 3:
-                            //тут будет редактирование транзакций
                             System.out.println("******************************");
                             System.out.println("= РЕДАКТИРОВАНИЕ ТРАНЗАКЦИИ ==");
-
-                            config = new HikariConfig();
-                            config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-                            config.setUsername("postgres");
-                            config.setPassword("postgres");
 
                             String oldName = request("Введите имя для редактирования:");
                             int idBD = requestId("Ведите id:");
                             String newName = request("Введите новое имя:");
-
                             System.out.println("Транзакция успешно изменена c " + oldName + " на " + newName + " c id " + idBD + "!");
 
-                            dataSource = new HikariDataSource(config);
-                            try (Connection conn2 = dataSource.getConnection()) {
-                                // метод редактирования транзакции
-                                editingAccountType(conn2, newName, idBD);
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
+                            // метод редактирования транзакции
+                            accountTypeService = new AccountTypeService();
+                            accountTypeService.editingAccountType(newName, idBD);
                             break;
-
                         case 0:
                             System.out.println("GOOD BYE!");
                             menuStatus = false;
@@ -230,10 +195,11 @@ public class TerminalView {
         }
     }
 
+
     static String request(String title) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(title);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     static Integer requestId(String title) {
@@ -241,4 +207,6 @@ public class TerminalView {
         System.out.println(title);
         return scanner.nextInt();
     }
+
+
 }

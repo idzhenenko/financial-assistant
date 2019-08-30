@@ -1,27 +1,53 @@
 package ru.dzhenenko.service;
 
+import ru.dzhenenko.converter.AccountModelToAccountDtoConverter;
+import ru.dzhenenko.dao.AccountDao;
+import ru.dzhenenko.dao.AccountModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AccountService {
 
-    public static void createAccount(Connection conn, String name, int balance, Integer testId4) throws SQLException {
-        PreparedStatement st = conn.prepareStatement("INSERT INTO account(name, balance, id_users) VALUES (?, ?, ?)");
-        st.setString(1, name);
-        st.setInt(2, balance);
-        st.setInt(3, testId4);
-        st.executeUpdate();
-        st.close();
+    public AccountDao accountDao;
+    public AccountModelToAccountDtoConverter accountDtoConverter;
+
+
+    public AccountService() {
+        this.accountDao = new AccountDao();
+        this.accountDtoConverter = new AccountModelToAccountDtoConverter();
     }
 
-    public static void deleteAccount(Connection conn, String name1) throws SQLException {
-        PreparedStatement st1 = conn.prepareStatement("delete from account where name = ?");
-        st1.setString(1, name1);
-        st1.executeUpdate();
-        st1.close();
+    public AccountDTO createAccount(String name, int balance) throws SQLException {
+
+        AccountModel accountModel = accountDao.addAccount(name, balance);
+        if (accountModel == null) {
+            return null;
+        }
+
+        return accountDtoConverter.convert(accountModel);
     }
 
+    public AccountDTO removeAccount(String name1) throws SQLException {
+
+        AccountModel accountModel = accountDao.deleteAccount(name1);
+        if(accountModel == null) {
+            return null;
+        }
+
+        return accountDtoConverter.convert(accountModel);
+    }
+    public List<AccountDTO> viewAccount(long userId) throws SQLException {
+        List<AccountDTO> accountDTOS = new ArrayList<>();
+        List<AccountModel> accountModels = accountDao.viewAccountUser(userId);
+        if (accountModels == null) {
+            return null;
+        }
+        for (AccountModel item : accountModels) {
+            accountDTOS.add(accountDtoConverter.convert(item));
+        }
+        return accountDTOS;
+    }
 }

@@ -1,18 +1,17 @@
 package ru.dzhenenko.service;
 
-import ru.dzhenenko.dao.AccountModel;
 
 public class AccountDTO {
     private long id;
     private String name;
-    private int balance;
+    private long balance;
     private long userId;
 
-    public AccountDTO(AccountModel accountModel) {
-        this.id = accountModel.getId();
-        this.name = accountModel.getName();
-        this.balance = accountModel.getBalance();
-        this.userId = accountModel.getUserId();
+    public AccountDTO() {
+
+    }
+
+    public AccountDTO(long id, String name, int balance, long userId) {
     }
 
     public long getId() {
@@ -31,11 +30,11 @@ public class AccountDTO {
         this.name = name;
     }
 
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance() {
         this.balance = balance;
     }
 
@@ -45,5 +44,18 @@ public class AccountDTO {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                ", userId=" + userId +
+                '}';
+    }
+
+    public void setBalance(long balance) {
     }
 }
