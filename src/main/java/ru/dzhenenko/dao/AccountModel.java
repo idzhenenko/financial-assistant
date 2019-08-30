@@ -9,7 +9,6 @@ public class AccountModel {
     private long userId;
 
     public AccountModel() {
-
     }
 
     public long getId() {

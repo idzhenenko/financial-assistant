@@ -41,7 +41,6 @@ public class TerminalView {
                     //System.out.println(AccountDTO);
 
 
-
                     /*final DataSource dataSource;
                     // метод для просмотра счетов
                     HikariConfig config = new HikariConfig();
@@ -87,7 +86,6 @@ public class TerminalView {
                         System.out.println("3: Выход");
                         input = scanner.nextInt();
                         switch (input) {
-
                             case 1:
                                 // Создать счет
                                 if (input == 1) {

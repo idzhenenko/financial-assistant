@@ -83,7 +83,6 @@ public class AccountDao {
                 accountModel.setBalance(query.getLong("balance"));
                 accountModel.setUserId(query.getLong("id_users"));
                 accountModels.add(accountModel);
-
                 //System.out.println("Id = " + query.getInt("id_users") + " " + query.getString("name") + " " + query.getInt("balance"));
                 //return accountModels;
             }

@@ -25,7 +25,6 @@ public class Main {
 
                 UserDTO userDTO = authService.auth(email, password);
 
-
                 if (userDTO != null) {
                     System.out.println("HELLO" + " " + userDTO.getEmail() + "!");
                     Integer testId = 1;

@@ -8,7 +8,6 @@ public class AccountDTO {
     private long userId;
 
     public AccountDTO() {
-
     }
 
     public AccountDTO(long id, String name, int balance, long userId) {
