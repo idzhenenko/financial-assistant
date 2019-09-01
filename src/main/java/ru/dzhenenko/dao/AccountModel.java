@@ -39,7 +39,7 @@ public class AccountModel {
         return userId;
     }
 
-    public void setUserId(int id, long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -56,9 +56,6 @@ public class AccountModel {
     }
 
     public void getName(String name) {
-    }
-
-    public void setUserId(long id_users) {
     }
 
     @Override
@@ -85,6 +82,10 @@ public class AccountModel {
                 ", balance=" + balance +
                 ", userId=" + userId +
                 '}';
+    }
+
+    public void getUserId(long userId) {
+        this.userId = userId;
     }
 }
 

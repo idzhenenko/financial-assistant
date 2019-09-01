@@ -27,9 +27,9 @@ public class Main {
 
                 if (userDTO != null) {
                     System.out.println("HELLO" + " " + userDTO.getEmail() + "!");
-                    Integer testId = 1;
+                    //Integer testId = 1;
                     long userId1 = userDTO.getId();
-                    TerminalView.start(userId1);
+                    TerminalView.start(userId1, userDTO);
                     break;
                 } else {
                     System.out.println("Тебя нет в базе данных!");

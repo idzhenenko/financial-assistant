@@ -13,3 +13,4 @@ public class AccountTypeModelToAccountTypeDtoConverter implements Converter<Acco
         return accountTypeDTO;
     }
 }
+

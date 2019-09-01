@@ -16,7 +16,7 @@ public class TerminalView {
         this.accountTypeService = accountTypeService;
         this.authService = authService;
     }
-    public static void start(long userId1) throws SQLException {
+    public static void start(long userId1, UserDTO userDto) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         boolean menuStatus = true;
         while (menuStatus) {
@@ -29,57 +29,12 @@ public class TerminalView {
                 case 1:
 //------------------------------------------------------------------------------
                     System.out.println("Твои счета: ");
-                    List<AccountDTO> userAccounts = accountService.viewAccount(userId1);
+                    AccountService accountService1 = new AccountService();
+                    List<AccountDTO> userAccounts = accountService1.viewAccount(userId1);
                     for (AccountDTO userAccount : userAccounts) {
-                        System.out.println(userAccount.getId());
-                        System.out.println(userAccount.getBalance());
-                        System.out.println(userAccount.getName());
-                        System.out.println(userAccount.getUserId());
+                        System.out.println(userAccount);
                     }
-                    //AccountService accountService = new AccountService();
-                    //accountService.viewAccount(userId1);
-                    //System.out.println(AccountDTO);
 
-
-                    /*final DataSource dataSource;
-                    // метод для просмотра счетов
-                    HikariConfig config = new HikariConfig();
-                    config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-                    config.setUsername("postgres");
-                    config.setPassword("postgres");
-
-                    dataSource = new HikariDataSource(config);
-                    try (Connection conn = dataSource.getConnection()) {
-                        PreparedStatement preparedStatement = conn.prepareStatement("select * from users where id = ?");
-                        preparedStatement.setLong(1, testId);
-                        ResultSet rs = preparedStatement.executeQuery();
-                        while (rs.next()) {
-                        }
-                        preparedStatement.close();
-
-                        PreparedStatement ps = conn.prepareStatement("select * from users where id = ?");
-                        ps.setLong(1, testId);
-                        rs = ps.executeQuery();
-
-                        if (rs.next()) {
-                            testId = userDto.getId();
-                            System.out.println("**********************");
-                            System.out.println("YOUR ACCOUNTS: ");
-                        } else {
-                            System.out.println("Access denied!");
-
-                        }
-
-                        PreparedStatement ps1 = conn.prepareStatement("select * from account where id_users = ?");
-                        ps1.setLong(1, testId);
-                        rs = ps1.executeQuery();
-                        while (rs.next())
-
-                            System.out.println("Id = " + rs.getInt("id_users") + " " + rs.getString("name") + " " + rs.getInt("balance"));
-                        ps1.close();
-                        rs.close();
-                    }*/
-//-----------------------------------------------------
 
                         System.out.println("1: Создать счет");
                         System.out.println("2: Удалить счет");
@@ -97,13 +52,13 @@ public class TerminalView {
                                     System.out.println("Баланс:");
                                     Scanner balScan = new Scanner(System.in);
                                     int balance1 = balScan.nextInt();
-                                    //long testId5 = userDto.getId();
+                                    long testId4 = userDto.getId();
 
                                     System.out.println("Your account is successfully created!");
 
                                     // метод создания счета
                                     accountService = new AccountService();
-                                    accountService.createAccount(name1, balance1);
+                                    accountService.createAccount(name1, balance1, testId4);
                                 }
 
                                 break;

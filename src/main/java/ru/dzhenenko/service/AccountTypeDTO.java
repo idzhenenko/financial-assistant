@@ -27,3 +27,4 @@ public class AccountTypeDTO {
         this.name = name;
     }
 }
+

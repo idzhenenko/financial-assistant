@@ -47,3 +47,4 @@ public class AccountTypeService {
         return accountTypeDtoConverter.convert(accountTypeModel);
     }
 }
+

@@ -1,17 +1,26 @@
 package ru.dzhenenko.service;
 
 
+import java.util.Objects;
+
 public class AccountDTO {
     private long id;
     private String name;
     private long balance;
     private long userId;
 
+    public AccountDTO(long id, String name, int balance, long userId) {
+
+    }
     public AccountDTO() {
     }
 
-    public AccountDTO(long id, String name, int balance, long userId) {
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getBalance(), getUserId());
     }
+
+
 
     public long getId() {
         return id;
@@ -33,7 +42,7 @@ public class AccountDTO {
         return balance;
     }
 
-    public void setBalance() {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
@@ -47,14 +56,11 @@ public class AccountDTO {
 
     @Override
     public String toString() {
-        return "AccountDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", balance=" + balance +
-                ", userId=" + userId +
-                '}';
+        return "AccountDTO" +
+                " id= " + id +
+                ", name = '" + name + '\'' +
+                ", balance = " + balance +
+                ", userId = " + userId;
     }
 
-    public void setBalance(long balance) {
-    }
 }

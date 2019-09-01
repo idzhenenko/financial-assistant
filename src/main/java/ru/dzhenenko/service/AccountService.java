@@ -20,15 +20,16 @@ public class AccountService {
         this.accountDtoConverter = new AccountModelToAccountDtoConverter();
     }
 
-    public AccountDTO createAccount(String name, int balance) throws SQLException {
+    public AccountDTO createAccount(String name, int balance, long testId4) throws SQLException {
 
-        AccountModel accountModel = accountDao.addAccount(name, balance);
+        AccountModel accountModel = accountDao.addAccount(name, balance, testId4);
         if (accountModel == null) {
             return null;
         }
 
         return accountDtoConverter.convert(accountModel);
     }
+
 
     public AccountDTO removeAccount(String name1) throws SQLException {
 
