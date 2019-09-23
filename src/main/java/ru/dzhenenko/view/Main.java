@@ -1,14 +1,16 @@
 package ru.dzhenenko.view;
 
 import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.ServiceFactory;
 import ru.dzhenenko.service.UserDTO;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        AuthService authService = new AuthService();
+    public static void main(String[] args) throws SQLException, ParseException {
+        AuthService authService = ServiceFactory.getAuthService();
 
         Scanner sc = new Scanner(System.in);
         System.out.println("*************************");
@@ -27,7 +29,6 @@ public class Main {
 
                 if (userDTO != null) {
                     System.out.println("HELLO" + " " + userDTO.getEmail() + "!");
-                    //Integer testId = 1;
                     long userId1 = userDTO.getId();
                     TerminalView.start(userId1, userDTO);
                     break;
@@ -47,7 +48,6 @@ public class Main {
 
                 // метод для регистрации
                 authService.registration(first_name, last1_name, phone, mail, pass);
-
                 break;
             case 0:
                 System.out.println("GOOD BYE!");

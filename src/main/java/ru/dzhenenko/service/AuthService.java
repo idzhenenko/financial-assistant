@@ -12,12 +12,18 @@ public class AuthService {
     public DigestService digestService;
     public UserModelToUserDtoConverter userDtoConverter;
 
-
-    public AuthService() {
-        this.userDao = new UserDao();
-        this.digestService = new Md5DigestService();
-        this.userDtoConverter = new UserModelToUserDtoConverter();
+    public AuthService(UserDao userDao, DigestService digestService, UserModelToUserDtoConverter userDtoConverter) {
+        this.userDao = userDao;
+        this.digestService = digestService;
+        this.userDtoConverter = userDtoConverter;
     }
+
+    //1 ШАГ! удаляем старый конструктор========================================
+    //public AuthService() {
+       // this.userDao = new UserDao();
+        //this.digestService = new Md5DigestService();
+        //this.userDtoConverter = new UserModelToUserDtoConverter();
+    //} =======================================================================
 
     // метод авторизации (сервис авторизации)
     public UserDTO auth(String email, String password) {

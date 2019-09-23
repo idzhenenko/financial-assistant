@@ -61,7 +61,6 @@ public class AccountTypeDao {
             throw new CustomExeption(e);
         }
     }
-
     public AccountTypeModel editAccountType (String name, int id) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("update category set name = ? where id = ?", Statement.RETURN_GENERATED_KEYS);

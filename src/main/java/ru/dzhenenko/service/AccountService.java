@@ -14,11 +14,16 @@ public class AccountService {
     public AccountDao accountDao;
     public AccountModelToAccountDtoConverter accountDtoConverter;
 
-
-    public AccountService() {
-        this.accountDao = new AccountDao();
-        this.accountDtoConverter = new AccountModelToAccountDtoConverter();
+    public AccountService(AccountDao accountDao, AccountModelToAccountDtoConverter accountDtoConverter) {
+        this.accountDao = accountDao;
+        this.accountDtoConverter = accountDtoConverter;
     }
+    //=========================================================================
+    //переделываем старый конструктор
+    //public AccountService() {
+        //this.accountDao = new AccountDao();
+        //this.accountDtoConverter = new AccountModelToAccountDtoConverter();
+    //}========================================================================
 
     public AccountDTO createAccount(String name, int balance, long testId4) throws SQLException {
 

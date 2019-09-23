@@ -15,12 +15,6 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getBalance(), getUserId());
-    }
-
-
 
     public long getId() {
         return id;
@@ -57,10 +51,25 @@ public class AccountDTO {
     @Override
     public String toString() {
         return "AccountDTO" +
-                " id= " + id +
+                " id = " + id +
                 ", name = '" + name + '\'' +
                 ", balance = " + balance +
                 ", userId = " + userId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountDTO)) return false;
+        AccountDTO that = (AccountDTO) o;
+        return getId() == that.getId() &&
+                getBalance() == that.getBalance() &&
+                getUserId() == that.getUserId() &&
+                Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getBalance(), getUserId());
+    }
 }

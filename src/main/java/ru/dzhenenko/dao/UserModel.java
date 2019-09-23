@@ -1,5 +1,7 @@
 package ru.dzhenenko.dao;
 
+import java.util.Objects;
+
 public class UserModel {
     private long id;
     private String firstName;
@@ -54,6 +56,24 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserModel)) return false;
+        UserModel userModel = (UserModel) o;
+        return getId() == userModel.getId() &&
+                Objects.equals(getFirstName(), userModel.getFirstName()) &&
+                Objects.equals(getLastName(), userModel.getLastName()) &&
+                Objects.equals(getPhone(), userModel.getPhone()) &&
+                Objects.equals(getEmail(), userModel.getEmail()) &&
+                Objects.equals(getPassword(), userModel.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPhone(), getEmail(), getPassword());
     }
 }
 

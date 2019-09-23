@@ -1,5 +1,7 @@
 package ru.dzhenenko.service;
 
+import java.util.Objects;
+
 public class UserDTO {
     private static long id;
     private String firstName;
@@ -53,6 +55,22 @@ public class UserDTO {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDTO)) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(getFirstName(), userDTO.getFirstName()) &&
+                Objects.equals(getLastName(), userDTO.getLastName()) &&
+                Objects.equals(getPhone(), userDTO.getPhone()) &&
+                Objects.equals(getEmail(), userDTO.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getPhone(), getEmail());
     }
 }
 

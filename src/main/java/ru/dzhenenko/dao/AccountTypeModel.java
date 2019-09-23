@@ -1,5 +1,7 @@
 package ru.dzhenenko.dao;
 
+import java.util.Objects;
+
 public class AccountTypeModel {
     private long id;
     private String name;
@@ -19,6 +21,20 @@ public class AccountTypeModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AccountTypeModel)) return false;
+        AccountTypeModel that = (AccountTypeModel) o;
+        return getId() == that.getId() &&
+                Objects.equals(getName(), that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
     }
 }
 
