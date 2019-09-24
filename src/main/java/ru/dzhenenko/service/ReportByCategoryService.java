@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReportByCategoryService {
 
@@ -22,14 +23,12 @@ public class ReportByCategoryService {
     }
 
     public List<ReportByCategoryDTO> viewReportCategory(long idUser,Timestamp startDay, Timestamp endDay) throws SQLException {
-        List<ReportByCategoryDTO> reportByCategoryDTOS = new ArrayList<>();
+        List<ReportByCategoryDTO> reportByCategoryDTOS;
         List<ReportByCategoryModel> reportByCategoryModels = reportByCategoryDao.reportByCategory(idUser,startDay,endDay);
         if (reportByCategoryModels == null) {
             return null;
         }
-        for (ReportByCategoryModel item : reportByCategoryModels) {
-            reportByCategoryDTOS.add(reportByCategoryModelToReportByCategoryDtoConverter.convert(item));
-        }
+        reportByCategoryDTOS = reportByCategoryModels.stream().map(item -> reportByCategoryModelToReportByCategoryDtoConverter.convert(item)).collect(Collectors.toList());
         return reportByCategoryDTOS;
     }
 }

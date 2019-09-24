@@ -46,3 +46,4 @@ public class ReportByCategoryDTO {
         return Objects.hash(getName(), getAmmount());
     }
 }
+

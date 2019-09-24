@@ -53,5 +53,4 @@ public class ReportByCategoryDao {
         }
         return reportByCategoryModels;
     }
-
 }
