@@ -37,9 +37,9 @@ public class AccountTypeDTO {
         return getId() == that.getId() &&
                 Objects.equals(getName(), that.getName());
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName());
     }
 }
-

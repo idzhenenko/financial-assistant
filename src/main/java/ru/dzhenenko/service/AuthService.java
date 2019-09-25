@@ -18,13 +18,6 @@ public class AuthService {
         this.userDtoConverter = userDtoConverter;
     }
 
-    //1 ШАГ! удаляем старый конструктор========================================
-    //public AuthService() {
-       // this.userDao = new UserDao();
-        //this.digestService = new Md5DigestService();
-        //this.userDtoConverter = new UserModelToUserDtoConverter();
-    //} =======================================================================
-
     // метод авторизации (сервис авторизации)
     public UserDTO auth(String email, String password) {
         String hash = digestService.hex(password);

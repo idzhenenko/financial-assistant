@@ -4,34 +4,19 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 public class ReportByCategoryModel {
-        String name;
-        long ammount;
-        long source_account;
-        long target_account;
-        Timestamp create_date;
+    private long id;
+    private String name;
+    private long amount;
+    private long sourceAccount;
+    private long targetAccount;
+    private Timestamp createDate;
 
-    public Timestamp getCreate_date() {
-        return create_date;
+    public ReportByCategoryModel() {
+
     }
 
-    public void setCreate_date(Timestamp create_date) {
-        this.create_date = create_date;
-    }
-
-    public long getSource_account() {
-        return source_account;
-    }
-
-    public void setSource_account(long source_account) {
-        this.source_account = source_account;
-    }
-
-    public long getTarget_account() {
-        return target_account;
-    }
-
-    public void setTarget_account(long target_account) {
-        this.target_account = target_account;
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -42,37 +27,68 @@ public class ReportByCategoryModel {
         this.name = name;
     }
 
-    public long getAmmount() {
-        return ammount;
+    public long getAmount() {
+        return amount;
     }
 
-    public void setAmmount(long ammount) {
-        this.ammount = ammount;
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
+
+    public long getSourceAccount() {
+        return sourceAccount;
+    }
+
+    public void setSourceAccount(long sourceAccount) {
+        this.sourceAccount = sourceAccount;
+    }
+
+    public long getTargetAccount() {
+        return targetAccount;
+    }
+
+    public void setTargetAccount(long targetAccount) {
+        this.targetAccount = targetAccount;
+    }
+
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setId(long userId) {
     }
 
     @Override
     public String toString() {
-        return "TransactionModel{" +
-                "name='" + name + '\'' +
-                ", ammount=" + ammount +
+        return "ReportByCategoryModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", sourceAccount=" + sourceAccount +
+                ", targetAccount=" + targetAccount +
+                ", createDate=" + createDate +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ReportByCategoryModel)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         ReportByCategoryModel that = (ReportByCategoryModel) o;
-        return getAmmount() == that.getAmmount() &&
-                Objects.equals(getName(), that.getName());
+        return id == that.id &&
+                amount == that.amount &&
+                sourceAccount == that.sourceAccount &&
+                targetAccount == that.targetAccount &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(createDate, that.createDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getAmmount());
-    }
-
-
-    public void setId(long user_id) {
+        return Objects.hash(id, name, amount, sourceAccount, targetAccount, createDate);
     }
 }
-

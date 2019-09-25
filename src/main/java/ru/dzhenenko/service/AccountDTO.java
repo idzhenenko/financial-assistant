@@ -12,6 +12,7 @@ public class AccountDTO {
     public AccountDTO(long id, String name, int balance, long userId) {
 
     }
+
     public AccountDTO() {
     }
 
@@ -67,6 +68,7 @@ public class AccountDTO {
                 getUserId() == that.getUserId() &&
                 Objects.equals(getName(), that.getName());
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getBalance(), getUserId());

@@ -57,6 +57,7 @@ public class AccountModel {
 
     public void getName(String name) {
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +87,3 @@ public class AccountModel {
         this.userId = userId;
     }
 }
-

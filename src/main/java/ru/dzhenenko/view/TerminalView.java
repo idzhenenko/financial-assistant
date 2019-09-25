@@ -8,19 +8,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class TerminalView {
     private static AccountService accountService;
     private static AccountTypeService accountTypeService;
     private static AuthService authService;
+    private static ReportByCategoryService reportByCategoryService;
 
-    public TerminalView(AccountService accountService, AccountTypeService accountTypeService, AuthService authService) {
+    public TerminalView(AccountService accountService, AccountTypeService accountTypeService, AuthService authService, ReportByCategoryService reportByCategoryService) {
         this.accountService = accountService;
         this.accountTypeService = accountTypeService;
         this.authService = authService;
+        this.reportByCategoryService = reportByCategoryService;
     }
+
     public static void start(long userId1, UserDTO userDto) throws SQLException, ParseException {
         Scanner scanner = new Scanner(System.in);
         boolean menuStatus = true;
@@ -35,65 +37,63 @@ public class TerminalView {
                 case 1:
 //------------------------------------------------------------------------------
                     System.out.println("Твои счета: ");
-                    AccountService accountService1 = ServiceFactory.getAccountService();
 
+                    AccountService accountService1 = ServiceFactory.getAccountService();
                     List<AccountDTO> userAccounts = accountService1.viewAccount(userId1);
+
                     for (AccountDTO userAccount : userAccounts) {
                         System.out.println(userAccount);
                     }
+                    System.out.println("1: Создать счет");
+                    System.out.println("2: Удалить счет");
+                    System.out.println("3: Выход");
+                    input = scanner.nextInt();
+                    switch (input) {
+                        case 1:
+                            // Создать счет
+                            if (input == 1) {
+                                System.out.println("Пожалуйста, введите детали счета:");
+                                System.out.println("Имя:");
+                                Scanner nameScan = new Scanner(System.in);
+                                String name1 = nameScan.nextLine();
 
+                                System.out.println("Баланс:");
+                                Scanner balScan = new Scanner(System.in);
+                                int balance1 = balScan.nextInt();
+                                long testId4 = userDto.getId();
 
-                        System.out.println("1: Создать счет");
-                        System.out.println("2: Удалить счет");
-                        System.out.println("3: Выход");
-                        input = scanner.nextInt();
-                        switch (input) {
-                            case 1:
-                                // Создать счет
-                                if (input == 1) {
-                                    System.out.println("Пожалуйста, введите детали счета:");
-                                    System.out.println("Имя:");
-                                    Scanner nameScan = new Scanner(System.in);
-                                    String name1 = nameScan.nextLine();
-
-                                    System.out.println("Баланс:");
-                                    Scanner balScan = new Scanner(System.in);
-                                    int balance1 = balScan.nextInt();
-                                    long testId4 = userDto.getId();
-
-                                    // метод создания счета
-                                    accountService = ServiceFactory.getAccountService();
-                                    accountService.createAccount(name1, balance1, testId4);
-
-                                    //AccountDTO accountDTO = accountService1.createAccount(name1, balance1, testId4);
-                                    System.out.println("Your account is successfully created!"); //+ accountDTO);
-
-                                }
-
-                                break;
-                            case 2:
-                                System.out.println("**** УДАЛЕНИЕ СЧЕТА ****");
-                                System.out.println("************************");
-                                Scanner scanner2 = new Scanner(System.in);
-                                System.out.println("Введите имя счета: ");
-                                String name1 = scanner2.nextLine();
-
-                                System.out.println("Your account is successfully deleted!");
-
-                                // метод удаления счета
+                                // метод создания счета
                                 accountService = ServiceFactory.getAccountService();
-                                accountService.removeAccount(name1);
+                                accountService.createAccount(name1, balance1, testId4);
 
-                                break;
-                            case 3:
-                                System.out.println("GOOD BYE!");
-                                break;
-                        }
-                        break;
-                        // просмотр отчетов
+                                System.out.println("Your account is successfully created!");
+
+                            }
+
+                            break;
+                        case 2:
+                            System.out.println("**** УДАЛЕНИЕ СЧЕТА ****");
+                            System.out.println("************************");
+                            Scanner scanner2 = new Scanner(System.in);
+                            System.out.println("Введите имя счета: ");
+                            String name1 = scanner2.nextLine();
+
+                            System.out.println("Your account is successfully deleted!");
+
+                            // метод удаления счета
+                            accountService = ServiceFactory.getAccountService();
+                            accountService.removeAccount(name1);
+
+                            break;
+                        case 3:
+                            System.out.println("GOOD BYE!");
+                            break;
+                    }
+                    break;
+                // просмотр отчетов
                 case 3:
                     System.out.println("************************");
-                    System.out.println("Введите начальную дату DD-MM-YYYY");
+                    System.out.println("Введите начальную дату YYYY-MM-DD");
                     Scanner scannerF = new Scanner(System.in);
                     String firstDate = scannerF.next();
 
@@ -101,7 +101,7 @@ public class TerminalView {
                     Date parsedDate1 = dateFormat1.parse(firstDate);
                     Timestamp date1 = new java.sql.Timestamp(parsedDate1.getTime());
 
-                    System.out.println("ВВедите конечную дату DD-MM-YYYY");
+                    System.out.println("ВВедите конечную дату YYYY-MM-DD");
                     Scanner scannerS = new Scanner(System.in);
                     String secondDate = scannerS.next();
 
@@ -111,11 +111,9 @@ public class TerminalView {
 
                     long testId7 = userDto.getId();
                     System.out.println("Отчет: ");
-                    ReportByCategoryService reportByCategoryService = ServiceFactory.getReportByCategoryService();
-                    reportByCategoryService.viewReportCategory(testId7,date1,date2);
 
-                    ReportByCategoryService accountService2 = ServiceFactory.getReportByCategoryService();
-                    List<ReportByCategoryDTO> list = accountService2.viewReportCategory(testId7,date1,date2);
+                    reportByCategoryService = ServiceFactory.getReportByCategoryService();
+                    List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, date1, date2);
 
                     for (ReportByCategoryDTO userCategory : list) {
                         System.out.println(userCategory);
@@ -176,8 +174,7 @@ public class TerminalView {
                             accountTypeService = ServiceFactory.getAccountTypeService();
                             accountTypeService.editingAccountType(newName, idBD);
                             break;
-                //case 3:
-                case 0:
+                        case 0:
                             System.out.println("GOOD BYE!");
                             menuStatus = false;
                             break;
@@ -187,7 +184,6 @@ public class TerminalView {
             }
         }
     }
-
 
     static String request(String title) {
         Scanner scanner = new Scanner(System.in);
@@ -200,6 +196,4 @@ public class TerminalView {
         System.out.println(title);
         return scanner.nextInt();
     }
-
-
 }

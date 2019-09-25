@@ -7,6 +7,7 @@ import ru.dzhenenko.dao.AccountModel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class AccountService {
@@ -18,12 +19,6 @@ public class AccountService {
         this.accountDao = accountDao;
         this.accountDtoConverter = accountDtoConverter;
     }
-    //=========================================================================
-    //переделываем старый конструктор
-    //public AccountService() {
-        //this.accountDao = new AccountDao();
-        //this.accountDtoConverter = new AccountModelToAccountDtoConverter();
-    //}========================================================================
 
     public AccountDTO createAccount(String name, int balance, long testId4) throws SQLException {
 
@@ -39,21 +34,20 @@ public class AccountService {
     public AccountDTO removeAccount(String name1) throws SQLException {
 
         AccountModel accountModel = accountDao.deleteAccount(name1);
-        if(accountModel == null) {
+        if (accountModel == null) {
             return null;
         }
 
         return accountDtoConverter.convert(accountModel);
     }
+
     public List<AccountDTO> viewAccount(long userId) throws SQLException {
-        List<AccountDTO> accountDTOS = new ArrayList<>();
+        List<AccountDTO> accountDTOS;
         List<AccountModel> accountModels = accountDao.viewAccountUser(userId);
         if (accountModels == null) {
             return null;
         }
-        for (AccountModel item : accountModels) {
-            accountDTOS.add(accountDtoConverter.convert(item));
-        }
+        accountDTOS = accountModels.stream().map(item -> accountDtoConverter.convert(item)).collect(Collectors.toList());
 
         return accountDTOS;
     }

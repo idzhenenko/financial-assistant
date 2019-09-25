@@ -73,4 +73,3 @@ public class UserDTO {
         return Objects.hash(getFirstName(), getLastName(), getPhone(), getEmail());
     }
 }
-

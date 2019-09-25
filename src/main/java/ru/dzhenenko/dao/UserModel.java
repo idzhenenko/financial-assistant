@@ -77,4 +77,3 @@ public class UserModel {
         return Objects.hash(getId(), getFirstName(), getLastName(), getPhone(), getEmail(), getPassword());
     }
 }
-

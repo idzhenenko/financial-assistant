@@ -47,9 +47,9 @@ public class UserDao {
     public UserModel insert(String firstName, String lastName, String phone, String email, String hash) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO users (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1,firstName);
-            ps.setString(2,lastName);
-            ps.setString(3,phone);
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setString(3, phone);
             ps.setString(4, email);
             ps.setString(5, hash);
             ps.executeUpdate();
@@ -73,4 +73,3 @@ public class UserDao {
         }
     }
 }
-

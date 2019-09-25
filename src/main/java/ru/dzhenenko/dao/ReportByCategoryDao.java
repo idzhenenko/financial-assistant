@@ -20,8 +20,9 @@ public class ReportByCategoryDao {
 
         dataSource = new HikariDataSource(config);
     }
-//метод для просмотра отчетов по категориям
-    public List<ReportByCategoryModel> reportByCategory (long idUser, Timestamp startDay, Timestamp endDay) {
+
+    //метод для просмотра отчетов по категориям
+    public List<ReportByCategoryModel> reportByCategory(long idUser, Timestamp startDay, Timestamp endDay) {
         List<ReportByCategoryModel> reportByCategoryModels = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement("SELECT t.amount, c.name\n" +
@@ -31,25 +32,25 @@ public class ReportByCategoryDao {
                     "                            JOIN type_transaction tt ON t.id_type_transaction = tt.id\n" +
                     "                            JOIN id_tran_to_id_category ittic ON t.id = ittic.id_category\n" +
                     "                            JOIN category c ON ittic.id_transaction = c.id\n" +
-                    "                    WHERE u.id = ? AND t.create_date <= ? AND t.create_date >= ?\n" +
+                    "                    WHERE u.id = ? AND t.create_date >= ? AND t.create_date <= ?\n" +
                     "                    ");
-            ps.setLong(1,idUser);
+            ps.setLong(1, idUser);
             ps.setTimestamp(2, startDay);
             ps.setTimestamp(3, endDay);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 ReportByCategoryModel reportByCategoryModel = new ReportByCategoryModel();
-                reportByCategoryModel.setAmmount(rs.getLong("amount"));
-                reportByCategoryModel.setId(rs.getLong("user_id"));
-                reportByCategoryModel.setCreate_date(rs.getTimestamp("create_date"));
-                reportByCategoryModel.setSource_account(rs.getLong("source_account"));
-                reportByCategoryModel.setTarget_account(rs.getLong("target_account"));
+                reportByCategoryModel.setId(rs.getLong("id"));
+                reportByCategoryModel.setSourceAccount(rs.getLong("source_account"));
+                reportByCategoryModel.setTargetAccount(rs.getLong("target_account"));
+                reportByCategoryModel.setCreateDate(rs.getTimestamp("create_date"));
                 reportByCategoryModel.setName(rs.getString("name"));
+                reportByCategoryModel.setAmount(rs.getLong("amount"));
                 reportByCategoryModels.add(reportByCategoryModel);
             }
         } catch (SQLException e) {
-           throw new CustomExeption(e.getMessage());
+            throw new CustomExeption(e.getMessage());
         }
         return reportByCategoryModels;
     }

@@ -13,5 +13,3 @@ public class UserModelToUserDtoConverter implements Converter<UserModel, UserDTO
         return userDTO;
     }
 }
-
-
