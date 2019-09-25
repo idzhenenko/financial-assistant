@@ -45,7 +45,6 @@ public class ServiceFactory {
         }
         return accountTypeService;
     }
-
     public static ReportByCategoryService getReportByCategoryService() {
         if(reportByCategoryService == null) {
             reportByCategoryService = new ReportByCategoryService(

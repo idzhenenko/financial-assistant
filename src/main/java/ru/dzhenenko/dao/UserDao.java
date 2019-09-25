@@ -41,7 +41,6 @@ public class UserDao {
         } catch (SQLException e) {
             throw new CustomExeption(e);
         }
-
         return userModel;
     }
 

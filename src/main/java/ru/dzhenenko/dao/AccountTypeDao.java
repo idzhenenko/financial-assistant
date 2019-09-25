@@ -40,7 +40,6 @@ public class AccountTypeDao {
             throw new CustomExeption(e);
         }
     }
-
     public AccountTypeModel deleteAccountType (String name) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("delete from category where name = ?", Statement.RETURN_GENERATED_KEYS);

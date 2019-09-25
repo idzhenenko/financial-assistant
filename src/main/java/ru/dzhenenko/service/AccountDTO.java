@@ -67,7 +67,6 @@ public class AccountDTO {
                 getUserId() == that.getUserId() &&
                 Objects.equals(getName(), that.getName());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getBalance(), getUserId());

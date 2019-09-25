@@ -120,7 +120,6 @@ public class TerminalView {
                     for (ReportByCategoryDTO userCategory : list) {
                         System.out.println(userCategory);
                     }
-
                     break;
                 case 2:
                     System.out.println("**********************************");

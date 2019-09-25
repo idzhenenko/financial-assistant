@@ -39,7 +39,6 @@ public class AccountTypeService {
         if (accountTypeModel == null) {
             return null;
         }
-
         return accountTypeDtoConverter.convert(accountTypeModel);
     }
 

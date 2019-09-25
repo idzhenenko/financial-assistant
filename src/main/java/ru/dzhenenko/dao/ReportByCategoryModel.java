@@ -57,7 +57,6 @@ public class ReportByCategoryModel {
                 ", ammount=" + ammount +
                 '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

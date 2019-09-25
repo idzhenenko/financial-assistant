@@ -31,4 +31,5 @@ public class ReportByCategoryService {
         reportByCategoryDTOS = reportByCategoryModels.stream().map(item -> reportByCategoryModelToReportByCategoryDtoConverter.convert(item)).collect(Collectors.toList());
         return reportByCategoryDTOS;
     }
+
 }

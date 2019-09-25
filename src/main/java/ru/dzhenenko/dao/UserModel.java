@@ -72,6 +72,7 @@ public class UserModel {
     }
 
     @Override
+
     public int hashCode() {
         return Objects.hash(getId(), getFirstName(), getLastName(), getPhone(), getEmail(), getPassword());
     }

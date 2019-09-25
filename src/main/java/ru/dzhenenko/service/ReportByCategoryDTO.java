@@ -40,7 +40,6 @@ public class ReportByCategoryDTO {
         return getAmmount() == that.getAmmount() &&
                 Objects.equals(getName(), that.getName());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getAmmount());

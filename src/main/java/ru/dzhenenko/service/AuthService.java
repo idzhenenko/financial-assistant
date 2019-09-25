@@ -47,4 +47,5 @@ public class AuthService {
 
         return userDtoConverter.convert(userModel);
     }
+
 }

@@ -22,7 +22,6 @@ public class AccountDao {
 
         dataSource = new HikariDataSource(config);
     }
-
     public AccountModel addAccount(String name, int balance, long testId4) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("INSERT INTO account(name, balance, id_users) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
