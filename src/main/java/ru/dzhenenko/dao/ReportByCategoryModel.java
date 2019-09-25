@@ -72,6 +72,7 @@ public class ReportByCategoryModel {
         return Objects.hash(getName(), getAmmount());
     }
 
+
     public void setId(long user_id) {
     }
 }

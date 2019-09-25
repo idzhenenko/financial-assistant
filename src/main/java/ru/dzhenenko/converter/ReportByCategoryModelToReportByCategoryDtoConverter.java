@@ -10,6 +10,7 @@ public class ReportByCategoryModelToReportByCategoryDtoConverter implements Conv
         ReportByCategoryDTO reportByCategoryDTO = new ReportByCategoryDTO();
         reportByCategoryDTO.setName(source.getName());
         reportByCategoryDTO.setAmmount(source.getAmmount());
+
         return reportByCategoryDTO;
     }
 }
