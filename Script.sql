@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 create table users
 (
     id         SERIAL PRIMARY KEY,
@@ -36,7 +37,6 @@ create table category
 (
     id   SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-
 );
 
 create table id_tran_to_id_category
