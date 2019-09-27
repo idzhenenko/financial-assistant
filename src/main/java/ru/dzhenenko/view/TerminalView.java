@@ -5,8 +5,6 @@ import ru.dzhenenko.service.*;
 import java.sql.*;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,9 +39,7 @@ public class TerminalView {
                     AccountService accountService1 = ServiceFactory.getAccountService();
                     List<AccountDTO> userAccounts = accountService1.viewAccount(userId1);
 
-                    for (AccountDTO userAccount : userAccounts) {
-                        System.out.println(userAccount);
-                    }
+                    userAccounts.forEach(System.out::println);
                     System.out.println("1: Создать счет");
                     System.out.println("2: Удалить счет");
                     System.out.println("3: Выход");
@@ -94,13 +90,8 @@ public class TerminalView {
                 case 3:
                     System.out.println("************************");
 
-                    System.out.println("Введите начальную дату YYYY-MM-DD");
-                    Scanner scannerF = new Scanner(System.in);
-                    String firstDate = scannerF.next();
-
-                    System.out.println("ВВедите конечную дату YYYY-MM-DD");
-                    Scanner scannerS = new Scanner(System.in);
-                    String secondDate = scannerS.next();
+                    String firstDate = request("Введите начальную дату YYYY-MM-DD");
+                    String secondDate = request("Введите конечную дату YYYY-MM-DD");
 
                     long testId7 = userDto.getId();
                     System.out.println("Отчет: ");
@@ -108,9 +99,7 @@ public class TerminalView {
                     reportByCategoryService = ServiceFactory.getReportByCategoryService();
                     List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, firstDate, secondDate);
 
-                    for (ReportByCategoryDTO userCategory : list) {
-                        System.out.println(userCategory);
-                    }
+                    list.forEach(System.out::println);
                     break;
                 case 2:
                     System.out.println("**********************************");
