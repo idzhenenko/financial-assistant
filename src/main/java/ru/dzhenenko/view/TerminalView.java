@@ -93,27 +93,20 @@ public class TerminalView {
                 // просмотр отчетов
                 case 3:
                     System.out.println("************************");
+
                     System.out.println("Введите начальную дату YYYY-MM-DD");
                     Scanner scannerF = new Scanner(System.in);
                     String firstDate = scannerF.next();
-
-                    SimpleDateFormat dateFormat1 = new SimpleDateFormat("YYYY-MM-DD");
-                    Date parsedDate1 = dateFormat1.parse(firstDate);
-                    Timestamp date1 = new java.sql.Timestamp(parsedDate1.getTime());
 
                     System.out.println("ВВедите конечную дату YYYY-MM-DD");
                     Scanner scannerS = new Scanner(System.in);
                     String secondDate = scannerS.next();
 
-                    SimpleDateFormat dateFormat2 = new SimpleDateFormat("YYYY-MM-DD");
-                    Date parsedDate2 = dateFormat2.parse(secondDate);
-                    Timestamp date2 = new java.sql.Timestamp(parsedDate2.getTime());
-
                     long testId7 = userDto.getId();
                     System.out.println("Отчет: ");
 
                     reportByCategoryService = ServiceFactory.getReportByCategoryService();
-                    List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, date1, date2);
+                    List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, firstDate, secondDate);
 
                     for (ReportByCategoryDTO userCategory : list) {
                         System.out.println(userCategory);

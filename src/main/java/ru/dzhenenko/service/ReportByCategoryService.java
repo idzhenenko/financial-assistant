@@ -19,7 +19,7 @@ public class ReportByCategoryService {
         this.reportByCategoryDtoConverter = reportByCategoryModelToReportByCategoryDtoConverter;
     }
 
-    public List<ReportByCategoryDTO> viewReportCategory(long idUser, Timestamp startDay, Timestamp endDay) throws SQLException {
+    public List<ReportByCategoryDTO> viewReportCategory(long idUser,String startDay, String endDay) throws SQLException {
         List<ReportByCategoryDTO> reportByCategoryDTOS;
         List<ReportByCategoryModel> reportByCategoryModels = reportByCategoryDao.reportByCategory(idUser, startDay, endDay);
         if (reportByCategoryModels == null) {

@@ -22,7 +22,7 @@ public class ReportByCategoryDao {
     }
 
     //метод для просмотра отчетов по категориям
-    public List<ReportByCategoryModel> reportByCategory(long idUser, Timestamp startDay, Timestamp endDay) {
+    public List<ReportByCategoryModel> reportByCategory(long idUser, String startDay, String  endDay) {
         List<ReportByCategoryModel> reportByCategoryModels = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement("SELECT t.amount, c.name\n" +
@@ -32,19 +32,15 @@ public class ReportByCategoryDao {
                     "                            JOIN type_transaction tt ON t.id_type_transaction = tt.id\n" +
                     "                            JOIN id_tran_to_id_category ittic ON t.id = ittic.id_category\n" +
                     "                            JOIN category c ON ittic.id_transaction = c.id\n" +
-                    "                    WHERE u.id = ? AND t.create_date >= ? AND t.create_date <= ?\n" +
+                    "                    WHERE u.id = ? AND date_trunc('day', t.Create_date) >= ? AND date_trunc('day', t.Create_date) <= ?\n" +
                     "                    ");
             ps.setLong(1, idUser);
-            ps.setTimestamp(2, startDay);
-            ps.setTimestamp(3, endDay);
+            ps.setDate(2, Date.valueOf(startDay));
+            ps.setDate(3, Date.valueOf(endDay));
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 ReportByCategoryModel reportByCategoryModel = new ReportByCategoryModel();
-                reportByCategoryModel.setId(rs.getLong("id"));
-                reportByCategoryModel.setSourceAccount(rs.getLong("source_account"));
-                reportByCategoryModel.setTargetAccount(rs.getLong("target_account"));
-                reportByCategoryModel.setCreateDate(rs.getTimestamp("create_date"));
                 reportByCategoryModel.setName(rs.getString("name"));
                 reportByCategoryModel.setAmount(rs.getLong("amount"));
                 reportByCategoryModels.add(reportByCategoryModel);

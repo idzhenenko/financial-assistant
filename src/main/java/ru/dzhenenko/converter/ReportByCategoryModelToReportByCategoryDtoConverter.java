@@ -10,11 +10,8 @@ public class ReportByCategoryModelToReportByCategoryDtoConverter implements Conv
     @Override
     public ReportByCategoryDTO convert(ReportByCategoryModel source) {
         ReportByCategoryDTO reportByCategoryDTO = new ReportByCategoryDTO();
-        reportByCategoryDTO.setId(source.getId());
         reportByCategoryDTO.setName(source.getName());
         reportByCategoryDTO.setAmount(source.getAmount());
-        reportByCategoryDTO.setSourceAccount(source.getSourceAccount());
-        reportByCategoryDTO.setTargetAccount(source.getTargetAccount());
         return reportByCategoryDTO;
     }
 }
