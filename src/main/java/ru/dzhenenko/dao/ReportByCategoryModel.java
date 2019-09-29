@@ -29,10 +29,8 @@ public class ReportByCategoryModel {
 
     @Override
     public String toString() {
-        return "ReportByCategoryModel{" +
-                "name='" + name + '\'' +
-                ", amount=" + amount +
-                '}';
+        return name +
+                " = " + amount;
     }
 
     @Override

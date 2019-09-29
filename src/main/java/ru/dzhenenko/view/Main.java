@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws SQLException, ParseException {
+    public static void main(String[] args) throws SQLException {
         AuthService authService = ServiceFactory.getAuthService();
 
         Scanner sc = new Scanner(System.in);
@@ -31,11 +31,10 @@ public class Main {
                     System.out.println("HELLO" + " " + userDTO.getEmail() + "!");
                     long userId1 = userDTO.getId();
                     TerminalView.start(userId1, userDTO);
-                    break;
                 } else {
                     System.out.println("Тебя нет в базе данных!");
-                    break;
                 }
+                break;
             case 2:
                 System.out.println("*************************");
                 System.out.println("====== РЕГИСТРАЦИЯ ======");

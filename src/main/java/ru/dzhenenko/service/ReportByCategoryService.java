@@ -19,15 +19,17 @@ public class ReportByCategoryService {
         this.reportByCategoryDtoConverter = reportByCategoryModelToReportByCategoryDtoConverter;
     }
 
-    public List<ReportByCategoryDTO> viewReportCategory(long idUser,String startDay, String endDay) throws SQLException {
+    public List<ReportByCategoryDTO> viewReportCategory(long idUser, String startDay, String endDay) throws SQLException {
         List<ReportByCategoryDTO> reportByCategoryDTOS;
         List<ReportByCategoryModel> reportByCategoryModels = reportByCategoryDao.reportByCategory(idUser, startDay, endDay);
         if (reportByCategoryModels == null) {
-            return null;
+            return reportByCategoryDao.reportByCategory(idUser, startDay, endDay)
+                    .stream()
+                    .map(reportByCategoryDtoConverter::convert)
+                    .collect(Collectors.toList());
         }
 
         reportByCategoryDTOS = reportByCategoryModels.stream().map(item -> reportByCategoryDtoConverter.convert(item)).collect(Collectors.toList());
         return reportByCategoryDTOS;
     }
-
 }

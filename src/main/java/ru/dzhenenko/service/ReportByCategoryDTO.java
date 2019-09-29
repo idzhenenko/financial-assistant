@@ -31,10 +31,8 @@ public class ReportByCategoryDTO {
 
     @Override
     public String toString() {
-        return "ReportByCategoryDTO{" +
-                "name='" + name + '\'' +
-                ", amount=" + amount +
-                '}';
+        return name +
+                " = " + amount;
     }
 
     @Override

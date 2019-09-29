@@ -21,7 +21,7 @@ public class TerminalView {
         this.reportByCategoryService = reportByCategoryService;
     }
 
-    public static void start(long userId1, UserDTO userDto) throws SQLException, ParseException {
+    public static void start(long userId1, UserDTO userDto) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         boolean menuStatus = true;
         while (menuStatus) {
@@ -63,7 +63,6 @@ public class TerminalView {
                                 accountService.createAccount(name1, balance1, testId4);
 
                                 System.out.println("Your account is successfully created!");
-
                             }
 
                             break;
@@ -89,7 +88,6 @@ public class TerminalView {
                 // просмотр отчетов
                 case 3:
                     System.out.println("************************");
-
                     String firstDate = request("Введите начальную дату YYYY-MM-DD");
                     String secondDate = request("Введите конечную дату YYYY-MM-DD");
 
@@ -162,7 +160,7 @@ public class TerminalView {
                             break;
                         default:
                             System.out.println("Не понятный ввод!");
-                    }
+                }
             }
         }
     }
