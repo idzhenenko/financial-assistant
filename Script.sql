@@ -45,23 +45,30 @@ create table id_tran_to_id_category
 );
 
 insert into users (first_name, last_name, phone, email, password)
-values ('Иван', 'Джененко', '+79855518076', 'i.dzhenenko@gmail.com', 'qwerty1234567890');
+values ('Ivan', 'Dzhenenko', '+79855518076', 'i.dzhenenko@gmail.com', 'qwerty1234567890');
 insert into users (first_name, last_name, phone, email, password)
-values ('Ольга', 'Джененко', '+79093730888', 'olgaginger20.05@gmail.com', 'qwerty0987654321');
+values ('Olga', 'Dzhenenko', '+79093730888', 'olgaginger20.05@gmail.com', 'qwerty0987654321');
 
 insert into account (name, balance, id_users)
-values ('Иван Wallet', '50000', '1');
+values ('Ivan Wallet', '50000', '1');
 insert into account (name, balance, id_users)
-values ('Иван Sberbank', '9000000', '1');
+values ('Ivan Sberbank', '9000000', '1');
 insert into account (name, balance, id_users)
-values ('Ольга Sberbank', '8000000', '2');
+values ('Olga Sberbank', '8000000', '2');
 
 insert into type_transaction (name)
-values ('Приход');
+values ('Getting');
 insert into type_transaction (name)
-values ('Расход');
+values ('Consumption');
 insert into type_transaction (name)
-values ('Перевод');
+values ('Money transfer');
+insert into type_transaction (name)
+values ('Consumption');
+insert into type_transaction (name)
+values ('Consumption');
+insert into type_transaction (name)
+values ('Consumption');
+
 
 insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
 values ('2', NULL, '2019-07-07 3:12:12', '2', '120000');
@@ -83,20 +90,32 @@ insert into transaction (source_account, target_account, Create_date, id_type_tr
 values ('2', '1', '2019-07-07 22:59:59', '3', '286000');
 insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
 values ('2', '3', '2019-07-07 3:09:09', '3', '174000');
+insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
+values ('2', '3', '2019-09-04 3:09:09', '3', '333000');
+insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
+values ('2', '3', '2019-09-04 3:09:09', '3', '333000');
+insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
+values ('2', '3', '2019-09-04 3:09:09', '2', '333000');
+insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
+values ('2', NULL, '2019-09-04 3:09:09', '1', '93000');
+insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
+values ('2', NULL, '2019-09-04 3:09:09', '6', '93000');
+insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
+values ('2', NULL, '2019-09-04 3:09:09', '5', '3000');
 
 
 insert into category (name)
-values ('Продукты');
+values ('Products');
 insert into category (name)
-values ('Транспорт');
+values ('Transport');
 insert into category (name)
-values ('Тренажерный зал');
+values ('Gym');
 insert into category (name)
-values ('Аренда квартиры');
+values ('Rent apartment');
 insert into category (name)
-values ('На путешевствия');
+values ('Trip');
 insert into category (name)
-values ('Зарплата');
+values ('Salary');
 
 insert into id_tran_to_id_category (id_transaction, id_category)
 values (1, 1);
@@ -118,7 +137,7 @@ select a.id,
        u.last_name
 from account as a
          join users u on a.id_users = u.id
-where u.first_name = 'Иван';
+where u.first_name = 'Ivan';
 
 --Вывести сумму всех остатков на счетах по всем пользователям
 select sum(balance)
@@ -135,8 +154,18 @@ from account as a
          join users u on a.id_users = u.id
          left join transaction t on a.id = t.source_account
          join type_transaction tt on t.id_type_transaction = tt.id
-where u.first_name = 'Иван'
+where u.first_name = 'Ivan'
   and date_trunc('day', t.Create_date) = date_trunc('day', current_timestamp - interval '1 day');
 
 update users
 set password = md5(password);
+
+select c.name,
+       t.amount
+from account as a
+         join users u on a.id_users = u.id
+         left join transaction t on a.id = t.source_account
+         join type_transaction tt on t.id_type_transaction = tt.id
+         join category c on t.id_type_transaction = c.id
+where u.first_name = 'Ivan'
+  and date_trunc('day', t.Create_date) = date_trunc('day', current_timestamp - interval '1 day');

@@ -76,16 +76,14 @@ public class AccountModel {
 
     @Override
     public String toString() {
-        return "AccountModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", balance=" + balance +
-                ", userId=" + userId +
-                '}';
+        return "AccountModel" +
+                " id = " + id +
+                ", name = '" + name + '\'' +
+                ", balance = " + balance +
+                ", userId = " + userId;
     }
 
     public void getUserId(long userId) {
         this.userId = userId;
     }
 }
-

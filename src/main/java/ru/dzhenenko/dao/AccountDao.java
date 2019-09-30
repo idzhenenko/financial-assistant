@@ -68,6 +68,7 @@ public class AccountDao {
             throw new CustomExeption(e);
         }
     }
+
     //тут будет метод для просмотра счетов
     public List<AccountModel> viewAccountUser(long userId) {
         List<AccountModel> accountModels = new ArrayList<>();
@@ -89,23 +90,24 @@ public class AccountDao {
         }
         return accountModels;
     }
-        public AccountModel findByUserId ( long userId){
-            AccountModel accountModel = null;
 
-            try (Connection conn = dataSource.getConnection()) {
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM account WHERE id_users = ?");
-                ps.setInt(1, (int) userId);
-                ResultSet rs = ps.executeQuery();
+    public AccountModel findByUserId(long userId) {
+        AccountModel accountModel = null;
 
-                if (rs.next()) {
-                    AccountModel accountModel1 = new AccountModel();
-                    accountModel1.setId(rs.getLong(1));
-                    return accountModel1;
-                } else {
-                    throw new CustomExeption("The account is not found!");
-                }
-            } catch (SQLException e) {
-                throw new CustomExeption(e);
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM account WHERE id_users = ?");
+            ps.setInt(1, (int) userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                AccountModel accountModel1 = new AccountModel();
+                accountModel1.setId(rs.getLong(1));
+                return accountModel1;
+            } else {
+                throw new CustomExeption("The account is not found!");
             }
+        } catch (SQLException e) {
+            throw new CustomExeption(e);
         }
+    }
 }

@@ -4,8 +4,6 @@ import ru.dzhenenko.converter.AccountTypeModelToAccountTypeDtoConverter;
 import ru.dzhenenko.dao.AccountTypeDao;
 import ru.dzhenenko.dao.AccountTypeModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class AccountTypeService {
@@ -13,9 +11,9 @@ public class AccountTypeService {
     public AccountTypeDao accountTypeDao;
     public AccountTypeModelToAccountTypeDtoConverter accountTypeDtoConverter;
 
-    public AccountTypeService() {
-        this.accountTypeDao = new AccountTypeDao();
-        this.accountTypeDtoConverter = new AccountTypeModelToAccountTypeDtoConverter();
+    public AccountTypeService(AccountTypeDao accountTypeDao, AccountTypeModelToAccountTypeDtoConverter accountTypeDtoConverter) {
+        this.accountTypeDao = accountTypeDao;
+        this.accountTypeDtoConverter = accountTypeDtoConverter;
     }
 
     public AccountTypeDTO createTypeAccount(String name) throws SQLException {
@@ -34,17 +32,16 @@ public class AccountTypeService {
         if (accountTypeModel == null) {
             return null;
         }
-
         return accountTypeDtoConverter.convert(accountTypeModel);
     }
 
-    public AccountTypeDTO editingAccountType (String name, int id) throws SQLException {
+    public AccountTypeDTO editingAccountType(String name, int id) throws SQLException {
 
         AccountTypeModel accountTypeModel = accountTypeDao.editAccountType(name, id);
         if (accountTypeModel == null) {
-            return  null;
+            return null;
         }
         return accountTypeDtoConverter.convert(accountTypeModel);
     }
-}
 
+}

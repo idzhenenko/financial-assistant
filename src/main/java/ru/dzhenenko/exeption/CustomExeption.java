@@ -9,4 +9,3 @@ public class CustomExeption extends RuntimeException {
         super(message);
     }
 }
-

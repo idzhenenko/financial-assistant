@@ -20,7 +20,7 @@ public class AccountTypeDao {
         dataSource = new HikariDataSource(config);
     }
 
-    public AccountTypeModel addAccountType (String name) {
+    public AccountTypeModel addAccountType(String name) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("INSERT INTO category(name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, name);
@@ -41,7 +41,7 @@ public class AccountTypeDao {
         }
     }
 
-    public AccountTypeModel deleteAccountType (String name) {
+    public AccountTypeModel deleteAccountType(String name) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("delete from category where name = ?", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, name);
@@ -62,11 +62,11 @@ public class AccountTypeDao {
         }
     }
 
-    public AccountTypeModel editAccountType (String name, int id) {
+    public AccountTypeModel editAccountType(String name, int id) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("update category set name = ? where id = ?", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, name);
-            st.setInt(2,id);
+            st.setInt(2, id);
             st.executeUpdate();
 
             ResultSet rs = st.getGeneratedKeys();
@@ -85,4 +85,3 @@ public class AccountTypeDao {
         }
     }
 }
-
