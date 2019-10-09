@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,7 +17,7 @@ public class AccountTypeDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("jdbcUrl", "jdbc:h2:mem:test_mem");
+        System.setProperty("jdbcUrl", "jdbc:h2:mem:test_mem" + UUID.randomUUID().toString());
         System.setProperty("jdbcUser", "sa");
         System.setProperty("jdbcPassword", "");
         System.setProperty("liquibaseFile", "liquibase_account_type_dao_test.xml");
@@ -43,14 +45,14 @@ public class AccountTypeDaoTest {
         assertNotEquals(1, trips.getName());
         assertNotEquals(1,trips.getId());
         assertNotNull(trips);
-
     }
+
     @Test
     public void editAccountType() {
         AccountTypeModel trips = subj.editAccountType("Products",1);
 
-        //assertEquals("Products", trips.getName());
-        //assertEquals(1,trips.getId());
         assertNotNull(trips);
+        System.out.println(trips.toString());
+
     }
 }

@@ -43,7 +43,6 @@ public class AccountServiceTest {
         assertNotNull(accountDTO1);
         verify(accountDao, times(1)).viewAccountUser(1);
     }
-
     @Test
     public void NotFoundByUserIdViewAccount() throws SQLException {
         AccountModel accountModel = new AccountModel();

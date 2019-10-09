@@ -81,5 +81,4 @@
             <column name="id_category">1</column>
         </insert>
     </changeSet>
-
 </databaseChangeLog>

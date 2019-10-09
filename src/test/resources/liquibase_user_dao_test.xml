@@ -20,5 +20,4 @@
             <column name="password">8046f82d3755e422ae19b026791a5e72</column>
         </insert>
     </changeSet>
-
 </databaseChangeLog>

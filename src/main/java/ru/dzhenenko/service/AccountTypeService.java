@@ -35,7 +35,6 @@ public class AccountTypeService {
         }
         return accountTypeDtoConverter.convert(accountTypeModel);
     }
-
     public AccountTypeDTO editingAccountType(String name, int id) throws SQLException {
 
         AccountTypeModel accountTypeModel = accountTypeDao.editAccountType(name, id);

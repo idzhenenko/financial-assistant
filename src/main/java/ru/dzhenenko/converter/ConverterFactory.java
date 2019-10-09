@@ -35,7 +35,6 @@ public class ConverterFactory {
         }
         return accountModelAccountDTOConverter;
     }
-
     public static Converter<TransactionModel, TransactionDTO> transactionModelTransactionDTOConverter;
     public static Converter<TransactionModel, TransactionDTO> getTransactionModelTransactionDTOConverter() {
         if (transactionModelTransactionDTOConverter == null) {

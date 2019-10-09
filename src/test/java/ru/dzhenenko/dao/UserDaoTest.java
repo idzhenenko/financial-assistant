@@ -1,11 +1,15 @@
 package ru.dzhenenko.dao;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static ru.dzhenenko.dao.DaoFactory.getUserDao;
 
 public class UserDaoTest {
 
@@ -13,12 +17,12 @@ public class UserDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        System.setProperty("jdbcUrl", "jdbc:h2:mem:test_mem");
+        System.setProperty("jdbcUrl", "jdbc:h2:mem:test_mem" + UUID.randomUUID().toString());
         System.setProperty("jdbcUser", "sa");
         System.setProperty("jdbcPassword", "");
         System.setProperty("liquibaseFile", "liquibase_user_dao_test.xml");
 
-        subj = DaoFactory.getUserDao();
+        subj = getUserDao();
     }
 
     @Test

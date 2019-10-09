@@ -30,5 +30,4 @@
             <column name="id_users">1</column>
         </insert>
     </changeSet>
-
 </databaseChangeLog>

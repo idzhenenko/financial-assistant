@@ -61,7 +61,6 @@ public class AccountDao {
         }
         return accountModel;
     }
-
     //тут будет метод для просмотра счетов
     public List<AccountModel> viewAccountUser(long userId) {
         List<AccountModel> accountModels = new ArrayList<>();

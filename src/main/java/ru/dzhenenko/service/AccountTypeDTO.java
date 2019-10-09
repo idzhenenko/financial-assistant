@@ -12,7 +12,6 @@ public class AccountTypeDTO {
     public AccountTypeDTO() {
 
     }
-
     public long getId() {
         return id;
     }

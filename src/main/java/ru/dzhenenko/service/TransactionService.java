@@ -7,7 +7,6 @@ import ru.dzhenenko.dao.TransactionModel;
 import java.sql.SQLException;
 
 public class TransactionService {
-
     public TransactionDao transactionDao;
     public Converter<TransactionModel, TransactionDTO> transactionModelTransactionDTOConverter;
 

@@ -10,6 +10,5 @@ public class AccountTypeModelToAccountTypeDtoConverter implements Converter<Acco
         accountTypeDTO.setId(source.getId());
         accountTypeDTO.setName(source.getName());
         return accountTypeDTO;
-
     }
 }

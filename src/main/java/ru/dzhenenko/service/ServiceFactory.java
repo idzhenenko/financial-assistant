@@ -26,7 +26,6 @@ public class ServiceFactory {
         }
         return authService;
     }
-
     private static DigestService digestService;
     public static DigestService getDigestService() {
         if (digestService == null) {

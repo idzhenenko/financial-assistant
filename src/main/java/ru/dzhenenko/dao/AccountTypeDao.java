@@ -53,7 +53,6 @@ public class AccountTypeDao {
         }
         return accountTypeModel;
     }
-
     public AccountTypeModel editAccountType(String name, int id) {
         AccountTypeModel accountTypeModel = new AccountTypeModel();
         try (Connection conn = dataSource.getConnection()) {

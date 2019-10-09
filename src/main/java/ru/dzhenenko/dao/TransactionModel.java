@@ -86,7 +86,6 @@ public class TransactionModel {
                 amount == that.amount &&
                 Objects.equals(createDate, that.createDate);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, sourceAccount, targetAccount, createDate, TypeTransaction, amount);

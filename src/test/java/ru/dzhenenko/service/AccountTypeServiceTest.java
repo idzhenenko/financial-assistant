@@ -40,7 +40,6 @@ public class AccountTypeServiceTest {
         assertEquals(accountTypeDTO, accountTypeDTOlist);
         verify(accountTypeDao, times(1)).addAccountType("На Вертолет");
     }
-
     @Test
     public void NotCreateAccount() throws SQLException {
         AccountTypeModel accountTypeModel = new AccountTypeModel();

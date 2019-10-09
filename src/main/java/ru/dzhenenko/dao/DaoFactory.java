@@ -60,7 +60,6 @@ public class DaoFactory {
         }
         return transactionDao;
     }
-
     public static DataSource dataSource;
     public static DataSource getDataSource() {
         if (dataSource == null) {

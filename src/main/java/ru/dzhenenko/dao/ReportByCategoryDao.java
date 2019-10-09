@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ReportByCategoryDao {
     private final DataSource dataSource;
-
     public ReportByCategoryDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }

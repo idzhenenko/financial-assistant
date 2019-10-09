@@ -10,7 +10,6 @@ public class ReportByCategoryDTO {
     private long amount;
 
     public ReportByCategoryDTO() {
-
     }
 
     public String getName() {

@@ -133,7 +133,6 @@ public class TerminalView {
                     input = scanner.nextInt();
 
                     switch (input) {
-
                         case 1:
                             if (input == 1) {
 

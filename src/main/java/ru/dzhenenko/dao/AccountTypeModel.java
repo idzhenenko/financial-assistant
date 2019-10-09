@@ -24,6 +24,14 @@ public class AccountTypeModel {
     }
 
     @Override
+    public String toString() {
+        return "AccountTypeModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AccountTypeModel)) return false;
@@ -31,7 +39,6 @@ public class AccountTypeModel {
         return getId() == that.getId() &&
                 Objects.equals(getName(), that.getName());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName());
