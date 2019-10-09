@@ -13,12 +13,14 @@ public class TerminalView {
     private static AccountTypeService accountTypeService;
     private static AuthService authService;
     private static ReportByCategoryService reportByCategoryService;
+    private static TransactionService transactionService;
 
-    public TerminalView(AccountService accountService, AccountTypeService accountTypeService, AuthService authService, ReportByCategoryService reportByCategoryService) {
+    public TerminalView(AccountService accountService, AccountTypeService accountTypeService, AuthService authService, ReportByCategoryService reportByCategoryService, TransactionService transactionService) {
         this.accountService = accountService;
         this.accountTypeService = accountTypeService;
         this.authService = authService;
         this.reportByCategoryService = reportByCategoryService;
+        this.transactionService = transactionService;
     }
 
     public static void start(long userId1, UserDTO userDto) throws SQLException {
@@ -29,6 +31,7 @@ public class TerminalView {
             System.out.println("1: Показать счета");
             System.out.println("2: Показать транзакции");
             System.out.println("3: Показать отчет по категориям");
+            System.out.println("4: Операции со счетами");
             System.out.println("0: Выход");
             int input = scanner.nextInt();
             switch (input) {
@@ -70,35 +73,55 @@ public class TerminalView {
                             System.out.println("**** УДАЛЕНИЕ СЧЕТА ****");
                             System.out.println("************************");
                             Scanner scanner2 = new Scanner(System.in);
-                            System.out.println("Введите имя счета: ");
-                            String name1 = scanner2.nextLine();
+                            System.out.println("Введите id счета: ");
+                            //String name1 = scanner2.nextLine();
+                            int id = scanner2.nextInt();
 
                             System.out.println("Your account is successfully deleted!");
 
                             // метод удаления счета
                             accountService = ServiceFactory.getAccountService();
-                            accountService.removeAccount(name1);
+                            accountService.removeAccount(id);
 
                             break;
                         case 3:
                             System.out.println("GOOD BYE!");
                             break;
-                    }
-                    break;
-                // просмотр отчетов
-                case 3:
-                    System.out.println("************************");
-                    String firstDate = request("Введите начальную дату YYYY-MM-DD");
-                    String secondDate = request("Введите конечную дату YYYY-MM-DD");
+                        // скобка была тут
+                        }
+                            break;
+                            // просмотр отчетов
+                            case 3:
+                                System.out.println("*****************************");
+                                String firstDate = request("Введите начальную дату YYYY-MM-DD");
+                                String secondDate = request("Введите конечную дату YYYY-MM-DD");
 
-                    long testId7 = userDto.getId();
-                    System.out.println("Отчет: ");
+                                long testId7 = userDto.getId();
+                                System.out.println("Отчет: ");
 
-                    reportByCategoryService = ServiceFactory.getReportByCategoryService();
-                    List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, firstDate, secondDate);
+                                reportByCategoryService = ServiceFactory.getReportByCategoryService();
+                                List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, firstDate, secondDate);
 
-                    list.forEach(System.out::println);
-                    break;
+                                list.forEach(System.out::println);
+
+                                break;
+
+                            case 4:
+                                // операции со счетами
+                                System.out.println("*****************************");
+                                long amount = requestId("Введите сумму:");
+                                long sourceAccount = requestId("Введите счет списания:");
+                                long targetAccount = requestId("Введите счет зачисления:");
+                                String idTypeTransaction = request("Введите имя транзакции: Например: Продукты");
+                                long idCategory = requestId("id категории");
+                                String dateTransaction = request("Дата транзакции");
+
+                                testId7 = userDto.getId();
+                                System.out.println("Отчет: ");
+                                transactionService = ServiceFactory.getTransactionService();
+                                transactionService.insertTransaction(amount,sourceAccount,targetAccount,idTypeTransaction,idCategory,testId7,dateTransaction);
+                                break;
+
                 case 2:
                     System.out.println("**********************************");
                     System.out.println("====== КАТЕГОРИИ ТРАНЗАКЦИЙ ======");
@@ -118,7 +141,7 @@ public class TerminalView {
                                 System.out.println("==== СОЗДАНИЕ ТРАНЗАКЦИИ ====");
 
                                 Scanner scanner3 = new Scanner(System.in);
-                                System.out.println("Введите тип транзакции: ");
+                                System.out.println("Введите имя транзакции: ");
                                 String name2 = scanner3.nextLine();
 
                                 System.out.println("Your type account is successfully created!");
@@ -132,13 +155,13 @@ public class TerminalView {
                             System.out.println("==== УДАЛЕНИЕ ТРАНЗАКЦИИ ====");
 
                             Scanner scanner3 = new Scanner(System.in);
-                            System.out.println("Введите тип транзакции: ");
-                            String name3 = scanner3.nextLine();
+                            System.out.println("Введите id транзакции: ");
+                            int id = scanner3.nextInt();
                             System.out.println("Your type account is successfully created!");
 
                             // метод удаления транзакции
                             AccountTypeService accountTypeService = ServiceFactory.getAccountTypeService();
-                            accountTypeService.removeAccountType(name3);
+                            accountTypeService.removeAccountType(id);
 
                             break;
                         case 3:

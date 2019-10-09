@@ -36,4 +36,10 @@ public class AccountTypeModel {
     public int hashCode() {
         return Objects.hash(getId(), getName());
     }
+
+    public void getId(long aLong) {
+    }
+
+    public void getName(String name) {
+    }
 }

@@ -10,13 +10,8 @@ import java.sql.*;
 public class UserDao {
     private final DataSource dataSource;
 
-    public UserDao() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("postgres");
-
-        dataSource = new HikariDataSource(config);
+    public UserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     // поиск пользователя по почте и хэшу

@@ -1,0 +1,117 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--******************************таблица users****************************-->
+    <changeSet id="1" author="dzhenenko">
+        <createTable tableName="users">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints unique="false" nullable="true"/>
+            </column>
+            <column name="phone" type="varchar(255)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--***************************таблица account*****************************-->
+    <changeSet id="2" author="dzhenenko">
+        <createTable tableName="account">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_users" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="to_user_id"
+                             references="users(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--***********************таблица type_transaction************************-->
+    <changeSet id="3" author="dzhenenko">
+        <createTable tableName="type_transaction">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--***************************таблица transaction*************************-->
+    <changeSet id="4" author="dzhenenko">
+        <createTable tableName="transaction">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="source_account" type="INTEGER">
+                <constraints nullable="false"
+                             foreignKeyName="to_account_id1"
+                             references="account(id)"/>
+            </column>
+            <column name="target_account" type="INTEGER">
+                <constraints nullable="true"
+                             foreignKeyName="to_account_id2"
+                             references="account(id)"/>
+            </column>
+            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_type_transaction" type="INTEGER">
+                <constraints nullable="false"
+                             foreignKeyName="to_id_type_transaction"
+                             references="type_transaction(id)"/>
+            </column>
+            <column name="amount" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--***************************таблица category****************************-->
+    <changeSet id="5" author="dzhenenko">
+        <createTable tableName="category">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--********************таблица id_tran_to_id_category*********************-->
+    <changeSet id="6" author="dzhenenko">
+        <createTable tableName="id_tran_to_id_category">
+            <column name="id_transaction" type="INTEGER">
+                <constraints foreignKeyName="to_id_category"
+                             references="category(id)"/>
+            </column>
+            <column name="id_category" type="INTEGER">
+                <constraints foreignKeyName="to_id_transactions"
+                             references="transaction(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

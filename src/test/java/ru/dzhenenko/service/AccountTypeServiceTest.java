@@ -64,17 +64,17 @@ public class AccountTypeServiceTest {
         AccountTypeModel accountTypeModel = new AccountTypeModel();
         accountTypeModel.setId(1);
         accountTypeModel.setName("На Мерседес");
-        when(accountTypeDao.deleteAccountType("На Мерседес")).thenReturn(null);
+        when(accountTypeDao.deleteAccountType(1)).thenReturn(null);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setId(1);
         accountTypeDTO.setName("На Мерседес");
         when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
 
-        AccountTypeDTO accountTypeDTO1 = accountTypeService.removeAccountType("На Мерседес");
+        AccountTypeDTO accountTypeDTO1 = accountTypeService.removeAccountType(1);
 
         assertNull(accountTypeDTO1);
-        verify(accountTypeDao, times(1)).deleteAccountType("На Мерседес");
+        verify(accountTypeDao, times(1)).deleteAccountType(1);
         verifyNoMoreInteractions(accountTypeDao);
     }
 
@@ -97,16 +97,16 @@ public class AccountTypeServiceTest {
         AccountTypeModel accountTypeModel = new AccountTypeModel();
         accountTypeModel.setId(1);
         accountTypeModel.setName("На Мерседес");
-        when(accountTypeDao.deleteAccountType("На Мерседес")).thenReturn(accountTypeModel);
+        when(accountTypeDao.deleteAccountType(1)).thenReturn(accountTypeModel);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setId(1);
         accountTypeDTO.setName("На Мерседес");
         when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
 
-        AccountTypeDTO accountTypeDTO1 = accountTypeService.removeAccountType("На Мерседес");
+        AccountTypeDTO accountTypeDTO1 = accountTypeService.removeAccountType(1);
 
-        verify(accountTypeDao, times(1)).deleteAccountType("На Мерседес");
+        verify(accountTypeDao, times(1)).deleteAccountType(1);
         assertNotNull(accountTypeDTO);
         verifyZeroInteractions(accountTypeDao);
         verifyNoMoreInteractions(accountTypeDao);

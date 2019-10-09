@@ -106,7 +106,7 @@ public class AccountServiceTest {
         AccountModel accountModel = new AccountModel();
         accountModel.setId(100);
         accountModel.setName("Bank");
-        when(accountDao.deleteAccount("Bank")).thenReturn(accountModel);
+        when(accountDao.deleteAccount(100)).thenReturn(accountModel);
 
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(100);
@@ -114,8 +114,8 @@ public class AccountServiceTest {
 
         when(accountDtoConverter.convert(accountModel)).thenReturn(accountDTO);
 
-        AccountDTO accountDTO1 = accountService.removeAccount("Bank");
+        AccountDTO accountDTO1 = accountService.removeAccount(100);
 
-        verify(accountDao, times(1)).deleteAccount("Bank");
+        verify(accountDao, times(1)).deleteAccount(100);
     }
 }

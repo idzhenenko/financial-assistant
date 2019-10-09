@@ -1,5 +1,6 @@
 package ru.dzhenenko.service;
 
+import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.converter.UserModelToUserDtoConverter;
 
 
@@ -10,9 +11,9 @@ import ru.dzhenenko.dao.UserModel;
 public class AuthService {
     public UserDao userDao;
     public DigestService digestService;
-    public UserModelToUserDtoConverter userDtoConverter;
+    public Converter<UserModel, UserDTO> userDtoConverter;
 
-    public AuthService(UserDao userDao, DigestService digestService, UserModelToUserDtoConverter userDtoConverter) {
+    public AuthService(UserDao userDao, DigestService digestService, Converter<UserModel, UserDTO> userDtoConverter) {
         this.userDao = userDao;
         this.digestService = digestService;
         this.userDtoConverter = userDtoConverter;

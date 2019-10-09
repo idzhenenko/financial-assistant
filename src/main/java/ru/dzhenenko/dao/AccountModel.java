@@ -1,5 +1,6 @@
 package ru.dzhenenko.dao;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class AccountModel {
@@ -86,4 +87,5 @@ public class AccountModel {
     public void getUserId(long userId) {
         this.userId = userId;
     }
+
 }

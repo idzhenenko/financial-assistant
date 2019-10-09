@@ -8,16 +8,11 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 public class AccountTypeDao {
-    private static DataSource dataSource;
+    private final DataSource dataSource;
     private AccountTypeModel AccounTypeModel;
 
-    public AccountTypeDao() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("postgres");
-
-        dataSource = new HikariDataSource(config);
+    public AccountTypeDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public AccountTypeModel addAccountType(String name) {
@@ -32,7 +27,7 @@ public class AccountTypeDao {
                 accountTypeModel.setId(rs.getLong(1));
                 accountTypeModel.setName(name);
 
-                return AccounTypeModel;
+                return accountTypeModel;
             } else {
                 throw new CustomExeption("Error adding!");
             }
@@ -41,28 +36,26 @@ public class AccountTypeDao {
         }
     }
 
-    public AccountTypeModel deleteAccountType(String name) {
+    public AccountTypeModel deleteAccountType(int id) {
+        AccountTypeModel accountTypeModel = new AccountTypeModel();
         try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement st = conn.prepareStatement("delete from category where name = ?", Statement.RETURN_GENERATED_KEYS);
-            st.setString(1, name);
+            PreparedStatement st = conn.prepareStatement("delete from category where id = ?", Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1, id);
             st.executeUpdate();
 
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
-                AccountTypeModel accountTypeModel = new AccountTypeModel();
-                accountTypeModel.setId(rs.getLong(1));
-                accountTypeModel.setName(name);
-
-                return AccounTypeModel;
-            } else {
-                throw new CustomExeption("delete error!");
+                accountTypeModel.getId(rs.getLong(1));
+                accountTypeModel.getId(id);
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
         }
+        return accountTypeModel;
     }
 
     public AccountTypeModel editAccountType(String name, int id) {
+        AccountTypeModel accountTypeModel = new AccountTypeModel();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("update category set name = ? where id = ?", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, name);
@@ -71,17 +64,13 @@ public class AccountTypeDao {
 
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
-                AccountTypeModel accountTypeModel = new AccountTypeModel();
                 accountTypeModel.setId(rs.getLong(1));
                 accountTypeModel.setName(name);
-                accountTypeModel.setId(id);
-
-                return AccounTypeModel;
-            } else {
-                throw new CustomExeption("Editing error!");
+                //accountTypeModel.setId(id);
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
         }
+        return accountTypeModel;
     }
 }

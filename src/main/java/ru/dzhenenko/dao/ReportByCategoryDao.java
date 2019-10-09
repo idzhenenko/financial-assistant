@@ -10,15 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportByCategoryDao {
-    private static DataSource dataSource;
+    private final DataSource dataSource;
 
-    public ReportByCategoryDao() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("postgres");
-
-        dataSource = new HikariDataSource(config);
+    public ReportByCategoryDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     //метод для просмотра отчетов по категориям

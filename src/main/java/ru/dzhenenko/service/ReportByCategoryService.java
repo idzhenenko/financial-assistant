@@ -1,5 +1,6 @@
 package ru.dzhenenko.service;
 
+import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.converter.ReportByCategoryModelToReportByCategoryDtoConverter;
 import ru.dzhenenko.dao.ReportByCategoryDao;
 import ru.dzhenenko.dao.ReportByCategoryModel;
@@ -12,9 +13,9 @@ import java.util.stream.Collectors;
 public class ReportByCategoryService {
 
     public ReportByCategoryDao reportByCategoryDao;
-    public ReportByCategoryModelToReportByCategoryDtoConverter reportByCategoryDtoConverter;
+    public Converter<ReportByCategoryModel, ReportByCategoryDTO> reportByCategoryDtoConverter;
 
-    public ReportByCategoryService(ReportByCategoryDao reportByCategoryDao, ReportByCategoryModelToReportByCategoryDtoConverter reportByCategoryModelToReportByCategoryDtoConverter) {
+    public ReportByCategoryService(ReportByCategoryDao reportByCategoryDao, Converter<ReportByCategoryModel, ReportByCategoryDTO> reportByCategoryModelToReportByCategoryDtoConverter) {
         this.reportByCategoryDao = reportByCategoryDao;
         this.reportByCategoryDtoConverter = reportByCategoryModelToReportByCategoryDtoConverter;
     }

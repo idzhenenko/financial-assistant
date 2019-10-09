@@ -26,7 +26,6 @@ public class Main {
                 String password = request("Введите password:");
 
                 UserDTO userDTO = authService.auth(email, password);
-
                 if (userDTO != null) {
                     System.out.println("HELLO" + " " + userDTO.getEmail() + "!");
                     long userId1 = userDTO.getId();
