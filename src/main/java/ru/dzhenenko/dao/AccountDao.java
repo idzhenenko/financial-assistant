@@ -12,7 +12,6 @@ import java.util.List;
 
 public class AccountDao {
     private final DataSource dataSource;
-    //private AccountModel accountModel;
 
     public AccountDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -53,11 +52,9 @@ public class AccountDao {
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
                 accountModel.getId(rs.getInt(1));
-                //accountModel.getId(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            //throw new CustomExeption(e);
         }
         return accountModel;
     }

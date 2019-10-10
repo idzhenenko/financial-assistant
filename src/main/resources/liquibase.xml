@@ -67,24 +67,26 @@
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="source_account" type="INTEGER">
-                <constraints nullable="false"
-                             foreignKeyName="to_account_id1"
+                <constraints nullable="true"
+                             foreignKeyName="to_account_id_source_account"
                              references="account(id)"/>
             </column>
             <column name="target_account" type="INTEGER">
                 <constraints nullable="true"
-                             foreignKeyName="to_account_id2"
+                             foreignKeyName="to_account_id_target_account"
                              references="account(id)"/>
             </column>
-            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE">
-                <constraints nullable="false"/>
-            </column>
+
             <column name="id_type_transaction" type="INTEGER">
                 <constraints nullable="false"
                              foreignKeyName="to_id_type_transaction"
                              references="type_transaction(id)"/>
             </column>
             <column name="amount" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE">
                 <constraints nullable="false"/>
             </column>
         </createTable>

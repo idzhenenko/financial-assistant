@@ -9,7 +9,6 @@ import java.sql.*;
 
 public class AccountTypeDao {
     private final DataSource dataSource;
-    private AccountTypeModel AccounTypeModel;
 
     public AccountTypeDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -65,7 +64,6 @@ public class AccountTypeDao {
             if (rs.next()) {
                 accountTypeModel.setId(rs.getLong(1));
                 accountTypeModel.setName(name);
-                //accountTypeModel.setId(id);
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);

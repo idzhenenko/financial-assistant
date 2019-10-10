@@ -7,7 +7,7 @@ public class TransactionModel {
     private long sourceAccount;
     private long targetAccount;
     private String createDate;
-    private String TypeTransaction;
+    private long TypeTransaction;
     private long amount;
 
     public TransactionModel() {
@@ -46,11 +46,11 @@ public class TransactionModel {
         this.createDate = createDate;
     }
 
-    public String getTypeTransaction() {
+    public long getTypeTransaction() {
         return TypeTransaction;
     }
 
-    public void setTypeTransaction(String TypeTransaction) {
+    public void setTypeTransaction(long TypeTransaction) {
         this.TypeTransaction = TypeTransaction;
     }
 

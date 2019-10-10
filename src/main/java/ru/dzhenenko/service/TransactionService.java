@@ -5,6 +5,7 @@ import ru.dzhenenko.dao.TransactionDao;
 import ru.dzhenenko.dao.TransactionModel;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class TransactionService {
     public TransactionDao transactionDao;
@@ -15,9 +16,10 @@ public class TransactionService {
         this.transactionModelTransactionDTOConverter = transactionModelTransactionDTOConverter;
     }
 
-    public TransactionDTO insertTransaction(long amount, long sourceAccount, long targetAccount, String idTypeTransaction, long idCategory, long idUser, String dateTransaction) throws SQLException {
+    public TransactionDTO insertTransaction(long sourceAccount, long targetAccount, long amount,
+                                            long idTypeTransaction, long idCategory, long idUser) throws SQLException {
 
-        TransactionModel transactionModel = transactionDao.insertTransactions(amount,sourceAccount,targetAccount,idTypeTransaction,idCategory,idUser,dateTransaction);
+        TransactionModel transactionModel = transactionDao.insertTransactions(sourceAccount, targetAccount, amount, idTypeTransaction, idCategory, idUser);
         if (transactionModel == null) {
             return null;
         }
