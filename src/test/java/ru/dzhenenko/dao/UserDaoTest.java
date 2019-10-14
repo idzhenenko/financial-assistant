@@ -25,6 +25,13 @@ public class UserDaoTest {
         subj = getUserDao();
     }
 
+    @After
+    public void tearDown() throws Exception {
+        DaoFactory.userDao = null;
+        DaoFactory.dataSource = null;
+        subj = null;
+    }
+
     @Test
     public void findByEmailAndHash() {
         UserModel user = subj.findByEmailAndHash("i.dzhenenko@gmail.com", "8046f82d3755e422ae19b026791a5e72");

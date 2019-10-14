@@ -54,7 +54,7 @@ public class AccountDao {
                 accountModel.getId(rs.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomExeption("Error");
         }
         return accountModel;
     }

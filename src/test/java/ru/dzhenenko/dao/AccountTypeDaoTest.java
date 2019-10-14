@@ -45,7 +45,6 @@ public class AccountTypeDaoTest {
         assertNotEquals(1, trips.getName());
         assertNotEquals(1,trips.getId());
         assertNotNull(trips);
-        //System.out.println(trips.toString());
     }
 
     @Test

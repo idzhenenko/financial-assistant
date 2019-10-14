@@ -7,7 +7,7 @@ public class TransactionDTO {
     private long sourceAccount;
     private long targetAccount;
     private String createDate;
-    private long TypeTransaction;
+    private long typeTransaction;
     private long amount;
 
     public TransactionDTO() {
@@ -47,11 +47,11 @@ public class TransactionDTO {
     }
 
     public long getTypeTransaction() {
-        return TypeTransaction;
+        return typeTransaction;
     }
 
-    public void setTypeTransaction(long TypeTransaction) {
-        this.TypeTransaction = TypeTransaction;
+    public void setTypeTransaction(long typeTransaction) {
+        this.typeTransaction = typeTransaction;
     }
 
     public long getAmount() {
@@ -69,7 +69,7 @@ public class TransactionDTO {
                 ", sourceAccount=" + sourceAccount +
                 ", targetAccount=" + targetAccount +
                 ", createDate='" + createDate + '\'' +
-                ", idTypeTransaction=" + TypeTransaction +
+                ", idTypeTransaction=" + typeTransaction +
                 ", amount=" + amount +
                 '}';
     }
@@ -82,12 +82,12 @@ public class TransactionDTO {
         return id == that.id &&
                 sourceAccount == that.sourceAccount &&
                 targetAccount == that.targetAccount &&
-                TypeTransaction == that.TypeTransaction &&
+                typeTransaction == that.typeTransaction &&
                 amount == that.amount &&
                 Objects.equals(createDate, that.createDate);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id, sourceAccount, targetAccount, createDate, TypeTransaction, amount);
+        return Objects.hash(id, sourceAccount, targetAccount, createDate, typeTransaction, amount);
     }
 }

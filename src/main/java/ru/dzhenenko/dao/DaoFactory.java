@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class DaoFactory {
-    private static UserDao userDao;
+    public static UserDao userDao;
     public static UserDao getUserDao() {
         if (userDao == null) {
             userDao = new UserDao(
