@@ -97,7 +97,7 @@ public class TransactionDao {
             conn.commit();
             conn.setAutoCommit(true);
         } catch (SQLException e) {
-            throw new CustomExeption("Error");
+            throw new CustomExeption(e);
         }
         return transactionModel;
     }
