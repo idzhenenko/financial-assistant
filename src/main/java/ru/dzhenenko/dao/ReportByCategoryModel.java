@@ -32,7 +32,6 @@ public class ReportByCategoryModel {
         return name +
                 " = " + amount;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

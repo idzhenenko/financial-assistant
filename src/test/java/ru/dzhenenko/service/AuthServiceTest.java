@@ -33,7 +33,6 @@ public class AuthServiceTest {
         verify(userDao, times(1)).findByEmailAndHash("i.dzhenenko@gmail.com" ,"hex");
         verifyZeroInteractions(userDtoConverter);
     }
-
     @Test
     public void auth_userFound() {
         when(digestService.hex("qwerty1234567890")).thenReturn("hex");

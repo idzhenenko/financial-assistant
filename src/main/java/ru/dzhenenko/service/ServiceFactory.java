@@ -4,33 +4,41 @@ import ru.dzhenenko.converter.AccountModelToAccountDtoConverter;
 import ru.dzhenenko.converter.AccountTypeModelToAccountTypeDtoConverter;
 import ru.dzhenenko.converter.ReportByCategoryModelToReportByCategoryDtoConverter;
 import ru.dzhenenko.converter.UserModelToUserDtoConverter;
-import ru.dzhenenko.dao.AccountDao;
-import ru.dzhenenko.dao.AccountTypeDao;
-import ru.dzhenenko.dao.ReportByCategoryDao;
-import ru.dzhenenko.dao.UserDao;
+
+
+import static ru.dzhenenko.converter.ConverterFactory.*;
+import static ru.dzhenenko.dao.DaoFactory.*;
 
 public class ServiceFactory {
     private static AuthService authService;
     private static AccountService accountService;
     private static AccountTypeService accountTypeService;
     private static ReportByCategoryService reportByCategoryService;
+    private static TransactionService transactionService;
 
     public static AuthService getAuthService() {
         if (authService == null) {
             authService = new AuthService(
-                    new UserDao(),
-                    new Md5DigestService(),
-                    new UserModelToUserDtoConverter()
+                    getUserDao(),
+                    getDigestService(),
+                    getUserModelUserDTOConverter()
             );
         }
         return authService;
+    }
+    private static DigestService digestService;
+    public static DigestService getDigestService() {
+        if (digestService == null) {
+            digestService = new Md5DigestService();
+        }
+        return digestService;
     }
 
     public static AccountService getAccountService() {
         if (accountService == null) {
             accountService = new AccountService(
-                    new AccountDao(),
-                    new AccountModelToAccountDtoConverter()
+                    getAccountDao(),
+                    getAccountModelAccountDTOConverter()
             );
         }
         return accountService;
@@ -39,8 +47,8 @@ public class ServiceFactory {
     public static AccountTypeService getAccountTypeService() {
         if (accountTypeService == null) {
             accountTypeService = new AccountTypeService(
-                    new AccountTypeDao(),
-                    new AccountTypeModelToAccountTypeDtoConverter()
+                    getAccountTypeDao(),
+                    getAccountTypeModelAccountTypeDTOConverter()
             );
         }
         return accountTypeService;
@@ -49,11 +57,20 @@ public class ServiceFactory {
     public static ReportByCategoryService getReportByCategoryService() {
         if (reportByCategoryService == null) {
             reportByCategoryService = new ReportByCategoryService(
-                    new ReportByCategoryDao(),
-                    new ReportByCategoryModelToReportByCategoryDtoConverter()
+                    getReportByCategoryDao(),
+                    getReportByCategoryModelReportByCategoryDTOConverter()
             );
         }
         return reportByCategoryService;
     }
 
+    public static TransactionService getTransactionService() {
+        if (transactionService == null) {
+            transactionService = new TransactionService(
+                    getTransactionDao(),
+                    getTransactionModelTransactionDTOConverter()
+            );
+        }
+        return transactionService;
+    }
 }

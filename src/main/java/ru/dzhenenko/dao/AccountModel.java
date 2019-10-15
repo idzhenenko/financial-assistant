@@ -1,5 +1,6 @@
 package ru.dzhenenko.dao;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class AccountModel {
@@ -57,7 +58,6 @@ public class AccountModel {
 
     public void getName(String name) {
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +86,5 @@ public class AccountModel {
     public void getUserId(long userId) {
         this.userId = userId;
     }
+
 }

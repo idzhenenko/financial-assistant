@@ -1,6 +1,7 @@
 package ru.dzhenenko.service;
 
 import ru.dzhenenko.converter.AccountModelToAccountDtoConverter;
+import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.dao.AccountDao;
 import ru.dzhenenko.dao.AccountModel;
 
@@ -13,9 +14,9 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     public AccountDao accountDao;
-    public AccountModelToAccountDtoConverter accountDtoConverter;
+    public Converter<AccountModel, AccountDTO> accountDtoConverter;
 
-    public AccountService(AccountDao accountDao, AccountModelToAccountDtoConverter accountDtoConverter) {
+    public AccountService(AccountDao accountDao, Converter<AccountModel, AccountDTO> accountDtoConverter) {
         this.accountDao = accountDao;
         this.accountDtoConverter = accountDtoConverter;
     }
@@ -30,10 +31,9 @@ public class AccountService {
         return accountDtoConverter.convert(accountModel);
     }
 
+    public AccountDTO removeAccount(int id) throws SQLException {
 
-    public AccountDTO removeAccount(String name1) throws SQLException {
-
-        AccountModel accountModel = accountDao.deleteAccount(name1);
+        AccountModel accountModel = accountDao.deleteAccount(id);
         if (accountModel == null) {
             return null;
         }

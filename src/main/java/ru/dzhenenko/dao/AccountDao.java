@@ -11,16 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDao {
-    private static DataSource dataSource;
-    private AccountModel AccountModel;
+    private final DataSource dataSource;
 
-    public AccountDao() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("postgres");
-
-        dataSource = new HikariDataSource(config);
+    public AccountDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public AccountModel addAccount(String name, int balance, long testId4) {
@@ -37,9 +31,9 @@ public class AccountDao {
                 accountModel.setId(rs.getLong(1));
                 accountModel.setName(name);
                 accountModel.setBalance(balance);
-                accountModel.getUserId(rs.getLong("id_users"));
+                accountModel.setUserId(testId4);
 
-                return AccountModel;
+                return accountModel;
             } else {
                 throw new CustomExeption("Error!");
             }
@@ -48,27 +42,22 @@ public class AccountDao {
         }
     }
 
-    public AccountModel deleteAccount(String name) {
+    public AccountModel deleteAccount(int id) {
+        AccountModel accountModel = new AccountModel();
         try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement st = conn.prepareStatement("delete from account where name = ?", Statement.RETURN_GENERATED_KEYS);
-            st.setString(1, name);
+            PreparedStatement st = conn.prepareStatement("delete from account where id = ?", Statement.RETURN_GENERATED_KEYS);
+            st.setLong(1, id);
             st.executeUpdate();
 
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
-                AccountModel accountModel = new AccountModel();
-                accountModel.setId(rs.getLong(1));
-                accountModel.setName(name);
-
-                return AccountModel;
-            } else {
-                throw new CustomExeption("Error!");
+                accountModel.getId(rs.getInt(1));
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
         }
+        return accountModel;
     }
-
     //тут будет метод для просмотра счетов
     public List<AccountModel> viewAccountUser(long userId) {
         List<AccountModel> accountModels = new ArrayList<>();
@@ -108,6 +97,7 @@ public class AccountDao {
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
+
         }
     }
 }

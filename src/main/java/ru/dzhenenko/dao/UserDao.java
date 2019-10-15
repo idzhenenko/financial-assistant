@@ -10,13 +10,8 @@ import java.sql.*;
 public class UserDao {
     private final DataSource dataSource;
 
-    public UserDao() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
-        config.setUsername("postgres");
-        config.setPassword("postgres");
-
-        dataSource = new HikariDataSource(config);
+    public UserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     // поиск пользователя по почте и хэшу
@@ -43,7 +38,6 @@ public class UserDao {
         }
         return userModel;
     }
-
     public UserModel insert(String firstName, String lastName, String phone, String email, String hash) {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO users (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
