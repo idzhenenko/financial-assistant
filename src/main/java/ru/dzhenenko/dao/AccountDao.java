@@ -97,6 +97,7 @@ public class AccountDao {
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
+
         }
     }
 }
