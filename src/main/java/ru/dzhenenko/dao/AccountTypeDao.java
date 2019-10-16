@@ -1,12 +1,12 @@
 package ru.dzhenenko.dao;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.exeption.CustomExeption;
 
 import javax.sql.DataSource;
 import java.sql.*;
 
+@Service
 public class AccountTypeDao {
     private final DataSource dataSource;
 
@@ -52,6 +52,7 @@ public class AccountTypeDao {
         }
         return accountTypeModel;
     }
+
     public AccountTypeModel editAccountType(String name, int id) {
         AccountTypeModel accountTypeModel = new AccountTypeModel();
         try (Connection conn = dataSource.getConnection()) {

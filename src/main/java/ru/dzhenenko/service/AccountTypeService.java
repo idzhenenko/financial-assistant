@@ -1,12 +1,13 @@
 package ru.dzhenenko.service;
 
-import ru.dzhenenko.converter.AccountTypeModelToAccountTypeDtoConverter;
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.dao.AccountTypeDao;
 import ru.dzhenenko.dao.AccountTypeModel;
 
 import java.sql.SQLException;
 
+@Service
 public class AccountTypeService {
 
     public AccountTypeDao accountTypeDao;
@@ -35,6 +36,7 @@ public class AccountTypeService {
         }
         return accountTypeDtoConverter.convert(accountTypeModel);
     }
+
     public AccountTypeDTO editingAccountType(String name, int id) throws SQLException {
 
         AccountTypeModel accountTypeModel = accountTypeDao.editAccountType(name, id);

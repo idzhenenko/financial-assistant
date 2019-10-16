@@ -1,18 +1,16 @@
 package ru.dzhenenko.dao;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.UUID;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static ru.dzhenenko.dao.DaoFactory.getUserDao;
-
 public class UserDaoTest {
 
+    ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
     UserDao subj;
 
     @Before
@@ -22,14 +20,7 @@ public class UserDaoTest {
         System.setProperty("jdbcPassword", "");
         System.setProperty("liquibaseFile", "liquibase_user_dao_test.xml");
 
-        subj = getUserDao();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        DaoFactory.userDao = null;
-        DaoFactory.dataSource = null;
-        subj = null;
+        subj = context.getBean(UserDao.class);
     }
 
     @Test

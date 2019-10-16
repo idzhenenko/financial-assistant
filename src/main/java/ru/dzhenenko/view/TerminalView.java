@@ -1,11 +1,10 @@
 package ru.dzhenenko.view;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.dzhenenko.service.*;
 
 import java.sql.*;
-
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +24,8 @@ public class TerminalView {
     }
 
     public static void start(long userId1, UserDTO userDto) throws SQLException {
+        ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
+
         Scanner scanner = new Scanner(System.in);
         boolean menuStatus = true;
         while (menuStatus) {
@@ -40,7 +41,7 @@ public class TerminalView {
 
                     System.out.println("Твои счета: ");
 
-                    AccountService accountService1 = ServiceFactory.getAccountService();
+                    AccountService accountService1 = context.getBean(AccountService.class);
                     List<AccountDTO> userAccounts = accountService1.viewAccount(userId1);
 
                     userAccounts.forEach(System.out::println);
@@ -64,7 +65,7 @@ public class TerminalView {
                                 long testId4 = userDto.getId();
 
                                 // метод создания счета
-                                accountService = ServiceFactory.getAccountService();
+                                accountService = context.getBean(AccountService.class);
                                 accountService.createAccount(name1, balance1, testId4);
 
                                 System.out.println("Your account " + "'" + name1 + "'" + " is successfully created!");
@@ -81,7 +82,7 @@ public class TerminalView {
                             System.out.println("Your account is successfully deleted!");
 
                             // метод удаления счета
-                            accountService = ServiceFactory.getAccountService();
+                            accountService = context.getBean(AccountService.class);
                             accountService.removeAccount(id);
 
                             break;
@@ -100,7 +101,7 @@ public class TerminalView {
                     long testId7 = userDto.getId();
                     System.out.println("Отчет: ");
 
-                    reportByCategoryService = ServiceFactory.getReportByCategoryService();
+                    reportByCategoryService = context.getBean(ReportByCategoryService.class);
                     List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, firstDate, secondDate);
 
                     list.forEach(System.out::println);
@@ -118,7 +119,7 @@ public class TerminalView {
                     long idUser = userDto.getId();
 
                     System.out.println("Операция проведена успешно!");
-                    transactionService = ServiceFactory.getTransactionService();
+                    transactionService = context.getBean(TransactionService.class);
                     transactionService.insertTransaction(sourceAccount, targetAccount, idTypeTransaction, amount, idCategory, idUser);
 
 
@@ -145,7 +146,7 @@ public class TerminalView {
                                 String name2 = scanner3.nextLine();
                                 System.out.println("Транзакция с именем " + "'" + name2 + "'" + " успешно создана!");
                                 // метод создания транзакции
-                                AccountTypeService accountTypeService = ServiceFactory.getAccountTypeService();
+                                AccountTypeService accountTypeService = context.getBean(AccountTypeService.class);
                                 accountTypeService.createTypeAccount(name2);
                             }
                             break;
@@ -159,7 +160,7 @@ public class TerminalView {
                             System.out.println("Транзакция с 'id = " + id + "' была успешно удалена");
 
                             // метод удаления транзакции
-                            AccountTypeService accountTypeService = ServiceFactory.getAccountTypeService();
+                            AccountTypeService accountTypeService = context.getBean(AccountTypeService.class);
                             accountTypeService.removeAccountType(id);
 
                             break;
@@ -173,7 +174,7 @@ public class TerminalView {
                             System.out.println("Транзакция успешно изменена c " + oldName + " на " + newName + " c id " + idBD + "!");
 
                             // метод редактирования транзакции
-                            accountTypeService = ServiceFactory.getAccountTypeService();
+                            accountTypeService = context.getBean(AccountTypeService.class);
                             accountTypeService.editingAccountType(newName, idBD);
                             break;
                         case 0:

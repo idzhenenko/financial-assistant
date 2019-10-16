@@ -1,5 +1,6 @@
 package ru.dzhenenko.dao;
 
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.exeption.CustomExeption;
 
 import javax.sql.DataSource;
@@ -9,6 +10,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class TransactionDao {
     private final DataSource dataSource;
 
@@ -57,7 +59,7 @@ public class TransactionDao {
 
                 PreparedStatement st2 = conn.prepareStatement("INSERT INTO id_tran_to_id_category(id_transaction, id_category) VALUES(?,?)");
                 st2.setLong(1, idCategory);
-                st2.setLong(2,idTypeTransaction);
+                st2.setLong(2, idTypeTransaction);
                 st2.executeUpdate();
 
                 PreparedStatement st3 = conn.prepareStatement("SELECT * FROM account WHERE id_users = ?");

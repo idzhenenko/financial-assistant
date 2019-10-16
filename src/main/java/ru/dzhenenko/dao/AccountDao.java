@@ -1,15 +1,14 @@
 package ru.dzhenenko.dao;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.exeption.CustomExeption;
-import ru.dzhenenko.service.UserDTO;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class AccountDao {
     private final DataSource dataSource;
 
@@ -58,6 +57,7 @@ public class AccountDao {
         }
         return accountModel;
     }
+
     //тут будет метод для просмотра счетов
     public List<AccountModel> viewAccountUser(long userId) {
         List<AccountModel> accountModels = new ArrayList<>();

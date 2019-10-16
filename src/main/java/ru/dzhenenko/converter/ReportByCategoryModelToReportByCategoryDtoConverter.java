@@ -1,11 +1,11 @@
 package ru.dzhenenko.converter;
 
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.dao.ReportByCategoryModel;
 import ru.dzhenenko.service.ReportByCategoryDTO;
 
-import java.sql.Timestamp;
-
-public class ReportByCategoryModelToReportByCategoryDtoConverter implements Converter<ReportByCategoryModel, ReportByCategoryDTO>{
+@Service
+public class ReportByCategoryModelToReportByCategoryDtoConverter implements Converter<ReportByCategoryModel, ReportByCategoryDTO> {
     @Override
     public ReportByCategoryDTO convert(ReportByCategoryModel source) {
         ReportByCategoryDTO reportByCategoryDTO = new ReportByCategoryDTO();

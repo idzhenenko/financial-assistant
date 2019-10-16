@@ -1,18 +1,18 @@
 package ru.dzhenenko.dao;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.UUID;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class AccountTypeDaoTest {
 
+    ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
     AccountTypeDao subj;
 
     @Before
@@ -22,12 +22,7 @@ public class AccountTypeDaoTest {
         System.setProperty("jdbcPassword", "");
         System.setProperty("liquibaseFile", "liquibase_account_type_dao_test.xml");
 
-        subj = DaoFactory.getAccountTypeDao();
-    }
-
-    @After
-    public void after() {
-        DaoFactory.dataSource = null;
+        subj = context.getBean(AccountTypeDao.class);
     }
 
     @Test

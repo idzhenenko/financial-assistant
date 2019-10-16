@@ -2,6 +2,8 @@ package ru.dzhenenko.dao;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +12,7 @@ import static org.junit.Assert.*;
 
 public class ReportByCategoryDaoTest {
 
+    ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
     ReportByCategoryDao subj;
 
     @Before
@@ -19,7 +22,7 @@ public class ReportByCategoryDaoTest {
         System.setProperty("jdbcPassword", "");
         System.setProperty("liquibaseFile", "liquibase_report_by_category_dao_test.xml");
 
-        subj = DaoFactory.getReportByCategoryDao();
+        subj = context.getBean(ReportByCategoryDao.class);
     }
 
     @Test

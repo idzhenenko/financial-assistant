@@ -1,15 +1,15 @@
 package ru.dzhenenko.service;
 
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.converter.Converter;
-import ru.dzhenenko.converter.ReportByCategoryModelToReportByCategoryDtoConverter;
 import ru.dzhenenko.dao.ReportByCategoryDao;
 import ru.dzhenenko.dao.ReportByCategoryModel;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ReportByCategoryService {
 
     public ReportByCategoryDao reportByCategoryDao;
@@ -22,8 +22,8 @@ public class ReportByCategoryService {
 
     public List<ReportByCategoryDTO> viewReportCategory(long idUser, String startDay, String endDay) throws SQLException {
         return reportByCategoryDao.reportByCategory(idUser, startDay, endDay)
-                    .stream()
-                    .map(reportByCategoryDtoConverter::convert)
-                    .collect(Collectors.toList());
+                .stream()
+                .map(reportByCategoryDtoConverter::convert)
+                .collect(Collectors.toList());
     }
 }
