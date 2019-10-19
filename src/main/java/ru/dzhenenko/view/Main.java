@@ -1,16 +1,18 @@
 package ru.dzhenenko.view;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.dzhenenko.service.AuthService;
-import ru.dzhenenko.service.ServiceFactory;
 import ru.dzhenenko.service.UserDTO;
 
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        AuthService authService = ServiceFactory.getAuthService();
+        ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
+
+        AuthService authService = context.getBean(AuthService.class);
 
         Scanner sc = new Scanner(System.in);
         System.out.println("*************************");

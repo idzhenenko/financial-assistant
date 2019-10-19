@@ -1,8 +1,10 @@
 package ru.dzhenenko.converter;
 
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.dao.TransactionModel;
 import ru.dzhenenko.service.TransactionDTO;
 
+@Service
 public class TransactionModelToTransactionDtoConverter implements Converter<TransactionModel, TransactionDTO> {
     @Override
     public TransactionDTO convert(TransactionModel source) {

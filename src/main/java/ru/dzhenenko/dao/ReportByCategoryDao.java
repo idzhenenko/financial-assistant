@@ -1,7 +1,6 @@
 package ru.dzhenenko.dao;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.exeption.CustomExeption;
 
 import javax.sql.DataSource;
@@ -9,14 +8,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ReportByCategoryDao {
     private final DataSource dataSource;
+
     public ReportByCategoryDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     //метод для просмотра отчетов по категориям
-    public List<ReportByCategoryModel> reportByCategory(long idUser, String startDay, String  endDay) {
+    public List<ReportByCategoryModel> reportByCategory(long idUser, String startDay, String endDay) {
         List<ReportByCategoryModel> reportByCategoryModels = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement ps = conn.prepareStatement("SELECT t.amount, c.name\n" +

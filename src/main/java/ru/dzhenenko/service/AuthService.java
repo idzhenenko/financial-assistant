@@ -1,5 +1,6 @@
 package ru.dzhenenko.service;
 
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.converter.UserModelToUserDtoConverter;
 
@@ -7,7 +8,7 @@ import ru.dzhenenko.converter.UserModelToUserDtoConverter;
 import ru.dzhenenko.dao.UserDao;
 import ru.dzhenenko.dao.UserModel;
 
-
+@Service
 public class AuthService {
     public UserDao userDao;
     public DigestService digestService;

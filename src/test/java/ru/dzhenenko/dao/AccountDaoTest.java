@@ -1,8 +1,9 @@
 package ru.dzhenenko.dao;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AccountDaoTest {
 
+    ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
     AccountDao subj;
 
     @Before
@@ -21,7 +23,7 @@ public class AccountDaoTest {
         System.setProperty("jdbcPassword", "");
         System.setProperty("liquibaseFile", "liquibase_account_dao_test.xml");
 
-        subj = DaoFactory.getAccountDao();
+        subj = context.getBean(AccountDao.class);
     }
     @Test
     public void addAccount() {
@@ -41,7 +43,6 @@ public class AccountDaoTest {
     public void findByUserId() {
         AccountModel account = subj.findByUserId(1);
 
-        //assertEquals(1,account.getId());
         assertNotNull(account);
     }
 

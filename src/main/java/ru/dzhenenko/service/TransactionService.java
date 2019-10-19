@@ -1,12 +1,13 @@
 package ru.dzhenenko.service;
 
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.dao.TransactionDao;
 import ru.dzhenenko.dao.TransactionModel;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
+@Service
 public class TransactionService {
     public TransactionDao transactionDao;
     public Converter<TransactionModel, TransactionDTO> transactionModelTransactionDTOConverter;

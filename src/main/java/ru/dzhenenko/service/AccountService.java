@@ -1,16 +1,15 @@
 package ru.dzhenenko.service;
 
-import ru.dzhenenko.converter.AccountModelToAccountDtoConverter;
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.converter.Converter;
 import ru.dzhenenko.dao.AccountDao;
 import ru.dzhenenko.dao.AccountModel;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
 public class AccountService {
 
     public AccountDao accountDao;
