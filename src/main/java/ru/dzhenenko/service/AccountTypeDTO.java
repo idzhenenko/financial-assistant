@@ -1,8 +1,6 @@
 package ru.dzhenenko.service;
 
 
-import ru.dzhenenko.dao.AccountTypeModel;
-
 import java.util.Objects;
 
 public class AccountTypeDTO {
@@ -12,6 +10,7 @@ public class AccountTypeDTO {
     public AccountTypeDTO() {
 
     }
+
     public long getId() {
         return id;
     }
@@ -26,6 +25,14 @@ public class AccountTypeDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountTypeDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @Override

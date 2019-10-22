@@ -25,13 +25,7 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                userModel = new UserModel();
-                userModel.setId(rs.getLong("id"));
-                userModel.setFirstName(rs.getString("first_name"));
-                userModel.setLastName(rs.getString("last_name"));
-                userModel.setPhone(rs.getString("phone"));
-                userModel.setEmail(rs.getString("email"));
-                userModel.setPassword(rs.getString("password"));
+                userModel = createUserModelByResultSet(rs);
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
@@ -66,5 +60,34 @@ public class UserDao {
         } catch (SQLException e) {
             throw new CustomExeption(e);
         }
+    }
+
+    public UserModel findById(Long userId) {
+        UserModel userModel = null;
+
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("select * from users where id = ?");
+            ps.setLong(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                userModel = createUserModelByResultSet(rs);
+            }
+        } catch (SQLException e) {
+            throw new CustomExeption(e);
+        }
+        return userModel;
+    }
+
+    private UserModel createUserModelByResultSet(ResultSet rs) throws SQLException {
+        UserModel userModel = new UserModel();
+        userModel.setId(rs.getLong("id"));
+        userModel.setFirstName(rs.getString("first_name"));
+        userModel.setLastName(rs.getString("last_name"));
+        userModel.setPhone(rs.getString("phone"));
+        userModel.setEmail(rs.getString("email"));
+        userModel.setPassword(rs.getString("password"));
+
+        return userModel;
     }
 }

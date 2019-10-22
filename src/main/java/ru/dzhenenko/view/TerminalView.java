@@ -122,7 +122,6 @@ public class TerminalView {
                     transactionService = context.getBean(TransactionService.class);
                     transactionService.insertTransaction(sourceAccount, targetAccount, idTypeTransaction, amount, idCategory, idUser);
 
-
                     break;
                 case 2:
                     System.out.println("**********************************");

@@ -41,7 +41,7 @@ public class AccountDao {
         }
     }
 
-    public AccountModel deleteAccount(int id) {
+    public AccountModel deleteAccount(long id) {
         AccountModel accountModel = new AccountModel();
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement st = conn.prepareStatement("delete from account where id = ?", Statement.RETURN_GENERATED_KEYS);

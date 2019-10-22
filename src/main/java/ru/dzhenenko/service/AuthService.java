@@ -20,6 +20,14 @@ public class AuthService {
         this.userDtoConverter = userDtoConverter;
     }
 
+    public UserDTO getUserById(Long userId) {
+        UserModel user = userDao.findById(userId);
+        if (user == null) {
+            return null;
+        }
+        return userDtoConverter.convert(user);
+    }
+
     // метод авторизации (сервис авторизации)
     public UserDTO auth(String email, String password) {
         String hash = digestService.hex(password);

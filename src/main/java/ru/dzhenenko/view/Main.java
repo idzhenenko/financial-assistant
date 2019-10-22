@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws SQLException {
         ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
-
         AuthService authService = context.getBean(AuthService.class);
 
         Scanner sc = new Scanner(System.in);
@@ -29,7 +28,7 @@ public class Main {
 
                 UserDTO userDTO = authService.auth(email, password);
                 if (userDTO != null) {
-                    System.out.println("HELLO" + " " + userDTO.getEmail() + "!");
+                    System.out.println("HELLO" + " " + userDTO.getFirstName() + "!");
                     long userId1 = userDTO.getId();
                     TerminalView.start(userId1, userDTO);
                 } else {

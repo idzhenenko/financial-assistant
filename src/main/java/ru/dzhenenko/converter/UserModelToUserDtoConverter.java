@@ -11,6 +11,8 @@ public class UserModelToUserDtoConverter implements Converter<UserModel, UserDTO
         UserDTO userDTO = new UserDTO();
         userDTO.setId(source.getId());
         userDTO.setEmail(source.getEmail());
+        userDTO.setFirstName(source.getFirstName());
+        userDTO.setLastName(source.getLastName());
         return userDTO;
     }
 }

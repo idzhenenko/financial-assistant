@@ -30,7 +30,7 @@ public class AccountService {
         return accountDtoConverter.convert(accountModel);
     }
 
-    public AccountDTO removeAccount(int id) throws SQLException {
+    public AccountDTO removeAccount(long id) throws SQLException {
 
         AccountModel accountModel = accountDao.deleteAccount(id);
         if (accountModel == null) {
