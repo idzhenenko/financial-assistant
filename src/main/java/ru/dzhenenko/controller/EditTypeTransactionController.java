@@ -9,14 +9,14 @@ import ru.dzhenenko.service.AccountTypeService;
 
 @Service("/editTypeAccount")
 @AllArgsConstructor
-public class EditTypeTransactionController implements SecureController<EditTypeTransactionRequest, EditTypeTransactionResponse>{
+public class EditTypeTransactionController implements SecureController<EditTypeTransactionRequest, EditTypeTransactionResponse> {
     private final AccountTypeService accountTypeService;
 
     @Override
     public EditTypeTransactionResponse handle(EditTypeTransactionRequest request, Long userId) throws Exception {
         AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(request.getName(), (int) request.getId());
         if (accountTypeDTO != null) {
-            return new EditTypeTransactionResponse(request.getId(),request.getName());
+            return new EditTypeTransactionResponse(request.getId(), request.getName());
         }
         return null;
     }

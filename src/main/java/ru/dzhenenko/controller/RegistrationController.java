@@ -15,10 +15,11 @@ public class RegistrationController implements SecureController<RegistrationRequ
     public AuthResponse handle(RegistrationRequest request, Long userId) throws Exception {
         UserDTO user = authService.registration(request.getFirstName(), request.getLastName(), request.getPhone(), request.getEmail(), request.getPassword());
         if (user != null) {
-            return new AuthResponse(user.getId(), user.getFirstName(),user.getEmail());
+            return new AuthResponse(user.getId(), user.getFirstName(), user.getEmail());
         }
         return null;
     }
+
     @Override
     public Class<RegistrationRequest> getRequestClass() {
         return RegistrationRequest.class;

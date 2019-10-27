@@ -9,7 +9,7 @@ import ru.dzhenenko.service.AccountTypeService;
 
 @Service("/addTypeAccount")
 @AllArgsConstructor
-public class AddTypeTransactionController implements SecureController<AddTypeTransactionRequest, AddTypeTransactionResponse>{
+public class AddTypeTransactionController implements SecureController<AddTypeTransactionRequest, AddTypeTransactionResponse> {
     private final AccountTypeService accountTypeService;
 
     @Override
@@ -26,3 +26,4 @@ public class AddTypeTransactionController implements SecureController<AddTypeTra
         return AddTypeTransactionRequest.class;
     }
 }
+

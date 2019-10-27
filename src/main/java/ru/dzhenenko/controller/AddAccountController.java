@@ -9,14 +9,14 @@ import ru.dzhenenko.service.AccountService;
 
 @Service("/addAccount")
 @AllArgsConstructor
-public class AddAccountController implements SecureController<AddAccountRequest, AddAccountResponse>{
+public class AddAccountController implements SecureController<AddAccountRequest, AddAccountResponse> {
     private final AccountService accountService;
 
     @Override
     public AddAccountResponse handle(AddAccountRequest request, Long userId) throws Exception {
         AccountDTO accountDTO = accountService.createAccount(request.getName(), request.getBalance(), request.getId());
-        if(accountDTO != null) {
-            return new AddAccountResponse(accountDTO.getId(),accountDTO.getName(),accountDTO.getBalance(),accountDTO.getUserId());
+        if (accountDTO != null) {
+            return new AddAccountResponse(accountDTO.getId(), accountDTO.getName(), accountDTO.getBalance(), accountDTO.getUserId());
         }
         return null;
     }

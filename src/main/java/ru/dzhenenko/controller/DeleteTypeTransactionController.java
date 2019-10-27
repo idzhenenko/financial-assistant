@@ -9,7 +9,7 @@ import ru.dzhenenko.service.AccountTypeService;
 
 @Service("/deleteTypeAccount")
 @AllArgsConstructor
-public class DeleteTypeTransactionController implements SecureController<DeleteTypeTransactionRequest, DeleteTypeTransactionResponse>{
+public class DeleteTypeTransactionController implements SecureController<DeleteTypeTransactionRequest, DeleteTypeTransactionResponse> {
     private final AccountTypeService accountTypeService;
 
     @Override

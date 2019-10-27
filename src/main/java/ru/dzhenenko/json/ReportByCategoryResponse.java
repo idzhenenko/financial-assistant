@@ -8,9 +8,4 @@ import lombok.Data;
 public class ReportByCategoryResponse {
     private String name;
     private long amount;
-
-    /*public ReportByCategoryResponse(String name, long amount) {
-        this.name = name;
-        this.amount = amount;
-    }*/
 }

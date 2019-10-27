@@ -26,3 +26,4 @@ public class AuthController implements Controller<AuthRequest, AuthResponse> {
         return AuthRequest.class;
     }
 }
+
