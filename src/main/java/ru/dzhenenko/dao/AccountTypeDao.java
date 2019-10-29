@@ -46,6 +46,8 @@ public class AccountTypeDao {
             if (rs.next()) {
                 accountTypeModel.getId(rs.getLong(1));
                 accountTypeModel.getId(id);
+                accountTypeModel.setId(rs.getInt("id"));
+                accountTypeModel.setName(rs.getString("name"));
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);

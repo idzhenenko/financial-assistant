@@ -51,6 +51,10 @@ public class AccountDao {
             ResultSet rs = st.getGeneratedKeys();
             if (rs.next()) {
                 accountModel.getId(rs.getInt(1));
+                accountModel.setId(rs.getInt("id"));
+                accountModel.setName(rs.getString("name"));
+                accountModel.setBalance(rs.getLong("balance"));
+                accountModel.setUserId(rs.getLong("id_users"));
             }
         } catch (SQLException e) {
             throw new CustomExeption(e);
