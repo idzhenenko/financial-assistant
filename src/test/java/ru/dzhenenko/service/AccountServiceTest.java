@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.dzhenenko.converter.AccountModelToAccountDtoConverter;
 import ru.dzhenenko.dao.AccountDao;
-import ru.dzhenenko.dao.AccountModel;
+import ru.dzhenenko.entity.Account;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,17 +26,17 @@ public class AccountServiceTest {
 
     @Test
     public void FoundByUserIdViewAccount() throws SQLException {
-        AccountModel accountModel = new AccountModel();
-        accountModel.setId(1);
-        accountModel.setName("Иван Wallet");
-        accountModel.setBalance(50000);
-        when(accountDao.findByUserId(1)).thenReturn(accountModel);
+        Account account = new Account();
+        //account.setId(1);
+        account.setName("Иван Wallet");
+        account.setBalance(50000);
+        //when(accountDao.findByUserId(1)).thenReturn(account);
 
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(1);
         accountDTO.setName("Иван Wallet");
         accountDTO.setBalance(50000);
-        when(accountDtoConverter.convert(accountModel)).thenReturn(accountDTO);
+        when(accountDtoConverter.convert(account)).thenReturn(accountDTO);
 
         List<AccountDTO> accountDTO1 = accountService.viewAccount(1);
 
@@ -45,8 +45,8 @@ public class AccountServiceTest {
     }
     @Test
     public void NotFoundByUserIdViewAccount() throws SQLException {
-        AccountModel accountModel = new AccountModel();
-        when(accountDao.findByUserId(1)).thenReturn(accountModel);
+        Account account = new Account();
+        //when(accountDao.findByUserId(1)).thenReturn(account);
         List<AccountDTO> accountDTO = accountService.viewAccount(1);
 
         List<AccountDTO> accountDTOList = new ArrayList<>();
@@ -59,19 +59,19 @@ public class AccountServiceTest {
 
     @Test
     public void creatAccount() throws SQLException {
-        AccountModel accountModel = new AccountModel();
-        accountModel.setId(10);
-        accountModel.setName("Bank Of America");
-        accountModel.setBalance(1000000);
-        accountModel.setUserId(10);
-        when(accountDao.addAccount("Bank Of America",1000000,10)).thenReturn(accountModel);
+        Account account = new Account();
+        //account.setId(10);
+        account.setName("Bank Of America");
+        account.setBalance(1000000);
+        //account.setUserId(10);
+        when(accountDao.addAccount("Bank Of America",1000000,10)).thenReturn(account);
 
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(10);
         accountDTO.setName("Bank Of America");
         accountDTO.setBalance(1000000);
         accountDTO.setUserId(10);
-        when(accountDtoConverter.convert(accountModel)).thenReturn(accountDTO);
+        when(accountDtoConverter.convert(account)).thenReturn(accountDTO);
 
         AccountDTO accountDTOList = accountService.createAccount("Bank Of America",1000000,10);
 
@@ -80,19 +80,19 @@ public class AccountServiceTest {
     }
     @Test
     public void notCreatAccount() throws SQLException {
-        AccountModel accountModel = new AccountModel();
-        accountModel.setId(10);
-        accountModel.setName("Bank Of Russia");
-        accountModel.setBalance(1000000);
-        accountModel.setUserId(10);
-        when(accountDao.addAccount("Bank Of Russia",1000000,10)).thenReturn(accountModel);
+        Account account = new Account();
+        //account.setId(10);
+        account.setName("Bank Of Russia");
+        account.setBalance(1000000);
+        //account.setUserId(10);
+        when(accountDao.addAccount("Bank Of Russia",1000000,10)).thenReturn(account);
 
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(10);
         accountDTO.setName("Bank Of America");
         accountDTO.setBalance(666);
         accountDTO.setUserId(190);
-        when(accountDtoConverter.convert(accountModel)).thenReturn(accountDTO);
+        when(accountDtoConverter.convert(account)).thenReturn(accountDTO);
 
         AccountDTO accountDTO1 = accountService.createAccount("Bank Of America",666, 190);
 
@@ -102,16 +102,16 @@ public class AccountServiceTest {
     }
     @Test
     public void removeAccount() throws SQLException {
-        AccountModel accountModel = new AccountModel();
-        accountModel.setId(100);
-        accountModel.setName("Bank");
-        when(accountDao.deleteAccount(100)).thenReturn(accountModel);
+        Account account = new Account();
+        //account.setId(100);
+        account.setName("Bank");
+        when(accountDao.deleteAccount(100)).thenReturn(account);
 
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(100);
         accountDTO.setName("Bank");
 
-        when(accountDtoConverter.convert(accountModel)).thenReturn(accountDTO);
+        when(accountDtoConverter.convert(account)).thenReturn(accountDTO);
 
         AccountDTO accountDTO1 = accountService.removeAccount(100);
 

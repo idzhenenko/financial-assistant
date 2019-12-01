@@ -106,12 +106,12 @@
     <changeSet id="6" author="dzhenenko">
         <createTable tableName="id_tran_to_id_category">
             <column name="id_transaction" type="INTEGER">
-                <constraints foreignKeyName="to_id_category"
-                             references="category(id)"/>
+                <constraints foreignKeyName="to_id_transactions"
+                             references="type_transaction(id)"/>
             </column>
             <column name="id_category" type="INTEGER">
-                <constraints foreignKeyName="to_id_transactions"
-                             references="transaction(id)"/>
+                <constraints foreignKeyName="to_id_category"
+                             references="category(id)"/>
             </column>
         </createTable>
     </changeSet>

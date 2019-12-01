@@ -1,13 +1,13 @@
 package ru.dzhenenko.converter;
 
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.dao.UserModel;
+import ru.dzhenenko.entity.User;
 import ru.dzhenenko.service.UserDTO;
 
 @Service
-public class UserModelToUserDtoConverter implements Converter<UserModel, UserDTO> {
+public class UserModelToUserDtoConverter implements Converter<User, UserDTO> {
     @Override
-    public UserDTO convert(UserModel source) {
+    public UserDTO convert(User source) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(source.getId());
         userDTO.setEmail(source.getEmail());
