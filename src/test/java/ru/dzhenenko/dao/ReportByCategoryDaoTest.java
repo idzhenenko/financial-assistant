@@ -4,15 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.dzhenenko.converter.ReportByCategoryModelToReportByCategoryDtoConverter;
 import ru.dzhenenko.entity.ReportByCategory;
 
 import java.util.List;
 import java.util.UUID;
 
-import static com.sun.javaws.JnlpxArgs.verify;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
+import static org.junit.Assert.assertNotNull;
 
 public class ReportByCategoryDaoTest {
 
