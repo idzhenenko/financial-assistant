@@ -1,10 +1,14 @@
 package ru.dzhenenko.dao;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.exeption.CustomExeption;
+import ru.dzhenenko.JpaConfiguration;
+import ru.dzhenenko.entity.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.util.List;
 
 @Service
 public class UserDao {
@@ -14,80 +18,40 @@ public class UserDao {
         this.dataSource = dataSource;
     }
 
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
+    EntityManager em = context.getBean(EntityManager.class);
+
     // поиск пользователя по почте и хэшу
-    public UserModel findByEmailAndHash(String email, String hash) {
-        UserModel userModel = null;
-
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("select * from users where email = ? and password = ?");
-            ps.setString(1, email);
-            ps.setString(2, hash);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                userModel = createUserModelByResultSet(rs);
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
-        }
-        return userModel;
-    }
-
-    public UserModel insert(String firstName, String lastName, String phone, String email, String hash) {
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO users (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
-            ps.setString(3, phone);
-            ps.setString(4, email);
-            ps.setString(5, hash);
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                UserModel userModel = new UserModel();
-                userModel.setId(rs.getLong(1));
-                userModel.setFirstName(firstName);
-                userModel.setLastName(lastName);
-                userModel.setPhone(phone);
-                userModel.setEmail(email);
-                userModel.setPassword(hash);
-
-                return userModel;
-            } else {
-                throw new CustomExeption("Can't generate id!");
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
+    public User findByEmailAndHash(String email, String hash) {
+        List<User> user = em.createNamedQuery("Users.getByEmailAndPassword", User.class)
+                .setParameter("email", email)
+                .setParameter("password", hash)
+                .getResultList();
+        if (user.isEmpty()) {
+            return null;
+        } else {
+            return user.get(0);
         }
     }
 
-    public UserModel findById(Long userId) {
-        UserModel userModel = null;
-
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("select * from users where id = ?");
-            ps.setLong(1, userId);
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                userModel = createUserModelByResultSet(rs);
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
-        }
-        return userModel;
+    public User insert(String firstName, String lastName, String phone, String email, String hash) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setPassword(hash);
+        em.persist(user);
+        transaction.commit();
+        return user;
     }
 
-    private UserModel createUserModelByResultSet(ResultSet rs) throws SQLException {
-        UserModel userModel = new UserModel();
-        userModel.setId(rs.getLong("id"));
-        userModel.setFirstName(rs.getString("first_name"));
-        userModel.setLastName(rs.getString("last_name"));
-        userModel.setPhone(rs.getString("phone"));
-        userModel.setEmail(rs.getString("email"));
-        userModel.setPassword(rs.getString("password"));
-
-        return userModel;
+    public User findById(Long userId) {
+        User user = em.createNamedQuery("Users.getById", User.class)
+                .setParameter("id", userId)
+                .getSingleResult();
+        return user;
     }
 }

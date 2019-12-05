@@ -1,6 +1,5 @@
 package ru.dzhenenko.view;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
@@ -10,7 +9,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
         AuthService authService = context.getBean(AuthService.class);
 
         Scanner sc = new Scanner(System.in);

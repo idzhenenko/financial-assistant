@@ -1,8 +1,5 @@
 package ru.dzhenenko.service;
 
-import ru.dzhenenko.dao.ReportByCategoryModel;
-
-import java.sql.Timestamp;
 import java.util.Objects;
 
 public class ReportByCategoryDTO {

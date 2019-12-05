@@ -1,10 +1,9 @@
 package ru.dzhenenko.view;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.dzhenenko.service.*;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,7 +23,7 @@ public class TerminalView {
     }
 
     public static void start(long userId1, UserDTO userDto) throws SQLException {
-        ApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
 
         Scanner scanner = new Scanner(System.in);
         boolean menuStatus = true;
@@ -120,7 +119,7 @@ public class TerminalView {
 
                     System.out.println("Операция проведена успешно!");
                     transactionService = context.getBean(TransactionService.class);
-                    transactionService.insertTransaction(sourceAccount, targetAccount, idTypeTransaction, amount, idCategory, idUser);
+                    transactionService.insertTransaction(sourceAccount, targetAccount, idTypeTransaction, idCategory, amount, idUser);
 
                     break;
                 case 2:

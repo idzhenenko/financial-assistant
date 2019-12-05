@@ -7,11 +7,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.dzhenenko.converter.AccountTypeModelToAccountTypeDtoConverter;
 import ru.dzhenenko.dao.AccountTypeDao;
-import ru.dzhenenko.dao.AccountTypeModel;
+import ru.dzhenenko.entity.AccountType;
 
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -25,15 +24,15 @@ public class AccountTypeServiceTest {
 
     @Test
     public void createTypeAccount() throws SQLException {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        accountTypeModel.setId(20);
-        accountTypeModel.setName("На Вертолет");
-        when(accountTypeDao.addAccountType("На Вертолет")).thenReturn(accountTypeModel);
+        AccountType accountType = new AccountType();
+        //accountType.setId(20);
+        accountType.setName("На Вертолет");
+        when(accountTypeDao.addAccountType("На Вертолет")).thenReturn(accountType);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setId(20);
         accountTypeDTO.setName("На Вертолет");
-        when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
+        when(accountTypeDtoConverter.convert(accountType)).thenReturn(accountTypeDTO);
 
         AccountTypeDTO accountTypeDTOlist = accountTypeService.createTypeAccount("На Вертолет");
 
@@ -42,15 +41,15 @@ public class AccountTypeServiceTest {
     }
     @Test
     public void NotCreateAccount() throws SQLException {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        accountTypeModel.setId(99);
-        accountTypeModel.setName("На Продукты");
+        AccountType accountType = new AccountType();
+        //accountType.setId(99);
+        accountType.setName("На Продукты");
         when(accountTypeDao.addAccountType("На Продукты")).thenReturn(null);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setId(99);
         accountTypeDTO.setName("На Продукты");
-        when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
+        when(accountTypeDtoConverter.convert(accountType)).thenReturn(accountTypeDTO);
 
         AccountTypeDTO accountTypeDTO1 = accountTypeService.createTypeAccount("На Продукты");
 
@@ -60,15 +59,15 @@ public class AccountTypeServiceTest {
 
     @Test
     public void NotRemoveAccountType() throws SQLException {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        accountTypeModel.setId(1);
-        accountTypeModel.setName("На Мерседес");
+        AccountType accountType = new AccountType();
+        //accountType.setId(1);
+        accountType.setName("На Мерседес");
         when(accountTypeDao.deleteAccountType(1)).thenReturn(null);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setId(1);
         accountTypeDTO.setName("На Мерседес");
-        when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
+        when(accountTypeDtoConverter.convert(accountType)).thenReturn(accountTypeDTO);
 
         AccountTypeDTO accountTypeDTO1 = accountTypeService.removeAccountType(1);
 
@@ -79,29 +78,29 @@ public class AccountTypeServiceTest {
 
     @Test
     public void editingAccountType() {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        accountTypeModel.setId(10);
-        accountTypeModel.setName("Наличные");
-        when(accountTypeDao.editAccountType("Наличные",10)).thenReturn(accountTypeModel);
+        AccountType accountType = new AccountType();
+        //accountType.setId(10);
+        accountType.setName("Наличные");
+        when(accountTypeDao.editAccountType("Наличные",10)).thenReturn(accountType);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setName("На Вискарь");
-        when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
+        when(accountTypeDtoConverter.convert(accountType)).thenReturn(accountTypeDTO);
 
-        assertNotEquals(accountTypeModel, accountTypeDTO);
+        assertNotEquals(accountType, accountTypeDTO);
         verifyNoMoreInteractions(accountTypeDtoConverter);
     }
     @Test
     public void removeAccountType() throws SQLException {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        accountTypeModel.setId(1);
-        accountTypeModel.setName("На Мерседес");
-        when(accountTypeDao.deleteAccountType(1)).thenReturn(accountTypeModel);
+        AccountType accountType = new AccountType();
+       // accountType.setId(1);
+        accountType.setName("На Мерседес");
+        when(accountTypeDao.deleteAccountType(1)).thenReturn(accountType);
 
         AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
         accountTypeDTO.setId(1);
         accountTypeDTO.setName("На Мерседес");
-        when(accountTypeDtoConverter.convert(accountTypeModel)).thenReturn(accountTypeDTO);
+        when(accountTypeDtoConverter.convert(accountType)).thenReturn(accountTypeDTO);
 
         AccountTypeDTO accountTypeDTO1 = accountTypeService.removeAccountType(1);
 

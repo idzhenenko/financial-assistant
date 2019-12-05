@@ -1,13 +1,13 @@
 package ru.dzhenenko.converter;
 
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.dao.ReportByCategoryModel;
+import ru.dzhenenko.entity.ReportByCategory;
 import ru.dzhenenko.service.ReportByCategoryDTO;
 
 @Service
-public class ReportByCategoryModelToReportByCategoryDtoConverter implements Converter<ReportByCategoryModel, ReportByCategoryDTO> {
+public class ReportByCategoryModelToReportByCategoryDtoConverter implements Converter<ReportByCategory, ReportByCategoryDTO> {
     @Override
-    public ReportByCategoryDTO convert(ReportByCategoryModel source) {
+    public ReportByCategoryDTO convert(ReportByCategory source) {
         ReportByCategoryDTO reportByCategoryDTO = new ReportByCategoryDTO();
         reportByCategoryDTO.setName(source.getName());
         reportByCategoryDTO.setAmount(source.getAmount());

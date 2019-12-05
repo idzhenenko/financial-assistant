@@ -1,11 +1,13 @@
 package ru.dzhenenko.dao;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.exeption.CustomExeption;
+import ru.dzhenenko.JpaConfiguration;
+import ru.dzhenenko.entity.ReportByCategory;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -16,33 +18,21 @@ public class ReportByCategoryDao {
         this.dataSource = dataSource;
     }
 
-    //метод для просмотра отчетов по категориям
-    public List<ReportByCategoryModel> reportByCategory(long idUser, String startDay, String endDay) {
-        List<ReportByCategoryModel> reportByCategoryModels = new ArrayList<>();
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("SELECT t.amount, c.name\n" +
-                    "                    FROM account AS a\n" +
-                    "                            JOIN users u ON a.id_users = u.id\n" +
-                    "                            LEFT JOIN transaction t ON a.id = t.source_account\n" +
-                    "                            JOIN type_transaction tt ON t.id_type_transaction = tt.id\n" +
-                    "                            JOIN id_tran_to_id_category ittic ON t.id = ittic.id_category\n" +
-                    "                            JOIN category c ON ittic.id_transaction = c.id\n" +
-                    "                    WHERE u.id = ? AND date_trunc('day', t.Create_date) >= ? AND date_trunc('day', t.Create_date) <= ?\n" +
-                    "                    ");
-            ps.setLong(1, idUser);
-            ps.setDate(2, Date.valueOf(startDay));
-            ps.setDate(3, Date.valueOf(endDay));
-            ResultSet rs = ps.executeQuery();
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
+    EntityManager em = context.getBean(EntityManager.class);
 
-            while (rs.next()) {
-                ReportByCategoryModel reportByCategoryModel = new ReportByCategoryModel();
-                reportByCategoryModel.setName(rs.getString("name"));
-                reportByCategoryModel.setAmount(rs.getLong("amount"));
-                reportByCategoryModels.add(reportByCategoryModel);
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e.getMessage());
-        }
-        return reportByCategoryModels;
+    public List<ReportByCategory> reportByCategory(long idUser, String startDay, String endDay) {
+        List resultList = em.createNativeQuery("SELECT tt.name,c.name,t.amount, t.create_date FROM account AS a JOIN users u ON a.id_users = u.id LEFT" +
+                "                JOIN transaction t ON a.id = t.source_account" +
+                "                JOIN type_transaction tt ON t.id_type_transaction = tt.id" +
+                "                JOIN id_tran_to_id_category ittic ON t.id_type_transaction = ittic.id_transaction" +
+                "                JOIN category c ON ittic.id_category = c.id" +
+                "                WHERE u.id = ? AND date_trunc('day', t.Create_date) >= ? AND date_trunc('day', t.Create_date) <= ?", ReportByCategory.class)
+                .setParameter(1, idUser)
+                .setParameter(2, Date.valueOf(startDay))
+                .setParameter(3, Date.valueOf(endDay))
+                .getResultList();
+
+        return resultList;
     }
 }

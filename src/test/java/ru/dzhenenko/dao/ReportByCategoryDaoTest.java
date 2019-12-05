@@ -4,11 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.dzhenenko.entity.ReportByCategory;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class ReportByCategoryDaoTest {
 
@@ -27,8 +28,9 @@ public class ReportByCategoryDaoTest {
 
     @Test
     public void reportByCategory() {
-        List<ReportByCategoryModel> reportByCategoryModels = subj.reportByCategory(1, "2019-07-07", "2019-09-09");
+        List<ReportByCategory> reportByCategoryModels = subj.reportByCategory(1, "2019-07-07", "2019-09-09");
 
         assertNotNull(reportByCategoryModels);
+
     }
 }
