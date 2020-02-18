@@ -1,107 +1,82 @@
 package ru.dzhenenko.dao;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.dzhenenko.entity.Account;
+import ru.dzhenenko.entity.AccountType;
+import ru.dzhenenko.entity.Category;
+import ru.dzhenenko.entity.Transaction;
 import ru.dzhenenko.exeption.CustomExeption;
 
-import javax.sql.DataSource;
-import java.sql.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TransactionDao {
-    private final DataSource dataSource;
+    private final EntityManager em;
 
-    public TransactionDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public TransactionModel insertTransactions(long sourceAccount, long targetAccount, long idTypeTransaction, long amount, long idCategory, long idUser) {
-
-        if (sourceAccount == 0 && targetAccount == 0) {
+    public Transaction insertTransactions(long sourceAccount, long targetAccount, long idTypeTransaction,
+                                          long amount, long idCategory, long idUser) {
+        EntityTransaction entityTransaction = em.getTransaction();
+        entityTransaction.begin();
+        Account source = em.find(Account.class, sourceAccount);
+        Account target = em.find(Account.class, targetAccount);
+        if (sourceAccount == 0 && targetAccount == 0)
             throw new CustomExeption("no accounts found");
-        }
-
-        TransactionModel transactionModel = new TransactionModel();
-        try (Connection conn = dataSource.getConnection()) {
-
-            conn.setAutoCommit(false);
-
-            try {
-                PreparedStatement st1 = conn.prepareStatement("INSERT INTO transaction(source_account, target_account, id_type_transaction, amount, create_date) " +
-                        "VALUES (?, ?, ?, ?, current_timestamp )", Statement.RETURN_GENERATED_KEYS);
-                if (sourceAccount == 0) {
-                    st1.setNull(1, Types.INTEGER);
-                } else {
-                    st1.setLong(1, sourceAccount);
-                }
-                if (targetAccount == 0) {
-                    st1.setNull(2, Types.INTEGER);
-                } else {
-                    st1.setLong(2, targetAccount);
-                }
-
-                st1.setLong(3, idTypeTransaction);
-                st1.setLong(4, amount);
-                st1.executeUpdate();
-
-                ResultSet rs1 = st1.getGeneratedKeys();
-
-                if (rs1.next()) {
-                    transactionModel.setId(rs1.getLong(1));
-                    transactionModel.setSourceAccount(sourceAccount);
-                    transactionModel.setTargetAccount(targetAccount);
-                    transactionModel.setTypeTransaction(idTypeTransaction);
-                    transactionModel.setAmount(amount);
-                }
-
-                PreparedStatement st2 = conn.prepareStatement("INSERT INTO id_tran_to_id_category(id_transaction, id_category) VALUES(?,?)");
-                st2.setLong(1, idCategory);
-                st2.setLong(2, idTypeTransaction);
-                st2.executeUpdate();
-
-                PreparedStatement st3 = conn.prepareStatement("SELECT * FROM account WHERE id_users = ?");
-                st3.setLong(1, idUser);
-                st3.executeQuery();
-
-                PreparedStatement st4 = conn.prepareStatement("UPDATE account SET balance = ? WHERE id = ?");
-                ResultSet rs2 = st3.executeQuery();
-
-                while (rs2.next()) {
-                    AccountModel accountModel = new AccountModel();
-                    accountModel.setId(rs2.getLong("id"));
-                    accountModel.setName(rs2.getString("name"));
-                    accountModel.setBalance(rs2.getLong("balance"));
-                    accountModel.setUserId(rs2.getLong("id_users"));
-
-                    if (accountModel.getId() == sourceAccount) {
-                        if (accountModel.getBalance() >= 0) {
-                            st4.setLong(1, accountModel.getBalance() - amount);
-                            st4.setLong(2, accountModel.getId());
-                            st4.executeUpdate();
-                        } else {
-                            throw new CustomExeption("Your balance is less than the transaction amount");
-                        }
-                    }
-                    if (accountModel.getId() == targetAccount) {
-                        st4.setLong(1, accountModel.getBalance() + amount);
-                        st4.setLong(2, accountModel.getId());
-                        st4.executeUpdate();
-                    }
-                }
-            } catch (SQLException e) {
-                conn.rollback();
-                throw new CustomExeption(e);
+        source = null;
+        if (sourceAccount > 0) {
+            source = em.find(Account.class, sourceAccount);
+            if (source == null) {
+                throw new CustomExeption("Source accounts is null");
             }
-
-            conn.commit();
-            conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
-
+            if (source.getUser().getId() != idUser) {
+                throw new CustomExeption("Custom Error!!!(source)");
+            }
         }
-        return transactionModel;
+        target = null;
+        if (targetAccount > 0) {
+            target = em.find(Account.class, targetAccount);
+            if (target == null) {
+                throw new CustomExeption("Target accounts is null");
+            }
+            if (target.getUser().getId() != idUser) {
+                throw new CustomExeption("Custom Error!!!(target)");
+            }
+        }
+        Transaction transaction = new Transaction();
+
+        transaction.setSourceAccount(source);
+        transaction.setTargetAccount(target);
+        AccountType idTypeTrans = em.find(AccountType.class, idTypeTransaction);
+        transaction.setTypeTransaction(idTypeTrans);
+        transaction.setAmount(amount);
+        transaction.setCreateDate(LocalDate.now());
+
+        if (source.getId() == sourceAccount) {
+            if (source.getBalance() > 0) {
+                source.setBalance((int) (source.getBalance() - amount));
+                em.refresh(source);
+                em.find(Account.class, sourceAccount);
+                source.getBalance();
+                source.getId();
+            } else {
+                throw new CustomExeption("Your balance is less than the transaction amount");
+            }
+            if (target.getId() == targetAccount) {
+                target.setBalance((int) (target.getBalance() + amount));
+            }
+        }
+
+        Category category = em.find(Category.class, idCategory);
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        em.persist(transaction);
+        entityTransaction.commit();
+        return transaction;
     }
 }

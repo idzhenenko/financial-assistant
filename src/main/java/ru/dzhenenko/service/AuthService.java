@@ -1,53 +1,53 @@
 package ru.dzhenenko.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.converter.Converter;
-import ru.dzhenenko.converter.UserModelToUserDtoConverter;
-
-
+import ru.dzhenenko.api.converter.Converter;
 import ru.dzhenenko.dao.UserDao;
-import ru.dzhenenko.dao.UserModel;
+import ru.dzhenenko.entity.User;
+import ru.dzhenenko.repository.ServiceUserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
-    public UserDao userDao;
-    public DigestService digestService;
-    public Converter<UserModel, UserDTO> userDtoConverter;
-
-    public AuthService(UserDao userDao, DigestService digestService, Converter<UserModel, UserDTO> userDtoConverter) {
-        this.userDao = userDao;
-        this.digestService = digestService;
-        this.userDtoConverter = userDtoConverter;
-    }
+    private final UserDao userDao;
+    private final DigestService digestService;
+    private final Converter<User, UserDTO> userDtoConverter;
+    private final ServiceUserRepository serviceUserRepository;
 
     public UserDTO getUserById(Long userId) {
-        UserModel user = userDao.findById(userId);
+        User user = serviceUserRepository.getOne(userId);
         if (user == null) {
             return null;
         }
         return userDtoConverter.convert(user);
     }
 
-    // метод авторизации (сервис авторизации)
     public UserDTO auth(String email, String password) {
-        String hash = digestService.hex(password);
+        UserDTO userDTO = null;
+        User user = serviceUserRepository.findByEmailAndPassword(email, digestService.hex(password));
 
-        UserModel userModel = userDao.findByEmailAndHash(email, hash);
-        if (userModel == null) {
-            return null;
+        if (user != null) {
+            userDTO = userDtoConverter.convert(user);
         }
-
-        return userDtoConverter.convert(userModel);
+        return userDTO;
     }
+
 
     public UserDTO registration(String firstName, String lastName, String phone, String email, String password) {
         String hash = digestService.hex(password);
 
-        UserModel userModel = userDao.insert(firstName, lastName, phone, email, hash);
-        if (userModel == null) {
-            return null;
-        }
+        User user = new User();
 
-        return userDtoConverter.convert(userModel);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setPassword(hash);
+
+        User userSave = serviceUserRepository.save(user);
+
+        return userDtoConverter.convert(userSave);
     }
+
 }

@@ -1,76 +1,43 @@
 package ru.dzhenenko.dao;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.exeption.CustomExeption;
+import ru.dzhenenko.entity.AccountType;
 
-import javax.sql.DataSource;
-import java.sql.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 @Service
+@AllArgsConstructor
 public class AccountTypeDao {
-    private final DataSource dataSource;
+    private final EntityManager em;
 
-    public AccountTypeDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public AccountType addAccountType(String name) {
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        AccountType accountType = new AccountType();
+        accountType.setName(name);
+        em.persist(accountType);
+        transaction.commit();
+
+        return accountType;
     }
 
-    public AccountTypeModel addAccountType(String name) {
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement st = conn.prepareStatement("INSERT INTO category(name) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-            st.setString(1, name);
-            st.executeUpdate();
+    public AccountType deleteAccountType(int id) {
+        AccountType accountType = em.find(AccountType.class, id);
+        em.getTransaction().begin();
+        em.remove(accountType);
+        em.getTransaction().commit();
 
-            ResultSet rs = st.getGeneratedKeys();
-            if (rs.next()) {
-                AccountTypeModel accountTypeModel = new AccountTypeModel();
-                accountTypeModel.setId(rs.getLong(1));
-                accountTypeModel.setName(name);
-
-                return accountTypeModel;
-            } else {
-                throw new CustomExeption("Error adding!");
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
-        }
+        return accountType;
     }
 
-    public AccountTypeModel deleteAccountType(int id) {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement st = conn.prepareStatement("delete from category where id = ?", Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1, id);
-            st.executeUpdate();
+    public AccountType editAccountType(String name, int id) {
+        AccountType accountType = em.find(AccountType.class, id);
+        em.getTransaction().begin();
+        accountType.setName(name);
+        em.getTransaction().commit();
 
-            ResultSet rs = st.getGeneratedKeys();
-            if (rs.next()) {
-                accountTypeModel.getId(rs.getLong(1));
-                accountTypeModel.getId(id);
-                accountTypeModel.setId(rs.getInt("id"));
-                accountTypeModel.setName(rs.getString("name"));
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
-        }
-        return accountTypeModel;
-    }
-
-    public AccountTypeModel editAccountType(String name, int id) {
-        AccountTypeModel accountTypeModel = new AccountTypeModel();
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement st = conn.prepareStatement("update category set name = ? where id = ?", Statement.RETURN_GENERATED_KEYS);
-            st.setString(1, name);
-            st.setInt(2, id);
-            st.executeUpdate();
-
-            ResultSet rs = st.getGeneratedKeys();
-            if (rs.next()) {
-                accountTypeModel.setId(rs.getLong(1));
-                accountTypeModel.setName(name);
-            }
-        } catch (SQLException e) {
-            throw new CustomExeption(e);
-        }
-        return accountTypeModel;
+        return accountType;
     }
 }
