@@ -72,4 +72,5 @@ public class AccountDTO {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getBalance(), getUserId());
     }
+
 }
