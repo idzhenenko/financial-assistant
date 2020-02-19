@@ -1,200 +1,164 @@
 package ru.dzhenenko.view;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.dzhenenko.service.*;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+@Service
+@RequiredArgsConstructor
 public class TerminalView {
-    private static AccountService accountService;
-    private static AccountTypeService accountTypeService;
-    private static AuthService authService;
-    private static ReportByCategoryService reportByCategoryService;
-    private static TransactionService transactionService;
+    private final AuthService authService;
+    private final AccountService accountService;
+    private final ReportByCategoryService reportByCategoryService;
+    private final TransactionService transactionService;
+    private final AccountTypeService accountTypeService;
 
-    public TerminalView(AccountService accountService, AccountTypeService accountTypeService, AuthService authService, ReportByCategoryService reportByCategoryService, TransactionService transactionService) {
-        this.accountService = accountService;
-        this.accountTypeService = accountTypeService;
-        this.authService = authService;
-        this.reportByCategoryService = reportByCategoryService;
-        this.transactionService = transactionService;
-    }
+    public void start() throws SQLException {
+        while (true) {
+            int userSelect = requestInt("=====Menu=====:\n1 - Регистрация \n2 - Вход\n0 - Выход\n введите цифру:\n");
+            if (userSelect == 1) {
 
-    public static void start(long userId1, UserDTO userDto) throws SQLException {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("ru.dzhenenko");
+                String first_name = requestString("введите имя");
+                String last1_name = requestString("введите фамилию");
+                String phone = requestString("введите номер телефона");
+                String email = requestString("введите email");
+                String pass = requestString("введите пароль");
+                UserDTO userDTO = authService.registration(first_name, last1_name, phone, email, pass);
+                System.out.println("Успешная регистрация: " + userDTO);
 
-        Scanner scanner = new Scanner(System.in);
-        boolean menuStatus = true;
-        while (menuStatus) {
-            System.out.println("MENU:");
-            System.out.println("1: Показать счета");
-            System.out.println("2: Показать транзакции");
-            System.out.println("3: Показать отчет по категориям");
-            System.out.println("4: Операции со счетами");
-            System.out.println("0: Выход");
-            int input = scanner.nextInt();
-            switch (input) {
-                case 1:
+            } else if (userSelect == 2) {
 
-                    System.out.println("Твои счета: ");
+                String email = requestString("введите email");
+                String pass = requestString("введите пароль");
+                UserDTO userDTO = authService.auth(email, pass);
+                if (userDTO != null) {
+                    System.out.println("Hello, " + userDTO.getFirstName() + " " + userDTO.getLastName() +
+                            " [id=" + userDTO.getId() + "]");
+                    while (true) {
+                        int userSelectAuth = requestInt(
+                                "\n=====Menu=====:\n1 - Показать счета \n2 - Создать счет\n3 - Удалить счет\n4 - Редактировать счет\n" +
+                                        "5 - Показать категории\n6 - Редактировать категорию\n7 - Добавить категорию\n" +
+                                        "8 - Удалить категорию\n9 - Отчет по категориям\n10 - Добавить транзакцию\n0 - Выход\nвведите цифру:\n");
 
-                    AccountService accountService1 = context.getBean(AccountService.class);
-                    List<AccountDTO> userAccounts = accountService1.viewAccount(userId1);
 
-                    userAccounts.forEach(System.out::println);
-
-                    System.out.println("1: Создать счет");
-                    System.out.println("2: Удалить счет");
-                    System.out.println("3: Выход");
-                    input = scanner.nextInt();
-                    switch (input) {
-                        case 1:
-                            // Создать счет
-                            if (input == 1) {
-                                System.out.println("Пожалуйста, введите детали счета:");
-                                System.out.println("Имя:");
-                                Scanner nameScan = new Scanner(System.in);
-                                String name1 = nameScan.nextLine();
-
-                                System.out.println("Баланс:");
-                                Scanner balScan = new Scanner(System.in);
-                                int balance1 = balScan.nextInt();
-                                long testId4 = userDto.getId();
-
-                                // метод создания счета
-                                accountService = context.getBean(AccountService.class);
-                                accountService.createAccount(name1, balance1, testId4);
-
-                                System.out.println("Your account " + "'" + name1 + "'" + " is successfully created!");
+                        if (userSelectAuth == 1) {
+                            //showAccount
+                            List<AccountDTO> accountDTO = accountService.viewAccount(userDTO.getId());
+                            for (AccountDTO dto : accountDTO) {
+                                System.out.println("\t" + dto.getName() + " = " + dto.getBalance() + " [id=" + dto.getId() + "]");
                             }
 
-                            break;
-                        case 2:
-                            System.out.println("**** УДАЛЕНИЕ СЧЕТА ****");
-                            System.out.println("************************");
-                            Scanner scanner2 = new Scanner(System.in);
-                            System.out.println("Введите id счета: ");
-                            int id = scanner2.nextInt();
+                        }
+                        //**********************
+                        //test JPA User findById
+                        //**********************
+                        else if (userSelectAuth == 100) {
+                            UserDTO tess = authService.getUserById(userDTO.getId());
+                            System.out.println("\n==== JPA TEST ====\n" + tess);
+                        }
+                        //**********************
+                        //test JPA User findById
+                        //**********************
+                        else if (userSelectAuth == 2) {
+                            //addAccount
+                            String name = requestString("введите имя счета:");
+                            long balance = requestLong(requestString("введите начальный остаток: 0.00"));
+                            AccountDTO accountDTO = accountService.createAccount(name, balance, userDTO.getId());
+                            System.out.println("Успешно добавлен: " + accountDTO);
 
-                            System.out.println("Your account is successfully deleted!");
-
-                            // метод удаления счета
-                            accountService = context.getBean(AccountService.class);
-                            accountService.removeAccount(id);
-
-                            break;
-                        case 3:
-                            System.out.println("GOOD BYE!");
-                            break;
-                        // скобка была тут
-                    }
-                    break;
-                // просмотр отчетов
-                case 3:
-                    System.out.println("*****************************");
-                    String firstDate = request("Введите начальную дату YYYY-MM-DD");
-                    String secondDate = request("Введите конечную дату YYYY-MM-DD");
-
-                    long testId7 = userDto.getId();
-                    System.out.println("Отчет: ");
-
-                    reportByCategoryService = context.getBean(ReportByCategoryService.class);
-                    List<ReportByCategoryDTO> list = reportByCategoryService.viewReportCategory(testId7, firstDate, secondDate);
-
-                    list.forEach(System.out::println);
-
-                    break;
-
-                case 4:
-                    // метод добавления транзакций (с учётом SQL транзакций)
-                    System.out.println("*****************************");
-                    long sourceAccount = requestId("Введите id счета списания:");
-                    long targetAccount = requestId("Введите id счета зачисления:");
-                    long idTypeTransaction = requestId("Введите тип транзакции(1.Приход, 2.Расход, 3.Перевод)");
-                    long amount = requestId("Введите сумму:");
-                    long idCategory = requestId("Введите id категории");
-                    long idUser = userDto.getId();
-
-                    System.out.println("Операция проведена успешно!");
-                    transactionService = context.getBean(TransactionService.class);
-                    transactionService.insertTransaction(sourceAccount, targetAccount, idTypeTransaction, idCategory, amount, idUser);
-
-                    break;
-                case 2:
-                    System.out.println("**********************************");
-                    System.out.println("====== КАТЕГОРИИ ТРАНЗАКЦИЙ ======");
-                    System.out.println();
-                    System.out.println("1: Создать транзакцию");
-                    System.out.println("2: Удалить транзакцию");
-                    System.out.println("3: Редактировать транзакцию");
-                    System.out.println("0: Выход");
-                    input = scanner.nextInt();
-
-                    switch (input) {
-                        case 1:
-                            if (input == 1) {
-
-                                System.out.println("*****************************");
-                                System.out.println("==== СОЗДАНИЕ ТРАНЗАКЦИИ ====");
-
-                                Scanner scanner3 = new Scanner(System.in);
-                                System.out.println("Введите имя транзакции: ");
-                                String name2 = scanner3.nextLine();
-                                System.out.println("Транзакция с именем " + "'" + name2 + "'" + " успешно создана!");
-                                // метод создания транзакции
-                                AccountTypeService accountTypeService = context.getBean(AccountTypeService.class);
-                                accountTypeService.createTypeAccount(name2);
+                        } else if (userSelectAuth == 3) {
+                            //delAccount
+                            long userSelectDel = requestLong("введите id для удаления, либо 0 для выхода");
+                            if (userSelectDel == 0) {
+                                continue;
                             }
+                            accountService.removeAccount(userSelectDel);
+
+                        } else if (userSelectAuth == 4) {
+                            //editCategory
+                            int userSelectUp = requestInt("введите id для редактирования, либо 0 для выхода");
+                            if (userSelectUp == 0) {
+                                continue;
+                            }
+                            accountTypeService.createTypeAccount(requestString("введите новое имя категории"), userSelectUp);
+
+                        } else if (userSelectAuth == 5) {
+                            //addCategory
+                            AccountTypeDTO accountTypeDTO = accountTypeService
+                                    .createTypeAccount(requestString("введите название категории:"), userDTO.getId());
+                            System.out.println(accountTypeDTO + " - успешно добавлено");
+
+                        } else if (userSelectAuth == 6) {
+                            //delCategory
+                            int userSelectDel = requestInt("введите id для удаления, либо 0 для выхода");
+                            if (userSelectDel == 0) {
+                                continue;
+                            }
+                            accountTypeService.removeAccountType(userSelectDel);
+
+                        } else if (userSelectAuth == 7) {
+                            //report
+                            List<ReportByCategoryDTO> reportDTOS = reportByCategoryService.viewReportCategory(
+                                    userDTO.getId(),
+                                    requestString("Введите начальную дату YYYY-MM-DD"),
+                                    requestString("Введите конечную дату YYYY-MM-DD")
+                            );
+                            for (ReportByCategoryDTO report : reportDTOS) {
+                                System.out.println(report.getName() + " " + report.getAmount());
+                            }
+
+
+                        } else if (userSelectAuth == 8) {
+                            //add transaction
+                            TransactionDTO transactionDTO = transactionService.insertTransaction(
+                                    requestLong("Откуда: "),
+                                    requestLong("Куда: "),
+                                    requestLong("Тип 1.Приход, 2.Расход, 3.Перевод:"),
+                                    requestLong(requestString("Сумма:")),
+                                    requestLong("Введите id категории"),
+                                    userDTO.getId()
+                            );
+
+                        } else if (userSelectAuth == 0) {
                             break;
-                        case 2:
-                            System.out.println("*****************************");
-                            System.out.println("==== УДАЛЕНИЕ ТРАНЗАКЦИИ ====");
-
-                            Scanner scanner3 = new Scanner(System.in);
-                            System.out.println("Введите id транзакции: ");
-                            int id = scanner3.nextInt();
-                            System.out.println("Транзакция с 'id = " + id + "' была успешно удалена");
-
-                            // метод удаления транзакции
-                            AccountTypeService accountTypeService = context.getBean(AccountTypeService.class);
-                            accountTypeService.removeAccountType(id);
-
-                            break;
-                        case 3:
-                            System.out.println("******************************");
-                            System.out.println("= РЕДАКТИРОВАНИЕ ТРАНЗАКЦИИ ==");
-
-                            String oldName = request("Введите имя для редактирования:");
-                            int idBD = requestId("Ведите id:");
-                            String newName = request("Введите новое имя:");
-                            System.out.println("Транзакция успешно изменена c " + oldName + " на " + newName + " c id " + idBD + "!");
-
-                            // метод редактирования транзакции
-                            accountTypeService = context.getBean(AccountTypeService.class);
-                            accountTypeService.editingAccountType(newName, idBD);
-                            break;
-                        case 0:
-                            System.out.println("GOOD BYE!");
-                            menuStatus = false;
-                            break;
-                        default:
-                            System.out.println("Не понятный ввод!");
+                        } else {
+                            System.out.println("Не верное число");
+                        }
                     }
+
+                } else {
+                    System.out.println("нет такого юзера");
+                    break;
+                }
+
+            } else if (userSelect == 0) {
+                break;
+            } else {
+                System.out.println("Не верное число");
             }
         }
+
     }
 
-    static String request(String title) {
+    static String requestString(String title) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(title);
         return scanner.nextLine();
     }
 
-    static Integer requestId(String title) {
+    static int requestInt(String title) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(title);
         return scanner.nextInt();
+    }
+
+    static long requestLong(String title) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(title);
+        return scanner.nextLong();
     }
 }

@@ -1,8 +1,7 @@
 package ru.dzhenenko.dao;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.JpaConfiguration;
 import ru.dzhenenko.entity.Account;
 import ru.dzhenenko.entity.AccountType;
 import ru.dzhenenko.entity.Category;
@@ -11,21 +10,14 @@ import ru.dzhenenko.exeption.CustomExeption;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.sql.DataSource;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TransactionDao {
-    private final DataSource dataSource;
-
-    public TransactionDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
-    EntityManager em = context.getBean(EntityManager.class);
+    private final EntityManager em;
 
     public Transaction insertTransactions(long sourceAccount, long targetAccount, long idTypeTransaction,
                                           long amount, long idCategory, long idUser) {

@@ -1,6 +1,5 @@
 package ru.dzhenenko.service;
 
-
 import java.util.Objects;
 
 public class AccountTypeDTO {

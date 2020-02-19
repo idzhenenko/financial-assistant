@@ -1,26 +1,18 @@
 package ru.dzhenenko.dao;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.entity.Account;
-import ru.dzhenenko.JpaConfiguration;
 import ru.dzhenenko.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.sql.DataSource;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class AccountDao {
-    private final DataSource dataSource;
-
-    public AccountDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
-    EntityManager em = context.getBean(EntityManager.class);
+    private final EntityManager em;
 
     public Account deleteAccount(long id) {
         Account account = em.find(Account.class, id);

@@ -13,12 +13,14 @@ public class AccountType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    // для теста нужен Integer
-    private Integer id;
-    //private Long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "id_users")
+    private User user;
 
     @Override
     public String toString() {

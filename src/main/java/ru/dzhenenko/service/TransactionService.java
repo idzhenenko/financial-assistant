@@ -1,7 +1,7 @@
 package ru.dzhenenko.service;
 
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.converter.Converter;
+import ru.dzhenenko.api.converter.Converter;
 import ru.dzhenenko.dao.TransactionDao;
 import ru.dzhenenko.entity.Transaction;
 

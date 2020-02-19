@@ -58,6 +58,12 @@
             <column name="name" type="varchar(255)">
                 <constraints unique="false" nullable="false"/>
             </column>
+            <!--ниже новый столбец-->
+            <column name="id_users" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="to_user_id"
+                             references="users(id)"/>
+            </column>
         </createTable>
     </changeSet>
     <!--***************************таблица transaction*************************-->

@@ -1,24 +1,16 @@
 package ru.dzhenenko.dao;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.entity.AccountType;
-import ru.dzhenenko.JpaConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.sql.DataSource;
 
 @Service
+@AllArgsConstructor
 public class AccountTypeDao {
-    private final DataSource dataSource;
-
-    public AccountTypeDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
-    EntityManager em = context.getBean(EntityManager.class);
+    private final EntityManager em;
 
     public AccountType addAccountType(String name) {
         EntityTransaction transaction = em.getTransaction();

@@ -1,25 +1,18 @@
 package ru.dzhenenko.dao;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dzhenenko.JpaConfiguration;
 import ru.dzhenenko.entity.ReportByCategory;
 
 import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 import java.sql.Date;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ReportByCategoryDao {
-    private final DataSource dataSource;
+    private final EntityManager em;
 
-    public ReportByCategoryDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
-    EntityManager em = context.getBean(EntityManager.class);
 
     public List<ReportByCategory> reportByCategory(long idUser, String startDay, String endDay) {
         List resultList = em.createNativeQuery("SELECT tt.name,c.name,t.amount, t.create_date FROM account AS a JOIN users u ON a.id_users = u.id LEFT" +

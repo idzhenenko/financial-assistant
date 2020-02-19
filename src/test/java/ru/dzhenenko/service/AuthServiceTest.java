@@ -6,10 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.dzhenenko.JpaConfiguration;
-import ru.dzhenenko.converter.UserModelToUserDtoConverter;
+//import ru.dzhenenko.JpaConfiguration;
+import ru.dzhenenko.api.converter.UserModelToUserDtoConverter;
 import ru.dzhenenko.dao.UserDao;
 import ru.dzhenenko.entity.User;
+import ru.dzhenenko.repository.ServiceUserRepository;
 
 import javax.persistence.EntityManager;
 
@@ -20,39 +21,38 @@ public class AuthServiceTest {
 
     @InjectMocks AuthService subj;
 
-    @Mock UserDao userDao;
+    //@Mock UserDao userDao;
+    @Mock ServiceUserRepository serviceUserRepository;
     @Mock DigestService digestService;
     @Mock UserModelToUserDtoConverter userDtoConverter;
 
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JpaConfiguration.class);
-    EntityManager em = context.getBean(EntityManager.class);
-
     @Test
     public void auth_userNotFound() {
-        when(digestService.hex("qwerty1234567890")).thenReturn("hex");
-        when(userDao.findByEmailAndHash("i.dzhenenko@gmail.com", "hex")).thenReturn(null);
+        when(digestService.hex("qwerty")).thenReturn("hex");
+        //when(userDao.findByEmailAndHash("i.dzhenenko@gmail.com", "hex")).thenReturn(null);
+        when(serviceUserRepository.findByEmailAndPassword("i.dzhenenko@gmail.com", "hex")).thenReturn(null);
 
-        UserDTO user = subj.auth("i.dzhenenko@gmail.com" ,"qwerty1234567890");
+        UserDTO user = subj.auth("i.dzhenenko@gmail.com" ,"qwerty");
 
         assertNull(user);
 
-        verify(digestService, times(1)).hex("qwerty1234567890");
-        verify(userDao, times(1)).findByEmailAndHash("i.dzhenenko@gmail.com" ,"hex");
+        verify(digestService, times(1)).hex("qwerty");
+        verify(serviceUserRepository, times(1)).findByEmailAndPassword("i.dzhenenko@gmail.com" ,"hex");
         verifyZeroInteractions(userDtoConverter);
     }
     @Test
     public void auth_userFound() {
-        when(digestService.hex("qwerty")).thenReturn("hex");
+        lenient().when(digestService.hex("qwerty")).thenReturn("hex");
 
         User user = new User();
         user.setEmail("i.dzhenenko@gmail.com");
         user.setPassword("hex");
-        when(userDao.findByEmailAndHash("i.dzhenenko@gmail.com", "hex")).thenReturn(user);
+        lenient().when(serviceUserRepository.findByEmailAndPassword("i.dzhenenko@gmail.com", "hex")).thenReturn(user);
 
         UserDTO userDTO = new UserDTO();
         userDTO.setId(1);
         userDTO.setEmail("i.dzhenenko@gmail.com");
-        when(userDtoConverter.convert(user)).thenReturn(userDTO);
+        lenient().when(userDtoConverter.convert(user)).thenReturn(userDTO);
 
         assertNotNull(user);
         //assertEquals(user, userDTO);

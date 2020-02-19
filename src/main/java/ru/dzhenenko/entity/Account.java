@@ -49,5 +49,4 @@ public class Account {
                 ", name='" + name + '\'' +
                 '}';
     }
-
 }
