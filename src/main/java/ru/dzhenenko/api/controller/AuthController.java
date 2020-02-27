@@ -25,24 +25,6 @@ public class AuthController {
     private final ServiceUserRepository serviceUserRepository;
     private final ServiceUserToResponseConverter converter;
 
-    @PostMapping("/login")
-    public @ResponseBody
-    ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request, User user,
-                                       HttpServletRequest httpServletRequest) {
-
-        User user1 = serviceUserRepository.findByEmailAndPassword(
-                request.getEmail(),
-                DigestUtils.md5Hex(request.getPassword())
-        );
-        if (user1 == null) {
-            return status(HttpStatus.UNAUTHORIZED).build();
-        }
-        HttpSession session = httpServletRequest.getSession();
-        session.setAttribute("userId", user1.getId());
-        return ok(converter.convert(user1));
-
-    }
-
     @GetMapping("/get-user-info")
     public @ResponseBody
     ResponseEntity<AuthResponse> getUserInfo(HttpServletRequest request, User user) {

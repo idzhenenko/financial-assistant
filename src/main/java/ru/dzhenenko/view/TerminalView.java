@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class TerminalView {
     private final AuthService authService;
     private final AccountService accountService;
-    private final ReportByCategoryService reportByCategoryService;
-    private final TransactionService transactionService;
+    //private final ReportByCategoryService reportByCategoryService;
+    //private final TransactionService transactionService;
     private final AccountTypeService accountTypeService;
 
     public void start() throws SQLException {
@@ -102,26 +102,26 @@ public class TerminalView {
 
                         } else if (userSelectAuth == 7) {
                             //report
-                            List<ReportByCategoryDTO> reportDTOS = reportByCategoryService.viewReportCategory(
+                            /*List<ReportByCategoryDTO> reportDTOS = reportByCategoryService.viewReportCategory(
                                     userDTO.getId(),
                                     requestString("Введите начальную дату YYYY-MM-DD"),
                                     requestString("Введите конечную дату YYYY-MM-DD")
                             );
                             for (ReportByCategoryDTO report : reportDTOS) {
                                 System.out.println(report.getName() + " " + report.getAmount());
-                            }
+                            }*/
 
 
                         } else if (userSelectAuth == 8) {
                             //add transaction
-                            TransactionDTO transactionDTO = transactionService.insertTransaction(
+                            /*TransactionDTO transactionDTO = transactionService.insertTransaction(
                                     requestLong("Откуда: "),
                                     requestLong("Куда: "),
                                     requestLong("Тип 1.Приход, 2.Расход, 3.Перевод:"),
                                     requestLong(requestString("Сумма:")),
                                     requestLong("Введите id категории"),
                                     userDTO.getId()
-                            );
+                            );*/
 
                         } else if (userSelectAuth == 0) {
                             break;

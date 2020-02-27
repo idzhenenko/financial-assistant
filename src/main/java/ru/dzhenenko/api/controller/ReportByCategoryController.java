@@ -29,12 +29,13 @@ public class ReportByCategoryController {
 
         Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
 
-        List<ReportByCategoryDTO> reportByCategoryDTOS = reportByCategoryService.viewReportCategory(
+        /*List<ReportByCategoryDTO> reportByCategoryDTOS = reportByCategoryService.viewReportCategory(
                 request.getId(), request.getStartDay(), request.getEndDay());
 
         return ok(reportByCategoryDTOS.stream()
                 .map(reportByCategoryDTOS1 -> new ReportByCategoryResponse(reportByCategoryDTOS1.getName(),
                         reportByCategoryDTOS1.getAmount()))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()));*/
+        return  null;
     }
 }

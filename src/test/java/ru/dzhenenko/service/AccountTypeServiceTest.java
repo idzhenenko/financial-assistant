@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.dzhenenko.api.converter.AccountTypeModelToAccountTypeDtoConverter;
-import ru.dzhenenko.dao.AccountTypeDao;
 import ru.dzhenenko.entity.AccountType;
 import ru.dzhenenko.repository.ServiceAccountTypeRepository;
 

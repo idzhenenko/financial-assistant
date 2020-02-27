@@ -25,6 +25,9 @@
             <a class="btn btn-outline-success" href="/viewTypeAccount" role="button">Показать типы транзакций</a>
         </form>
     </div>
+    <div class="row">
+        <a href="/logout">Logout</a>
+    </div>
 </div>
 <script src="/js/bootstrap.min.js"></script>
 </body>

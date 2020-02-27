@@ -4,18 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.api.json.AuthRequest;
+import ru.dzhenenko.secuity.UserRole;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import static java.util.Collections.emptySet;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "users")
-@NamedQueries({
-        @NamedQuery(name = "Users.getByEmailAndPassword", query = "SELECT u FROM User AS u WHERE u.email = :email and u.password = :password"),
-        @NamedQuery(name = "Users.getById", query = "SELECT u FROM User AS u WHERE u.id = :id")
-})
+
 public class User {
     @Id
     @Column(name = "id")
@@ -41,5 +44,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Account> accounts;
 
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_role")
+    @Column(name = "role")
+    private Set<UserRole> roles = emptySet();
 
 }

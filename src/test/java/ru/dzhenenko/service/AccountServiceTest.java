@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.dzhenenko.api.converter.AccountModelToAccountDtoConverter;
-import ru.dzhenenko.dao.AccountDao;
 import ru.dzhenenko.entity.Account;
 import ru.dzhenenko.repository.ServiceAccountRepository;
 
@@ -14,7 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
