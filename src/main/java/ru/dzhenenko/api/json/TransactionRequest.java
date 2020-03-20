@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class TransactionRequest {
-    private long id;
     private long sourceAccount;
     private long targetAccount;
     private String createDate;

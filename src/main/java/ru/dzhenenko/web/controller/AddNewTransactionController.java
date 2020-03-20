@@ -22,7 +22,7 @@ public class AddNewTransactionController {
     private final AccountTypeService accountTypeService;
     private final AuthService authService;
 
-    @GetMapping("/addTypeAccount")
+    @GetMapping("/add-type-account")
     public String getAccount(Model model) {
 
         model.addAttribute("form", new AddTypeAccountForm());
@@ -31,21 +31,16 @@ public class AddNewTransactionController {
 
     }
 
-    @PostMapping("/addTypeAccount")
+    @PostMapping("/add-type-account")
     public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
                               HttpServletRequest request) throws SQLException {
         if (!result.hasErrors()) {
-            HttpSession session = request.getSession();
-            Long userId = (Long) session.getAttribute("userId");
+            UserDTO userDTO = authService.currentUser();
 
-            AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(form.getName(), userId);
-
+            AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(form.getName(), userDTO.getId());
 
             model.addAttribute("name", accountTypeDTO.getName());
             model.addAttribute("id", accountTypeDTO.getId());
-
-            session = request.getSession();
-            session.setAttribute("userId", accountTypeDTO.getId());
 
             return "addNewTypeAccount";
         }

@@ -8,6 +8,8 @@ import ru.dzhenenko.api.json.AddTypeTransactionRequest;
 import ru.dzhenenko.api.json.AddTypeTransactionResponse;
 import ru.dzhenenko.service.AccountTypeDTO;
 import ru.dzhenenko.service.AccountTypeService;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,15 +23,17 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/api")
 public class AddTypeTransactionController {
     private final AccountTypeService accountTypeService;
+    private final AuthService authService;
 
     @PostMapping("/add-type-account")
     public @ResponseBody
     ResponseEntity<AddTypeTransactionResponse> addAccount(@RequestBody @Valid AddTypeTransactionRequest request,
                                                           HttpServletRequest httpServletRequest) throws SQLException {
 
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        //Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        UserDTO userId = authService.currentUser();
 
-        AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(request.getName(), userId);
+        AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(request.getName(), userId.getId());
 
         if (userId != null) {
             return ok(new AddTypeTransactionResponse(accountTypeDTO.getId(),

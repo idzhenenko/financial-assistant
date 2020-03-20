@@ -27,7 +27,7 @@
                     <input name="password" class="form-control" id="exampleInputPassword" placeholder="Password" type="password"/>
                 </div>
                 <button type="submit" class="btn btn-success">Войти</button>
-                <a class="btn btn-dark" href="/addUser" role="button">Регистрация</a>
+                <a class="btn btn-dark" href="/add-user" role="button">Регистрация</a>
                 <div>
                 </div>
             </form>

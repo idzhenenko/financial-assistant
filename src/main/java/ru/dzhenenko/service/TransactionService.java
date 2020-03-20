@@ -1,22 +1,86 @@
 package ru.dzhenenko.service;
 
-//@Service
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.dzhenenko.api.converter.TransactionModelToTransactionDtoConverter;
+import ru.dzhenenko.entity.Account;
+import ru.dzhenenko.entity.AccountType;
+import ru.dzhenenko.entity.Category;
+import ru.dzhenenko.entity.Transaction;
+import ru.dzhenenko.exeption.CustomExeption;
+import ru.dzhenenko.repository.*;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
 public class TransactionService {
-    /*public TransactionDao transactionDao;
-    public Converter<Transaction, TransactionDTO> transactionModelTransactionDTOConverter;
+    private final ServiceTransactionRepository serviceTransactionRepository;
+    private final ServiceUserRepository userRepository;
+    private final ServiceAccountRepository accountRepository;
+    private final ServiceAccountTypeRepository accountTypeRepository;
+    private final TransactionModelToTransactionDtoConverter transactionModelToTransactionDtoConverter;
+    private final ServiceTransactionRepository transactionRepository;
+    private final ServiceCategoryRepository serviceCategoryRepository;
 
-    public TransactionService(TransactionDao transactionDao, Converter<Transaction, TransactionDTO> transactionModelTransactionDTOConverter) {
-        this.transactionDao = transactionDao;
-        this.transactionModelTransactionDTOConverter = transactionModelTransactionDTOConverter;
-    }
-
-    public TransactionDTO insertTransaction(long sourceAccount, long targetAccount, long amount,
+    public TransactionDTO insertTransaction(Long sourceAccount, Long targetAccount, long amount,
                                             long idTypeTransaction, long idCategory, long idUser) throws SQLException {
 
-        Transaction transaction = transactionDao.insertTransactions(sourceAccount, targetAccount, idTypeTransaction, idCategory, amount, idUser);
-        if (transaction == null) {
-            return null;
+        Account source = null;
+        Account target = null;
+        if (sourceAccount == 0 && targetAccount == 0)
+            throw new CustomExeption("no accounts found");
+        source = null;
+        if (sourceAccount > 0) {
+            source = accountRepository.getOne(sourceAccount);
+            if (source == null) {
+                throw new CustomExeption("Source accounts is null");
+            }
+            if (source.getUser().getId() != idUser) {
+                throw new CustomExeption("Custom Error!!!(source)");
+            }
         }
-        return transactionModelTransactionDTOConverter.convert(transaction);
-    }*/
+        target = null;
+        if (targetAccount > 0) {
+            target = accountRepository.getOne(targetAccount);
+            if (target == null) {
+                throw new CustomExeption("Target accounts is null");
+            }
+            if (target.getUser().getId() != idUser) {
+                throw new CustomExeption("Custom Error!!!(target)");
+            }
+        }
+        Transaction transaction = new Transaction();
+
+        transaction.setSourceAccount(source);
+        transaction.setTargetAccount(target);
+        AccountType idTypeTrans = accountTypeRepository.getOne(idTypeTransaction);
+        transaction.setTypeTransaction(idTypeTrans);
+        transaction.setAmount(amount);
+        transaction.setCreateDate(LocalDate.now());
+
+        if (source.getId() == sourceAccount) {
+            if (source.getBalance() > 0) {
+                source.setBalance((int) (source.getBalance() - amount));
+                Account accountSave = accountRepository.save(source);
+                source.getBalance();
+                source.getId();
+            } else {
+                throw new CustomExeption("Your balance is less than the transaction amount");
+            }
+            if (target.getId() == targetAccount) {
+                target.setBalance((int) (target.getBalance() + amount));
+            }
+        }
+
+        Category category = serviceCategoryRepository.getOne(idCategory);
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        Transaction transactionSave = transactionRepository.save(transaction);
+        return transactionModelToTransactionDtoConverter.convert(transactionSave);
+    }
 }

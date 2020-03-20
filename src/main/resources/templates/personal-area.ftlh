@@ -15,14 +15,15 @@
         <hr class="my-4">
         <p>Простое и удобное приложение для отслеживания своих расходов</p>
         <form>
-            <a class="btn btn-outline-success" href="/viewAccount" role="button">Показать счета</a>
+            <a class="btn btn-outline-success" href="/view-account" role="button">Показать счета</a>
             <button type="button" class="btn btn-outline-success">Отчёт</button>
-            <button type="button" class="btn btn-outline-success">Показать отчёт по категориям</button>
-            <a class="btn btn-outline-success" href="/addTypeAccount" role="button">Добавить тип транзакцию</a>
-            <a class="btn btn-outline-success" href="/renameTypeAccount" role="button">Переименовать тип транзакцию</a>
+            <#--<button type="button" class="btn btn-outline-success">Показать отчёт по категориям</button>-->
+            <a class="btn btn-outline-success" href="/insert-new-transaction" role="button">Создать новую транзакцию</a>
+            <a class="btn btn-outline-success" href="/add-type-account" role="button">Добавить тип транзакцию</a>
+            <a class="btn btn-outline-success" href="/rename-type-account" role="button">Переименовать тип транзакцию</a>
             <hr class="my-4">
             <a class="btn btn-outline-success" href="/delete-type-account" role="button">Удалить тип транзакцию</a>
-            <a class="btn btn-outline-success" href="/viewTypeAccount" role="button">Показать типы транзакций</a>
+            <a class="btn btn-outline-success" href="/view-type-account" role="button">Показать типы транзакций</a>
         </form>
     </div>
     <div class="row">

@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.dzhenenko.api.converter.ServiceUserToResponseConverter;
 import ru.dzhenenko.api.json.AuthRequest;
 import ru.dzhenenko.api.json.AuthResponse;
+import ru.dzhenenko.api.json.RegistrationRequest;
 import ru.dzhenenko.entity.User;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,10 +24,11 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/api")
 public class RegistrationController {
     private final ServiceUserToResponseConverter converter;
+    private final AuthService authService;
 
     @PostMapping("/registration")
     public @ResponseBody
-    ResponseEntity<AuthResponse> registration(@RequestBody @Valid AuthRequest authRequest, User user,
+    ResponseEntity<AuthResponse> registration(@RequestBody @Valid RegistrationRequest request, User user,
                                               HttpServletRequest httpServletRequest) {
 
         AuthResponse authResponse = converter.convert(user);
@@ -32,9 +36,17 @@ public class RegistrationController {
         if (authResponse.getId() == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }
+        UserDTO userDTO = authService.registration(request.getFirstName(),
+                request.getLastName(), request.getPhone(),
+                request.getEmail(), request.getPassword());
 
-        HttpSession session = httpServletRequest.getSession();
+        /*HttpSession session = httpServletRequest.getSession();
         session.setAttribute("userId", user.getId());
-        return ok(converter.convert(user));
+        UserDTO userId = authService.currentUser();*/
+        //return ok(converter.convert(userDTO));
+        if (userDTO == null) {
+            return status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ok(new AuthResponse(userDTO.getId(), userDTO.getEmail(), userDTO.getFirstName()));
     }
 }

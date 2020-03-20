@@ -1,6 +1,7 @@
 package ru.dzhenenko.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.dzhenenko.entity.User;
+import ru.dzhenenko.repository.ServiceUserRepository;
+import ru.dzhenenko.secuity.CustomUserDetails;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddUserForm;
@@ -21,7 +24,7 @@ import javax.validation.Valid;
 public class AddUserController {
     private final AuthService authService;
 
-    @GetMapping("/addUser")
+    @GetMapping("/add-user")
     public String getUser(Model model) {
 
         model.addAttribute("form", new AddUserForm());
@@ -29,7 +32,7 @@ public class AddUserController {
         return "addUserGet";
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/add-user")
     public String postUser(@ModelAttribute("form") @Valid AddUserForm form, BindingResult result, Model model,
                            HttpServletRequest request) {
         if (!result.hasErrors()) {
@@ -41,12 +44,11 @@ public class AddUserController {
                     form.getEmail(),
                     form.getPassword());
 
-            model.addAttribute("name", user.getFirstName());
-
-            if (user != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("userId", user.getId());
-            }
+            model.addAttribute("name", user.getFirstName())
+            .addAttribute("lastName", user.getLastName())
+            .addAttribute("phone", user.getPhone())
+            .addAttribute("email", user.getEmail())
+            .addAttribute("idUser", user.getId());
 
             return "addUsеrPost";
         }

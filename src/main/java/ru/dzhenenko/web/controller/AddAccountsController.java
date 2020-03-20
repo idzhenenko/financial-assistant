@@ -27,34 +27,28 @@ public class AddAccountsController {
     private final AccountService accountService;
     private final AuthService authService;
 
-    @GetMapping("/addAccount")
+    @GetMapping("/add-account")
     public String getAccount(Model model) {
 
-        model.addAttribute("form", new AddUserForm());
+        model.addAttribute("form", new AddAccountForm());
 
         return "addAccountGet";
-
     }
 
-    @PostMapping("/addAccount")
+    @PostMapping("/add-account")
     public String postAccount(@ModelAttribute("form") @Valid AddAccountForm form, BindingResult result, Model model,
                               HttpServletRequest request) throws SQLException {
         if (!result.hasErrors()) {
-            HttpSession session = request.getSession();
-            Long userId = (Long) session.getAttribute("userId");
-            UserDTO userDTO = authService.getUserById(userId);
+
+            UserDTO userId = authService.currentUser();
+
+            UserDTO userDTO = authService.getUserById(userId.getId());
 
             AccountDTO account = accountService.createAccount(form.getName(), form.getBalance(), userDTO.getId());
-
 
             model.addAttribute("name", account.getName());
             model.addAttribute("balance", account.getBalance());
             model.addAttribute("id", account.getId());
-
-            //if(account != null) {
-            session = request.getSession();
-            session.setAttribute("userId", account.getId());
-            //}
 
             return "addNewAccount";
         }

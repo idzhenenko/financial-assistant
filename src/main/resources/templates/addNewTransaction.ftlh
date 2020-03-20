@@ -13,14 +13,14 @@
 <br>
 <div class="container">
     <div class="jumbotron">
-        <h3 class="text-center">Новое имя транзакции успешно создано!</h3>
+        <h3 class="text-center">Успешное совершение операции!</h3>
         <br>
         <br>
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/add-type-account" method="post">
-                <h1 class="display-4">${name}- (${id})!</h1>
+            <form action="/insert-new-transaction" method="post">
+                <h1 class="display-4">${sourceAccount}-${targetAccount}-(${amount})!</h1>
                 <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
             </form>
         </div>

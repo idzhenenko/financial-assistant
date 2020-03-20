@@ -30,15 +30,15 @@
             </column>
         </createTable>
         <createTable tableName="user_role">
-            <column name="service_user_id" type="BIGINT">
+            <column name="user_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="role" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="user_role" baseColumnNames="service_user_id"
-                                 constraintName="user_role_user_id"
+        <addForeignKeyConstraint baseTableName="user_role" baseColumnNames="user_id"
+                                 constraintName="abc"
                                  referencedTableName="users" referencedColumnNames="id"/>
 
     </changeSet>
@@ -52,7 +52,7 @@
             <column name="password">$2y$12$1GkGr4hhAEX0exlONRfnYu5St31AuKf5xjIEXq7GWiO91iSLzKH2e</column>
         </insert>
         <insert tableName="user_role">
-            <column name="service_user_id">1</column>
+            <column name="user_id">1</column>
             <column name="role">USER</column>
         </insert>
     </changeSet>
@@ -131,6 +131,11 @@
             </column>
             <column name="name" type="varchar(255)">
                 <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="id_users" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="to_user_id"
+                             references="users(id)"/>
             </column>
         </createTable>
     </changeSet>

@@ -19,9 +19,9 @@
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/renameTypeAccount" method="post">
+            <form action="/rename-type-account" method="post">
                 <h1 class="display-4">${name}- (${id})!</h1>
-                <a class="btn btn-dark" href="/login" role="button">Вернуться братно</a>
+                <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
                 <#--<button type="submit" href="/addNewTypeAccount" class="btn btn-success">Создать тип транзакции</button>-->
                 <#--<a class="btn btn-outline-success" type="submit" href="/viewAccount" role="button">Создать счет</a>-->
             </form>

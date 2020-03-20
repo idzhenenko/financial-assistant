@@ -102,7 +102,7 @@ public class TerminalView {
 
                         } else if (userSelectAuth == 7) {
                             //report
-                            /*List<ReportByCategoryDTO> reportDTOS = reportByCategoryService.viewReportCategory(
+                           /* List<ReportByCategoryDTO> reportDTOS = reportByCategoryService.viewReportCategory(
                                     userDTO.getId(),
                                     requestString("Введите начальную дату YYYY-MM-DD"),
                                     requestString("Введите конечную дату YYYY-MM-DD")

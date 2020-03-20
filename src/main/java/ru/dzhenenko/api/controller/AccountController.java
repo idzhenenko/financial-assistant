@@ -10,6 +10,7 @@ import ru.dzhenenko.repository.ServiceAccountRepository;
 import ru.dzhenenko.service.AccountDTO;
 import ru.dzhenenko.service.AccountService;
 import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,9 +35,10 @@ public class AccountController {
                                                           HttpServletRequest httpServletRequest) throws SQLException {
 
 
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        //Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        UserDTO userId = authService.currentUser();
 
-        List<AccountDTO> accountDTO = accountService.viewAccount(userId);
+        List<AccountDTO> accountDTO = accountService.viewAccount(userId.getId());
 
         return ok(accountDTO.stream()
                 .map(accountDTO1 -> new AccountResponse(accountDTO1.getId(), accountDTO1.getName(),

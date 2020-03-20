@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.dzhenenko.service.AccountService;
-import ru.dzhenenko.service.AccountTypeDTO;
-import ru.dzhenenko.service.AccountTypeService;
-import ru.dzhenenko.service.UserDTO;
+import ru.dzhenenko.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,14 +15,13 @@ import java.util.List;
 @Controller
 public class ViewAccountTypesController {
     private final AccountTypeService accountTypeService;
-    private final AccountService accountService;
+    private final AuthService authService;
 
-    @GetMapping("/viewTypeAccount")
+    @GetMapping("/view-type-account")
     public String getTypesAccount(Model model, HttpServletRequest request) throws SQLException {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
+        UserDTO userDTO = authService.currentUser();
 
-        model.addAttribute("accountsType", accountTypeService.viewTypeAccount(userId));
+        model.addAttribute("accountsType", accountTypeService.viewTypeAccount(userDTO.getId()));
 
         return "viewTypeAccountGet";
     }

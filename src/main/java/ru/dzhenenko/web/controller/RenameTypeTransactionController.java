@@ -24,7 +24,7 @@ public class RenameTypeTransactionController {
     private final AccountTypeService accountTypeService;
     private final AuthService authService;
 
-    @GetMapping("/renameTypeAccount")
+    @GetMapping("/rename-type-account")
     public String getAccount(Model model) {
 
         model.addAttribute("form", new AddTypeAccountForm());
@@ -33,22 +33,16 @@ public class RenameTypeTransactionController {
 
     }
 
-    @PostMapping("/renameTypeAccount")
+    @PostMapping("/rename-type-account")
     public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
                               HttpServletRequest request) throws SQLException {
         if (!result.hasErrors()) {
-            HttpSession session = request.getSession();
-            Long userId = (Long) session.getAttribute("userId");
-            UserDTO userDTO = authService.getUserById(userId);
 
             AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(form.getName(), form.getId());
 
 
             model.addAttribute("name", accountTypeDTO.getName());
             model.addAttribute("id", accountTypeDTO.getId());
-
-            session = request.getSession();
-            session.setAttribute("userId", accountTypeDTO.getId());
 
             return "renameTypeAccount";
         }

@@ -19,9 +19,9 @@
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/addAccount" method="post">
+            <form action="/add-account" method="post">
                 <button type="submit" class="btn btn-success">Создать счет</button>
-                <a class="btn btn-dark" href="/login" role="button">Вернуться братно</a>
+                <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
             </form>
         </div>
         <div class="col-sm"></div>

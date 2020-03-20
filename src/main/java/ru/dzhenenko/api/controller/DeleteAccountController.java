@@ -9,6 +9,8 @@ import ru.dzhenenko.api.json.DeleteAccountRequest;
 import ru.dzhenenko.api.json.DeleteAccountResponse;
 import ru.dzhenenko.service.AccountDTO;
 import ru.dzhenenko.service.AccountService;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,13 +25,15 @@ import static org.springframework.http.ResponseEntity.status;
 public class DeleteAccountController {
     private final ServiceAccountToResponseConverter converter;
     private final AccountService accountService;
+    private final AuthService authService;
 
     @PostMapping("/delete-account")
     public @ResponseBody
     ResponseEntity<DeleteAccountResponse> deleteAccount(@RequestBody @Valid DeleteAccountRequest deleteAccountRequest,
                                                         HttpServletRequest httpServletRequest) throws SQLException {
 
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        //Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        UserDTO userId = authService.currentUser();
 
         AccountDTO accountDTO = accountService.removeAccount(deleteAccountRequest.getId());
 

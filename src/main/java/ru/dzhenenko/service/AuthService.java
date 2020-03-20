@@ -40,7 +40,8 @@ public class AuthService {
     }
 
 
-    public UserDTO registration(String firstName, String lastName, String phone, String email, String password) {
+    public UserDTO registration(String firstName, String lastName, String phone, String email,
+                                String password) {
         Set<UserRole> userRoles = new HashSet<>();
         userRoles.add(UserRole.USER);
         String hash = passwordEncoder.encode(password);
@@ -51,6 +52,7 @@ public class AuthService {
         user.setPhone(phone);
         user.setEmail(email);
         user.setPassword(hash);
+        user.setRoles(userRoles);
 
         User userSave = serviceUserRepository.save(user);
 

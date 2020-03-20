@@ -29,19 +29,11 @@ public class DeleteAccountsController {
         model.addAttribute("form", new DeleteAccountForm());
 
         return "deleteAccountGet";
-
     }
 
     @PostMapping("delete-account")
     public String postDeleteAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
                                     HttpServletRequest request) throws SQLException {
-        HttpSession session = request.getSession();
-        Long idUser = (Long) session.getAttribute("userId");
-        UserDTO userDTO = authService.getUserById(idUser);
-
-        if (idUser == null) {
-            return "redirect:/login";
-        }
 
         AccountDTO account = accountService.removeAccount(form.getId());
 

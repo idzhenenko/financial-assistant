@@ -1,7 +1,10 @@
 package ru.dzhenenko.service;
 
+import lombok.Data;
+
 import java.util.Objects;
 
+@Data
 public class TransactionDTO {
     private long id;
     private long sourceAccount;
@@ -9,12 +12,13 @@ public class TransactionDTO {
     private String createDate;
     private long typeTransaction;
     private long amount;
+    private long idCategory;
 
     public TransactionDTO() {
 
     }
 
-    public long getId() {
+    /*public long getId() {
         return id;
     }
 
@@ -60,9 +64,9 @@ public class TransactionDTO {
 
     public void setAmount(long amount) {
         this.amount = amount;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public String toString() {
         return "TransactionDTO{" +
                 "id=" + id +
@@ -71,6 +75,19 @@ public class TransactionDTO {
                 ", createDate='" + createDate + '\'' +
                 ", idTypeTransaction=" + typeTransaction +
                 ", amount=" + amount +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "TransactionDTO{" +
+                "id=" + id +
+                ", sourceAccount=" + sourceAccount +
+                ", targetAccount=" + targetAccount +
+                ", createDate='" + createDate + '\'' +
+                ", typeTransaction=" + typeTransaction +
+                ", amount=" + amount +
+                ", idCategory=" + idCategory +
                 '}';
     }
 

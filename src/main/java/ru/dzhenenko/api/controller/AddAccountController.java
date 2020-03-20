@@ -11,6 +11,7 @@ import ru.dzhenenko.repository.ServiceAccountRepository;
 import ru.dzhenenko.service.AccountDTO;
 import ru.dzhenenko.service.AccountService;
 import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -33,7 +34,8 @@ public class AddAccountController {
     ResponseEntity<AddAccountResponse> addAccount(@RequestBody @Valid AddAccountRequest addAccountRequest,
                                                   HttpServletRequest httpServletRequest) throws SQLException {
 
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        //Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        UserDTO userId = authService.currentUser();
 
         AccountDTO accountDTO = accountService.createAccount(addAccountRequest.getName(), addAccountRequest.getBalance(),
                 addAccountRequest.getId());

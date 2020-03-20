@@ -23,7 +23,7 @@
                         <@spring.formInput "form.id" "class=\"form-control\" id=\"id\" placeholder=\"Введите Id счета:\"" "text"/>
                         <@spring.showErrors "<br>"/>
                         <button type="submit" class="btn btn-success">Удалить</button>
-                        <a class="btn btn-dark" href="/index" role="button">Вернуться братно</a>
+                        <a class="btn btn-dark" href="/personal-area" role="button">Вернуться братно</a>
                     </div>
                 </form>
                 </div>

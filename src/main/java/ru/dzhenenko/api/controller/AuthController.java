@@ -10,6 +10,8 @@ import ru.dzhenenko.api.json.AuthRequest;
 import ru.dzhenenko.api.json.AuthResponse;
 import ru.dzhenenko.entity.User;
 import ru.dzhenenko.repository.ServiceUserRepository;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,17 +26,19 @@ import static org.springframework.http.ResponseEntity.status;
 public class AuthController {
     private final ServiceUserRepository serviceUserRepository;
     private final ServiceUserToResponseConverter converter;
+    private final AuthService authService;
 
     @GetMapping("/get-user-info")
     public @ResponseBody
     ResponseEntity<AuthResponse> getUserInfo(HttpServletRequest request, User user) {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
+        /*HttpSession session = request.getSession();
+        Long userId = (Long) session.getAttribute("userId");*/
+        UserDTO userId = authService.currentUser();
         if (userId == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        User user1 = serviceUserRepository.getOne(userId);
+        User user1 = serviceUserRepository.getOne(userId.getId());
         if (user1 == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }

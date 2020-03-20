@@ -13,19 +13,22 @@
 <br>
 <div class="container">
     <div class="jumbotron">
-        <h3 class="text-center">Создание типа транзакции!</h3>
+        <h3 class="text-center">Отчет!</h3>
         <br>
         <br>
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/add-type-account" method="post">
+            <form action="/report-account-category" method="post">
                 <div class="form-group">
-                    <label for="name">Имя транзакции</label>
-                    <@spring.formInput "form.name" "class=\"form-control\" id=\"name\" placeholder=\"Введите имя\"" "text"/>
+                    <label for="name">Отчет за временной промежуток</label>
+                    <@spring.formInput "form.startDay" "class=\"form-control\" id=\"startDay\" placeholder=\"Введите первую дату\"" "text"/>
+                    <@spring.showErrors "<br>"/>
+                    <br>
+                    <@spring.formInput "form.endDay" "class=\"form-control\" id=\"endDay\" placeholder=\"Введите вторую дату\"" "text"/>
                     <@spring.showErrors "<br>"/>
                 </div>
-                <button type="submit" class="btn btn-success">Создать тип счета</button>
+                <button type="submit" class="btn btn-success">Посмотреть</button>
                 <a class="btn btn-dark" href="/personal-area" role="button">Вернуться братно</a>
             </form>
         </div>

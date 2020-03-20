@@ -58,4 +58,7 @@ public class Transaction {
     public Long getAmount() {
         return amount;
     }
+
+    public void setUserId(User user) {
+    }
 }

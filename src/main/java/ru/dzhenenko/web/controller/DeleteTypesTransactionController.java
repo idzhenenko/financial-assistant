@@ -28,15 +28,13 @@ public class DeleteTypesTransactionController {
         model.addAttribute("form", new AddTypeAccountForm());
 
         return "deleteTypeAccountGet";
-
     }
 
     @PostMapping("delete-type-account")
     public String postDeleteTypeAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
                                         HttpServletRequest request) throws SQLException {
-        HttpSession session = request.getSession();
-        Long idUser = (Long) session.getAttribute("userId");
-        UserDTO userDTO = authService.getUserById(idUser);
+
+        UserDTO idUser = authService.currentUser();
 
         if (idUser == null) {
             return "redirect:/login";
