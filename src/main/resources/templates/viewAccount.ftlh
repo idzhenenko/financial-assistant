@@ -14,8 +14,8 @@
         <h1 class="display-4">id счета: ${a.id}(${a.name}) - ${a.balance}!</h1>
         </#list>
         <hr class="my-4">
-        <a class="btn btn-dark" href="/addAccount" role="button">Создать счет</a>
-        <a class="btn btn-danger" href="/delete-account/" role="button">Удалить счет</a>
+        <a class="btn btn-dark" href="/add-account" role="button">Создать счет</a>
+        <a class="btn btn-danger" href="/delete-account" role="button">Удалить счет</a>
     </div>
 </div>
 <script src="/js/bootstrap.min.js"></script>

@@ -10,10 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "account")
-@NamedQueries({
-        @NamedQuery(name = "Account.findByUserId", query = "SELECT a FROM Account AS a WHERE a.id = :id"),
-        @NamedQuery(name = "Account.viewAccountUser", query = "SELECT a FROM Account AS a WHERE a.user = :user")
-})
+
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

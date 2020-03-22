@@ -8,8 +8,9 @@ import ru.dzhenenko.api.json.DeleteTypeTransactionRequest;
 import ru.dzhenenko.api.json.DeleteTypeTransactionResponse;
 import ru.dzhenenko.service.AccountTypeDTO;
 import ru.dzhenenko.service.AccountTypeService;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -21,13 +22,13 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/api")
 public class DeleteTypeTransactionController {
     private final AccountTypeService accountTypeService;
+    private final AuthService authService;
 
     @PostMapping("/delete-type-account")
     public @ResponseBody
-    ResponseEntity<DeleteTypeTransactionResponse> deleteAccount(@RequestBody @Valid DeleteTypeTransactionRequest request,
-                                                        HttpServletRequest httpServletRequest) throws SQLException {
+    ResponseEntity<DeleteTypeTransactionResponse> deleteAccount(@RequestBody @Valid DeleteTypeTransactionRequest request) throws SQLException {
 
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        UserDTO userId = authService.currentUser();
 
         AccountTypeDTO accountTypeDTO = accountTypeService.removeAccountType(request.getId());
 

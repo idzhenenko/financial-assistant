@@ -5,22 +5,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.dzhenenko.service.AccountService;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 @RequiredArgsConstructor
 @Controller
 public class ViewAccountController {
     private final AccountService accountService;
+    private final AuthService authService;
 
-    @GetMapping("/viewAccount")
-    public String getAccount(Model model, HttpServletRequest request) throws SQLException {
-        HttpSession session = request.getSession();
-        Long userId = (Long) session.getAttribute("userId");
+    @GetMapping("/view-account")
+    public String getAccount(Model model) throws SQLException {
 
-        model.addAttribute("accounts", accountService.viewAccount(userId));
+        UserDTO userDTO = authService.currentUser();
+
+        model.addAttribute("accounts", accountService.viewAccount(userDTO.getId()));
 
         return "viewAccount";
     }

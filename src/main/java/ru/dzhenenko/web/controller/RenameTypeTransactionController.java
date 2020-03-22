@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.dzhenenko.service.AccountTypeDTO;
 import ru.dzhenenko.service.AccountTypeService;
-import ru.dzhenenko.service.AuthService;
-import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddTypeAccountForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -22,9 +18,8 @@ import java.sql.SQLException;
 @Controller
 public class RenameTypeTransactionController {
     private final AccountTypeService accountTypeService;
-    private final AuthService authService;
 
-    @GetMapping("/renameTypeAccount")
+    @GetMapping("/rename-type-account")
     public String getAccount(Model model) {
 
         model.addAttribute("form", new AddTypeAccountForm());
@@ -33,22 +28,15 @@ public class RenameTypeTransactionController {
 
     }
 
-    @PostMapping("/renameTypeAccount")
-    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
-                              HttpServletRequest request) throws SQLException {
+    @PostMapping("/rename-type-account")
+    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
-            HttpSession session = request.getSession();
-            Long userId = (Long) session.getAttribute("userId");
-            UserDTO userDTO = authService.getUserById(userId);
 
             AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(form.getName(), form.getId());
 
 
             model.addAttribute("name", accountTypeDTO.getName());
             model.addAttribute("id", accountTypeDTO.getId());
-
-            session = request.getSession();
-            session.setAttribute("userId", accountTypeDTO.getId());
 
             return "renameTypeAccount";
         }

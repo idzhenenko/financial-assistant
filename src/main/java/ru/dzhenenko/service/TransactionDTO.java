@@ -1,7 +1,10 @@
 package ru.dzhenenko.service;
 
+import lombok.Data;
+
 import java.util.Objects;
 
+@Data
 public class TransactionDTO {
     private long id;
     private long sourceAccount;
@@ -9,57 +12,10 @@ public class TransactionDTO {
     private String createDate;
     private long typeTransaction;
     private long amount;
+    private long idCategory;
 
     public TransactionDTO() {
 
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getSourceAccount() {
-        return sourceAccount;
-    }
-
-    public void setSourceAccount(long sourceAccount) {
-        this.sourceAccount = sourceAccount;
-    }
-
-    public long getTargetAccount() {
-        return targetAccount;
-    }
-
-    public void setTargetAccount(long targetAccount) {
-        this.targetAccount = targetAccount;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public long getTypeTransaction() {
-        return typeTransaction;
-    }
-
-    public void setTypeTransaction(long typeTransaction) {
-        this.typeTransaction = typeTransaction;
-    }
-
-    public long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(long amount) {
-        this.amount = amount;
     }
 
     @Override
@@ -69,8 +25,9 @@ public class TransactionDTO {
                 ", sourceAccount=" + sourceAccount +
                 ", targetAccount=" + targetAccount +
                 ", createDate='" + createDate + '\'' +
-                ", idTypeTransaction=" + typeTransaction +
+                ", typeTransaction=" + typeTransaction +
                 ", amount=" + amount +
+                ", idCategory=" + idCategory +
                 '}';
     }
 

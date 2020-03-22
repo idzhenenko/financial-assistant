@@ -19,9 +19,9 @@
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/addTypeAccount" method="post">
+            <form action="/add-type-account" method="post">
                 <h1 class="display-4">${name}- (${id})!</h1>
-                <a class="btn btn-dark" href="/login" role="button">Вернуться братно</a>
+                <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
             </form>
         </div>
         </div>

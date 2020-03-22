@@ -3,19 +3,14 @@ package ru.dzhenenko.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.api.converter.AccountModelToAccountDtoConverter;
-import ru.dzhenenko.api.converter.Converter;
-import ru.dzhenenko.dao.AccountDao;
 import ru.dzhenenko.entity.Account;
 import ru.dzhenenko.entity.User;
-import ru.dzhenenko.exeption.CustomExeption;
 import ru.dzhenenko.repository.ServiceAccountRepository;
 import ru.dzhenenko.repository.ServiceUserRepository;
 
-import javax.persistence.EntityManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

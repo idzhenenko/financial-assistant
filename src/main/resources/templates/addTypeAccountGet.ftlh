@@ -19,14 +19,14 @@
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/addTypeAccount" method="post">
+            <form action="/add-type-account" method="post">
                 <div class="form-group">
                     <label for="name">Имя транзакции</label>
                     <@spring.formInput "form.name" "class=\"form-control\" id=\"name\" placeholder=\"Введите имя\"" "text"/>
                     <@spring.showErrors "<br>"/>
                 </div>
                 <button type="submit" class="btn btn-success">Создать тип счета</button>
-                <a class="btn btn-dark" href="/index" role="button">Вернуться братно</a>
+                <a class="btn btn-dark" href="/personal-area" role="button">Вернуться братно</a>
             </form>
         </div>
         <div class="col-sm"></div>

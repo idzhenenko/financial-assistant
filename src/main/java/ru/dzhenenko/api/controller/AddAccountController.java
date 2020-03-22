@@ -4,15 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.dzhenenko.api.converter.ServiceAccountToResponseConverter;
 import ru.dzhenenko.api.json.AddAccountRequest;
 import ru.dzhenenko.api.json.AddAccountResponse;
-import ru.dzhenenko.repository.ServiceAccountRepository;
 import ru.dzhenenko.service.AccountDTO;
 import ru.dzhenenko.service.AccountService;
 import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -23,17 +21,14 @@ import static org.springframework.http.ResponseEntity.status;
 @RestController
 @RequestMapping("/api")
 public class AddAccountController {
-    private final ServiceAccountToResponseConverter converter;
     private final AccountService accountService;
-    private final ServiceAccountRepository serviceAccountRepository;
     private final AuthService authService;
 
     @PostMapping("/add-account")
     public @ResponseBody
-    ResponseEntity<AddAccountResponse> addAccount(@RequestBody @Valid AddAccountRequest addAccountRequest,
-                                                  HttpServletRequest httpServletRequest) throws SQLException {
+    ResponseEntity<AddAccountResponse> addAccount(@RequestBody @Valid AddAccountRequest addAccountRequest) throws SQLException {
 
-        Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+        UserDTO userId = authService.currentUser();
 
         AccountDTO accountDTO = accountService.createAccount(addAccountRequest.getName(), addAccountRequest.getBalance(),
                 addAccountRequest.getId());

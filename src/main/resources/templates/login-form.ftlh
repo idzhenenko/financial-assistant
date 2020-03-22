@@ -1,5 +1,3 @@
-<#import "/spring.ftl" as spring />
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,16 +20,14 @@
             <form action="/login" method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail">Email address</label>
-                    <@spring.formInput "form.email" "class=\"form-control\" id=\"exampleInputEmail\" placeholder=\"Введите email\"" "email"/>
-                    <@spring.showErrors "<br>"/>
+                    <input name="email" class="form-control" id="exampleInputEmail" placeholder="Enter email" type="text"/>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword">Password</label>
-                    <@spring.formInput "form.password" "class=\"form-control\" id=\"exampleInputPassword\" placeholder=\"Ввелите пароль\"" "passwprd"/>
-                    <@spring.showErrors "<br>"/>
+                    <input name="password" class="form-control" id="exampleInputPassword" placeholder="Password" type="password"/>
                 </div>
                 <button type="submit" class="btn btn-success">Войти</button>
-                <a class="btn btn-dark" href="/addUser" role="button">Регистрация</a>
+                <a class="btn btn-dark" href="/add-user" role="button">Регистрация</a>
                 <div>
                 </div>
             </form>

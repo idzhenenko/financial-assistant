@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm">
-            <form action="/addUser" method="post">
+            <form action="/add-user" method="post">
                 <div class="form-group">
                     <label for="firstName">Имя</label>
                     <@spring.formInput "form.firstName" "class=\"form-control\" id=\"firstName\" placeholder=\"Введите Ваше имя\"" "text"/>

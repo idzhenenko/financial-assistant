@@ -5,17 +5,15 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-//import ru.dzhenenko.JpaConfiguration;
 import ru.dzhenenko.api.converter.UserModelToUserDtoConverter;
-import ru.dzhenenko.dao.UserDao;
 import ru.dzhenenko.entity.User;
 import ru.dzhenenko.repository.ServiceUserRepository;
 
-import javax.persistence.EntityManager;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
+
+//import ru.dzhenenko.JpaConfiguration;
 @RunWith(MockitoJUnitRunner.class)
 public class AuthServiceTest {
 
