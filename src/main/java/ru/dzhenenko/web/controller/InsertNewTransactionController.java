@@ -7,10 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.dzhenenko.service.*;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.TransactionDTO;
+import ru.dzhenenko.service.TransactionService;
+import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.InsertNewTransactionForm;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -30,8 +32,7 @@ public class InsertNewTransactionController {
 
     @PostMapping("/insert-new-transaction")
     public String postAccount(@ModelAttribute("form") @Valid InsertNewTransactionForm form, BindingResult result,
-                              Model model,
-                              HttpServletRequest request) throws SQLException {
+                              Model model) throws SQLException {
         if (!result.hasErrors()) {
             UserDTO userId = authService.currentUser();
 

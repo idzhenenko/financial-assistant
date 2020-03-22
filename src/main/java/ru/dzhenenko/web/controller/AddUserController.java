@@ -1,22 +1,16 @@
 package ru.dzhenenko.web.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.dzhenenko.entity.User;
-import ru.dzhenenko.repository.ServiceUserRepository;
-import ru.dzhenenko.secuity.CustomUserDetails;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddUserForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -33,8 +27,7 @@ public class AddUserController {
     }
 
     @PostMapping("/add-user")
-    public String postUser(@ModelAttribute("form") @Valid AddUserForm form, BindingResult result, Model model,
-                           HttpServletRequest request) {
+    public String postUser(@ModelAttribute("form") @Valid AddUserForm form, BindingResult result, Model model) {
         if (!result.hasErrors()) {
 
             UserDTO user = authService.registration(

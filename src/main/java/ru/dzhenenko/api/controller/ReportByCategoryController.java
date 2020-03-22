@@ -11,7 +11,6 @@ import ru.dzhenenko.service.ReportByCategoryDTO;
 import ru.dzhenenko.service.ReportByCategoryService;
 import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,8 +28,7 @@ public class ReportByCategoryController {
 
     @PostMapping("/view-report")
     public @ResponseBody
-    ResponseEntity<List<ReportByCategoryResponse>> viewListAccount(@RequestBody @Valid ReportByCategoryRequest request,
-                                                                   HttpServletRequest httpServletRequest) throws SQLException {
+    ResponseEntity<List<ReportByCategoryResponse>> viewListAccount(@RequestBody @Valid ReportByCategoryRequest request) throws SQLException {
 
         UserDTO userDTO = authService.currentUser();
 

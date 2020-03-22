@@ -11,7 +11,6 @@ import ru.dzhenenko.service.AccountTypeService;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -27,9 +26,7 @@ public class EditTypeTransactionController {
 
     @PostMapping("/edit-type-account")
     public @ResponseBody
-    ResponseEntity<EditTypeTransactionResponse> deleteAccount(@RequestBody @Valid EditTypeTransactionRequest request,
-                                                              HttpServletRequest httpServletRequest) throws SQLException {
-        //Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
+    ResponseEntity<EditTypeTransactionResponse> deleteAccount(@RequestBody @Valid EditTypeTransactionRequest request) throws SQLException {
         UserDTO userId = authService.currentUser();
 
         AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(request.getName(), request.getId());

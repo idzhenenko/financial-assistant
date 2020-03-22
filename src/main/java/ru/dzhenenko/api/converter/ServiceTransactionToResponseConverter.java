@@ -1,7 +1,5 @@
 package ru.dzhenenko.api.converter;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.dzhenenko.api.json.TransactionResponse;
 import ru.dzhenenko.entity.Transaction;

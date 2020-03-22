@@ -1,7 +1,6 @@
 package ru.dzhenenko.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.dzhenenko.entity.Account;
 
 import java.util.List;

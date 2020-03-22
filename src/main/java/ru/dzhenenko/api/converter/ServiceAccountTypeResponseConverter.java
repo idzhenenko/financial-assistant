@@ -1,7 +1,6 @@
 package ru.dzhenenko.api.converter;
 
 import org.springframework.stereotype.Component;
-import ru.dzhenenko.api.json.AccountResponse;
 import ru.dzhenenko.api.json.AddTypeTransactionResponse;
 import ru.dzhenenko.entity.AccountType;
 

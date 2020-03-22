@@ -3,16 +3,15 @@ package ru.dzhenenko.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.dzhenenko.service.*;
+import ru.dzhenenko.service.AccountTypeDTO;
+import ru.dzhenenko.service.AccountTypeService;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddTypeAccountForm;
-import ru.dzhenenko.web.form.DeleteAccountForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -31,8 +30,7 @@ public class DeleteTypesTransactionController {
     }
 
     @PostMapping("delete-type-account")
-    public String postDeleteTypeAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
-                                        HttpServletRequest request) throws SQLException {
+    public String postDeleteTypeAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, Model model) throws SQLException {
 
         UserDTO idUser = authService.currentUser();
 

@@ -18,8 +18,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
-    private final ServiceTransactionRepository serviceTransactionRepository;
-    private final ServiceUserRepository userRepository;
     private final ServiceAccountRepository accountRepository;
     private final ServiceAccountTypeRepository accountTypeRepository;
     private final TransactionModelToTransactionDtoConverter transactionModelToTransactionDtoConverter;

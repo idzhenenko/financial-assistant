@@ -11,7 +11,6 @@ import ru.dzhenenko.service.AccountTypeService;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -27,10 +26,8 @@ public class AddTypeTransactionController {
 
     @PostMapping("/add-type-account")
     public @ResponseBody
-    ResponseEntity<AddTypeTransactionResponse> addAccount(@RequestBody @Valid AddTypeTransactionRequest request,
-                                                          HttpServletRequest httpServletRequest) throws SQLException {
+    ResponseEntity<AddTypeTransactionResponse> addAccount(@RequestBody @Valid AddTypeTransactionRequest request) throws SQLException {
 
-        //Long userId = (Long) httpServletRequest.getSession().getAttribute("userId");
         UserDTO userId = authService.currentUser();
 
         AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(request.getName(), userId.getId());

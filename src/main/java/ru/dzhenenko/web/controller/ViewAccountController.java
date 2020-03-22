@@ -8,8 +8,6 @@ import ru.dzhenenko.service.AccountService;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 @RequiredArgsConstructor
@@ -19,7 +17,7 @@ public class ViewAccountController {
     private final AuthService authService;
 
     @GetMapping("/view-account")
-    public String getAccount(Model model, HttpServletRequest request) throws SQLException {
+    public String getAccount(Model model) throws SQLException {
 
         UserDTO userDTO = authService.currentUser();
 

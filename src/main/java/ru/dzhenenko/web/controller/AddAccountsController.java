@@ -7,17 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.dzhenenko.entity.Account;
-import ru.dzhenenko.entity.User;
 import ru.dzhenenko.service.AccountDTO;
 import ru.dzhenenko.service.AccountService;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddAccountForm;
-import ru.dzhenenko.web.form.AddUserForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -36,8 +31,7 @@ public class AddAccountsController {
     }
 
     @PostMapping("/add-account")
-    public String postAccount(@ModelAttribute("form") @Valid AddAccountForm form, BindingResult result, Model model,
-                              HttpServletRequest request) throws SQLException {
+    public String postAccount(@ModelAttribute("form") @Valid AddAccountForm form, BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
 
             UserDTO userId = authService.currentUser();

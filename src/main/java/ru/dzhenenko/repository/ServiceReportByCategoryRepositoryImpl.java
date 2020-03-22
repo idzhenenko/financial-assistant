@@ -12,19 +12,6 @@ import java.util.List;
 public class ServiceReportByCategoryRepositoryImpl implements ServiceReportByCategoryRepositoryCustom{
     private final EntityManager em;
 
-   /* @SuppressWarnings("unchecked")
-    @Override
-    public List<Transaction> findByUserId(Long userId) {
-        Query query = em.createNamedQuery(
-                "SELECT t.amount, c.name FROM account AS a JOIN users u ON a.id_users = u.id " +
-                        "LEFT JOIN transaction t ON a.id = t.source_account " +
-                        "JOIN type_transaction tt ON t.id_type_transaction = tt.id " +
-                        "JOIN id_tran_to_id_category ittic ON t.id = ittic.id_category " +
-                        "JOIN category c ON ittic.id_transaction = c.id WHERE u.id = ? " +
-                        "AND date_trunc('day', t.Create_date) >= ? AND date_trunc('day', t.Create_date) <= ?", Transaction.class);
-        query.setParameter(1, userId);
-        return (List<Transaction>) query.getResultList();*/
-   @SuppressWarnings("unchecked")
    @Override
    public List<ReportByCategory> findByUserIdAndStartDateAndEndDate(Long userId, String startDate, String endDate) {
        Timestamp startTimestamp = Timestamp.valueOf(startDate + " 00:00:00.000000");

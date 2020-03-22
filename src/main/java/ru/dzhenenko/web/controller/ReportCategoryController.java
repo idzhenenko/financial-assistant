@@ -13,10 +13,7 @@ import ru.dzhenenko.service.ReportByCategoryService;
 import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.ReportForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,7 +31,6 @@ public class ReportCategoryController {
         return "categoryReportGet";
 
     }
-
 
     @PostMapping("/report-account-category")
     public String postReport(@ModelAttribute ("form") @Valid ReportForm form, BindingResult result, Model model)

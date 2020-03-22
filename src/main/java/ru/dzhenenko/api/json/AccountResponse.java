@@ -3,9 +3,6 @@ package ru.dzhenenko.api.json;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import ru.dzhenenko.entity.User;
-import ru.dzhenenko.service.AccountDTO;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor

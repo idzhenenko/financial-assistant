@@ -11,7 +11,6 @@ import ru.dzhenenko.service.TransactionDTO;
 import ru.dzhenenko.service.TransactionService;
 import ru.dzhenenko.service.UserDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -27,8 +26,7 @@ public class TransactionController {
 
     @PostMapping("/add-transaction")
     public @ResponseBody
-    ResponseEntity<TransactionResponse> addTypeTransaction(@RequestBody @Valid TransactionRequest request,
-                                                        HttpServletRequest httpServletRequest) throws SQLException {
+    ResponseEntity<TransactionResponse> addTypeTransaction(@RequestBody @Valid TransactionRequest request) throws SQLException {
         UserDTO userDTO = authService.currentUser();
 
         TransactionDTO transactionDTO = transactionService.insertTransaction(request.getSourceAccount(),

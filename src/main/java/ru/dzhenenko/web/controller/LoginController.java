@@ -9,15 +9,10 @@ import ru.dzhenenko.entity.User;
 import ru.dzhenenko.repository.ServiceUserRepository;
 import ru.dzhenenko.secuity.CustomUserDetails;
 import ru.dzhenenko.service.AuthService;
-import ru.dzhenenko.service.UserDTO;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
 public class LoginController {
-    private final AuthService authService;
     private final ServiceUserRepository serviceUserRepository;
 
     @GetMapping("/personal-area")

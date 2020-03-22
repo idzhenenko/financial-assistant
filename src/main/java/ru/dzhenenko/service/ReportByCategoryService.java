@@ -3,9 +3,7 @@ package ru.dzhenenko.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.api.converter.Converter;
-import ru.dzhenenko.entity.Account;
 import ru.dzhenenko.entity.ReportByCategory;
-import ru.dzhenenko.entity.Transaction;
 import ru.dzhenenko.repository.ServiceReportByCategoryRepository;
 
 import java.sql.SQLException;

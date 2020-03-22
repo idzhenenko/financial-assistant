@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.dzhenenko.service.AccountTypeDTO;
 import ru.dzhenenko.service.AccountTypeService;
-import ru.dzhenenko.service.AuthService;
-import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddTypeAccountForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -22,7 +18,6 @@ import java.sql.SQLException;
 @Controller
 public class RenameTypeTransactionController {
     private final AccountTypeService accountTypeService;
-    private final AuthService authService;
 
     @GetMapping("/rename-type-account")
     public String getAccount(Model model) {
@@ -34,8 +29,7 @@ public class RenameTypeTransactionController {
     }
 
     @PostMapping("/rename-type-account")
-    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
-                              HttpServletRequest request) throws SQLException {
+    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
 
             AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(form.getName(), form.getId());

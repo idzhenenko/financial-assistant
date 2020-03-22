@@ -16,7 +16,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final DigestService digestService;
     private final Converter<User, UserDTO> userDtoConverter;
     private final ServiceUserRepository serviceUserRepository;
     private final PasswordEncoder passwordEncoder;

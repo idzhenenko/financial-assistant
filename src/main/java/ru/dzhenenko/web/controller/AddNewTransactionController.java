@@ -7,12 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.dzhenenko.service.*;
+import ru.dzhenenko.service.AccountTypeDTO;
+import ru.dzhenenko.service.AccountTypeService;
+import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.AddTypeAccountForm;
-import ru.dzhenenko.web.form.AddUserForm;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.SQLException;
 
@@ -32,8 +32,7 @@ public class AddNewTransactionController {
     }
 
     @PostMapping("/add-type-account")
-    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model,
-                              HttpServletRequest request) throws SQLException {
+    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
             UserDTO userDTO = authService.currentUser();
 
