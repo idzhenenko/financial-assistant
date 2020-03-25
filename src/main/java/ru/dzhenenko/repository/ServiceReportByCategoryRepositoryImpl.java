@@ -16,11 +16,13 @@ public class ServiceReportByCategoryRepositoryImpl implements ServiceReportByCat
    public List<ReportByCategory> findByUserIdAndStartDateAndEndDate(Long userId, String startDate, String endDate) {
        Timestamp startTimestamp = Timestamp.valueOf(startDate + " 00:00:00.000000");
        Timestamp endTimestamp = Timestamp.valueOf(endDate + " 00:00:00.000000");
+       /*Timestamp startTimestamp = Timestamp.valueOf(startDate);
+       Timestamp endTimestamp = Timestamp.valueOf(endDate);*/
 
        Query nativeQuery = em.createNativeQuery(
-               "SELECT cat.name, sum(t.balance_tr) as balance " +
+               "SELECT cat.name, sum(t.amount) as amount " +
                        "FROM category AS cat " +
-                       //"INNER JOIN users u on cat.user_id = u.id " +
+                       "INNER JOIN users u on cat.id_users = u.id " +
                        "INNER JOIN id_tran_to_id_category ctt on cat.id = ctt.id_category " +
                        "INNER JOIN transaction t on ctt.id_transaction = t.id " +
                        "WHERE u.id = ? AND t.create_date between ? AND ? " +
