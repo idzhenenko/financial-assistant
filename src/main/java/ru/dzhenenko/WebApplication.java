@@ -12,15 +12,8 @@ import java.sql.SQLException;
 @SpringBootApplication
 public class WebApplication {
 
-    /*@Autowired
-    private TerminalView terminalView;*/
-
     public static void main(String[] args) throws SQLException {
         SpringApplication.run(WebApplication.class, args);
     }
 
-    /*@Override
-    public void run(String... args) throws Exception {
-        *//*terminalView.start();*//*
-    }*/
 }

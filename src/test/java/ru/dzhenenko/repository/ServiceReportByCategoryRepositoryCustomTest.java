@@ -31,11 +31,11 @@ class ServiceReportByCategoryRepositoryCustomTest {
 
     @Test
     void findByUserIdAndStartDateAndEndDate() {
-        Category category = new Category();
+        ReportByCategory category = new ReportByCategory();
         category.setName("Самолет");
-        category.setId(1L);
+        category.setAmount(120000);
 
-        List<Category> categoryList = new ArrayList<>();
+        List<ReportByCategory> categoryList = new ArrayList<>();
         categoryList.add(category);
 
         List<ReportByCategory> report = subj.findByUserIdAndStartDateAndEndDate(1L,

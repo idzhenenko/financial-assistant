@@ -9,15 +9,16 @@ import ru.dzhenenko.entity.User;
 import ru.dzhenenko.repository.ServiceUserRepository;
 import ru.dzhenenko.secuity.CustomUserDetails;
 import ru.dzhenenko.service.AuthService;
+import ru.dzhenenko.service.UserDTO;
 
 @RequiredArgsConstructor
 @Controller
 public class LoginController {
-    private final ServiceUserRepository serviceUserRepository;
+    private final AuthService authService;
 
     @GetMapping("/personal-area")
     public String index(Model model) {
-        User user = currentUser();
+        UserDTO user = authService.currentUser();
 
         model.addAttribute("id", user.getId())
                 .addAttribute("name", user.getFirstName());
@@ -30,11 +31,4 @@ public class LoginController {
          return "login-form";
     }
 
-    private User currentUser() {
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-
-        return serviceUserRepository.getOne(user.getId());
-    }
 }

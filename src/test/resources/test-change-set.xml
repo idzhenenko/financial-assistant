@@ -51,7 +51,7 @@
             <column name="target_account">2</column>
             <column name="id_type_transaction">1</column>
             <column name="amount">120000</column>
-            <column name="Create_date">2020-13-10</column>
+            <column name="Create_date">2020-10-10</column>
         </insert>
     </changeSet>
 
