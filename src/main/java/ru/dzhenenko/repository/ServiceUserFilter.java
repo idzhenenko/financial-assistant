@@ -9,8 +9,6 @@ import java.util.Set;
 @Data
 @Accessors(chain = true)
 public class ServiceUserFilter {
-    /*private String emailLike;
-    private UserRole userRole;*/
     private String firstName;
     private String lastName;
     private String phone;

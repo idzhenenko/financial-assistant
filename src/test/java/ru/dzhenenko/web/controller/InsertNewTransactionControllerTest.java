@@ -11,54 +11,49 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.dzhenenko.MockSecurityConfiguration;
 import ru.dzhenenko.SecurityConfiguration;
-import ru.dzhenenko.service.AccountService;
-import ru.dzhenenko.service.AuthService;
-import ru.dzhenenko.service.UserDTO;
-import ru.dzhenenko.web.form.AddAccountForm;
+import ru.dzhenenko.service.*;
+import ru.dzhenenko.web.form.AddTypeAccountForm;
+import ru.dzhenenko.web.form.InsertNewTransactionForm;
+
+import java.sql.SQLException;
+import java.util.Collections;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AddAccountsController.class)
+@WebMvcTest(InsertNewTransactionController.class)
 @Import({SecurityConfiguration.class, MockSecurityConfiguration.class})
 @RunWith(SpringRunner.class)
-class AddAccountsControllerTest {
+class InsertNewTransactionControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
+    @Autowired MockMvc mockMvc;
 
-    @MockBean
-    AuthService authService;
+    @MockBean TransactionService transactionService;
 
-    @MockBean
-    AccountService accountService;
+    @MockBean AuthService authService;
 
     @WithUserDetails(value = "i.dzhenenko@gmail.com", userDetailsServiceBeanName = "userDetailsService")
     @Test
-    void getAccount() throws Exception {
-        mockMvc.perform(get("/add-account"))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("form", new AddAccountForm()))
-                .andExpect(view().name("addAccountGet"));
+    void getTransactionNew() throws Exception {
+            when(authService.currentUser()).thenReturn(new UserDTO());
 
+            mockMvc.perform(get("/insert-new-transaction"))
+                    .andExpect(status().isOk())
+                    .andExpect(model().attribute("form", new InsertNewTransactionForm()))
+                    .andExpect(view().name("addNewTransactionGet"));
     }
 
     @WithUserDetails(value = "i.dzhenenko@gmail.com", userDetailsServiceBeanName = "userDetailsService")
     @Test
     void postAccount() throws Exception {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
-        userDTO.setFirstName("Ivan");
-        userDTO.setLastName("Dzhenenko");
-        userDTO.setEmail("i.dzhenenko@gmail.com");
-        userDTO.setPhone("+8800666999");
-        when(authService.currentUser()).thenReturn(userDTO);
+        when(authService.currentUser()).thenReturn(new UserDTO());
 
-        mockMvc.perform(post("/add-account")
-                .flashAttr("form", new AddAccountForm()))
+        mockMvc.perform(post("/insert-new-transaction"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("addNewAccount"));
+                .andExpect(model().attribute("form" , new InsertNewTransactionForm()))
+                .andExpect(view().name("addNewTransaction"));
+
     }
 }

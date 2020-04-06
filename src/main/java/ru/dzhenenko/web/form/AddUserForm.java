@@ -25,7 +25,6 @@ public class AddUserForm {
     private String email;
 
     @NotEmpty
-    @Size(min = 2, max = 30)
     private String password;
 
 }

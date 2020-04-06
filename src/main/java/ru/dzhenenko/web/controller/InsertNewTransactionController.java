@@ -36,19 +36,18 @@ public class InsertNewTransactionController {
         if (!result.hasErrors()) {
             UserDTO userId = authService.currentUser();
 
-            UserDTO userDTO = authService.getUserById(userId.getId());
+            TransactionDTO transactionDTO = transactionService.insertTransaction(
+                    form.getSourceAccount(),
+                    form.getTargetAccount(),
+                    form.getTypeTransaction(),
+                    form.getIdCategory(),
+                    form.getAmount(),
+                    userId.getId());
 
-            TransactionDTO transactionDTO = transactionService.insertTransaction(form.getSourceAccount(),
-                    form.getTargetAccount(),form.getTypeTransaction(), form.getIdCategory(), form.getAmount(),
-                    userDTO.getId());
+            if (transactionDTO != null) {
 
-            model.addAttribute("sourceAccount", transactionDTO.getSourceAccount());
-            model.addAttribute("targetAccount", transactionDTO.getTargetAccount());
-            model.addAttribute("amount", transactionDTO.getAmount());
-            model.addAttribute("typeTransaction", transactionDTO.getTypeTransaction());
-            model.addAttribute("idCategory", transactionDTO.getIdCategory());
-
-            return "addNewTransaction";
+                return "redirect: /insert-new-transaction";
+            }
         }
         model.addAttribute("form", form);
 

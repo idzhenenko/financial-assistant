@@ -12,8 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import static ru.dzhenenko.secuity.UserRole.ADMIN;
 import static ru.dzhenenko.secuity.UserRole.USER;
 
-//@EnableWebSecurity
-//@Profile("Production")
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -21,11 +19,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login-form", "/registration", "/add-user", "/api/*").permitAll()
-                .antMatchers("/personal-area", "/add-user").hasAnyRole(USER.name(), ADMIN.name())
+                .antMatchers("/", "/login-form", "/registration", "/add-user").permitAll()
+                .antMatchers("/personal-area").hasAnyRole(USER.name(), ADMIN.name())
                 .antMatchers("/add-account", "/delete-account", "/view-account").hasAnyRole(USER.name(), ADMIN.name())
                 .antMatchers("/add-type-account", "/delete-type-account", "/view-type-account", "rename-type-account").hasAnyRole(USER.name(), ADMIN.name())
                 .antMatchers("/insert-new-transaction", "/report-account-category").hasAnyRole(USER.name(), ADMIN.name())
+                .antMatchers("/api/get-user-info", "/api/view-account", "/api/delete-account",
+                        "/api/add-account", "/api/add-type-account", "/api/delete-type-account", "/api/registration",
+                        "/api/edit-type-account", "/api/view-report").hasAnyRole(USER.name(), ADMIN.name())
                 .and()
                 .formLogin()
                 .usernameParameter("email")

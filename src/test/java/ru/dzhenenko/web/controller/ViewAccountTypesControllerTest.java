@@ -11,43 +11,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.dzhenenko.MockSecurityConfiguration;
 import ru.dzhenenko.SecurityConfiguration;
-import ru.dzhenenko.service.AccountService;
-import ru.dzhenenko.service.AuthService;
-import ru.dzhenenko.service.UserDTO;
+import ru.dzhenenko.service.*;
 import ru.dzhenenko.web.form.AddAccountForm;
 
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(AddAccountsController.class)
+@WebMvcTest(ViewAccountTypesController.class)
 @Import({SecurityConfiguration.class, MockSecurityConfiguration.class})
 @RunWith(SpringRunner.class)
-class AddAccountsControllerTest {
+class ViewAccountTypesControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
+    @Autowired MockMvc mockMvc;
 
-    @MockBean
-    AuthService authService;
+    @MockBean AuthService authService;
 
-    @MockBean
-    AccountService accountService;
+    @MockBean AccountTypeService accountTypeService;
 
     @WithUserDetails(value = "i.dzhenenko@gmail.com", userDetailsServiceBeanName = "userDetailsService")
     @Test
-    void getAccount() throws Exception {
-        mockMvc.perform(get("/add-account"))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("form", new AddAccountForm()))
-                .andExpect(view().name("addAccountGet"));
-
-    }
-
-    @WithUserDetails(value = "i.dzhenenko@gmail.com", userDetailsServiceBeanName = "userDetailsService")
-    @Test
-    void postAccount() throws Exception {
+    void getTypesAccount() throws Exception {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(1L);
         userDTO.setFirstName("Ivan");
@@ -56,9 +43,14 @@ class AddAccountsControllerTest {
         userDTO.setPhone("+8800666999");
         when(authService.currentUser()).thenReturn(userDTO);
 
-        mockMvc.perform(post("/add-account")
-                .flashAttr("form", new AddAccountForm()))
+        AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
+        accountTypeDTO.setId(1L);
+        accountTypeDTO.setName("Name");
+        when(accountTypeService.viewTypeAccount(1L))
+                .thenReturn(Collections.singletonList(accountTypeDTO));
+
+        mockMvc.perform(get("/view-type-account"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("addNewAccount"));
+                .andExpect(view().name("viewTypeAccountGet"));
     }
 }

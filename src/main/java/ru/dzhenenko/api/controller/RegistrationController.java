@@ -25,13 +25,8 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public @ResponseBody
-    ResponseEntity<AuthResponse> registration(@RequestBody @Valid RegistrationRequest request, User user) {
+    ResponseEntity<AuthResponse> registration(@RequestBody @Valid RegistrationRequest request) {
 
-        AuthResponse authResponse = converter.convert(user);
-
-        if (authResponse.getId() == null) {
-            return status(HttpStatus.UNAUTHORIZED).build();
-        }
         UserDTO userDTO = authService.registration(request.getFirstName(),
                 request.getLastName(), request.getPhone(),
                 request.getEmail(), request.getPassword());
@@ -39,6 +34,7 @@ public class RegistrationController {
         if (userDTO == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ok(new AuthResponse(userDTO.getId(), userDTO.getEmail(), userDTO.getFirstName()));
+        return ok(new AuthResponse(userDTO.getId(), userDTO.getFirstName(),
+                userDTO.getLastName(), userDTO.getPhone(), userDTO.getEmail()));
     }
 }

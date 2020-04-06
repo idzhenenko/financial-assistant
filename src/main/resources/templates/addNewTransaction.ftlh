@@ -1,5 +1,3 @@
-<#import "/spring.ftl" as spring />
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +18,6 @@
         <div class="col-sm"></div>
         <div class="col-sm">
             <form action="/insert-new-transaction" method="post">
-                <h1 class="display-4">${sourceAccount}-${targetAccount}-(${amount})!</h1>
                 <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
             </form>
         </div>

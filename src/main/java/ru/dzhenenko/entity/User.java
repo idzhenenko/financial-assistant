@@ -2,6 +2,7 @@ package ru.dzhenenko.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.api.json.AuthRequest;
 import ru.dzhenenko.secuity.UserRole;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 import static java.util.Collections.emptySet;
 
+@Accessors(chain = true)
 @Entity
 @Getter
 @Setter

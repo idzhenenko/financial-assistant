@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//@Profile("Production")
 @Configuration
 public class MockSecurityConfiguration {
     @Bean

@@ -16,8 +16,6 @@ public class ServiceReportByCategoryRepositoryImpl implements ServiceReportByCat
    public List<ReportByCategory> findByUserIdAndStartDateAndEndDate(Long userId, String startDate, String endDate) {
        Timestamp startTimestamp = Timestamp.valueOf(startDate + " 00:00:00.000000");
        Timestamp endTimestamp = Timestamp.valueOf(endDate + " 00:00:00.000000");
-       /*Timestamp startTimestamp = Timestamp.valueOf(startDate);
-       Timestamp endTimestamp = Timestamp.valueOf(endDate);*/
 
        Query nativeQuery = em.createNativeQuery(
                "SELECT cat.name, sum(t.amount) as amount " +
