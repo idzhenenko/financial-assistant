@@ -29,15 +29,12 @@ public class AuthController {
     public @ResponseBody
     ResponseEntity<AuthResponse> getUserInfo() {
 
-        UserDTO userId = authService.currentUser();
-        if (userId == null) {
-            return status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        User user = serviceUserRepository.getOne(userId.getId());
+        UserDTO user = authService.currentUser();
         if (user == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ok(converter.convert(user));
+
+        return ok(new AuthResponse(user.getId(), user.getFirstName(),
+                user.getLastName(), user.getPhone(), user.getEmail()));
     }
 }

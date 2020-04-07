@@ -8,7 +8,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <include file="liquibase.xml"/>
+   <!-- <include file="liquibase.xml"/>
     
     <changeSet id="test" author="dzhenenko">
         <insert tableName="users">
@@ -19,5 +19,5 @@
             <column name="email">i.dzhenenko@gmail.com</column>
             <column name="password">8046f82d3755e422ae19b026791a5e72</column>
         </insert>
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

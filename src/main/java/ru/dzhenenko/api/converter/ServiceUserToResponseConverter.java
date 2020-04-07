@@ -8,7 +8,8 @@ import ru.dzhenenko.entity.User;
 public class ServiceUserToResponseConverter implements Converter<User, AuthResponse> {
     @Override
     public AuthResponse convert(User user) {
-        return new AuthResponse(user.getId(), user.getEmail(), user.getFirstName());
+        return new AuthResponse(user.getId(), user.getFirstName(), user.getLastName(),
+                user.getPhone(), user.getEmail());
     }
 }
 

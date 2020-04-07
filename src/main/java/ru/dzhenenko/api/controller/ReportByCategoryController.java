@@ -28,7 +28,7 @@ public class ReportByCategoryController {
 
     @PostMapping("/view-report")
     public @ResponseBody
-    ResponseEntity<List<ReportByCategoryResponse>> viewListAccount(@RequestBody @Valid ReportByCategoryRequest request) throws SQLException {
+    ResponseEntity<List<ReportByCategoryResponse>> viewListReport(@RequestBody @Valid ReportByCategoryRequest request) throws SQLException {
 
         UserDTO userDTO = authService.currentUser();
 

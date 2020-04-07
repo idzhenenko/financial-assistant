@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <include file="liquibase.xml"/>
+
+    <changeSet id="add_simple_dada" author="dzhenenko">
+        <insert tableName="users">
+            <column name="first_name">Ivan</column>
+            <column name="last_name">Dzhenenko</column>
+            <column name="phone">+8800666999</column>
+            <column name="email">i.dzhenenko@gmail.com</column>
+            <column name="password">$2y$12$1GkGr4hhAEX0exlONRfnYu5St31AuKf5xjIEXq7GWiO91iSLzKH2e</column>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id">1</column>
+            <column name="role">USER</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="test_account" author="dzhenenko">
+        <insert tableName="account">
+            <column name="name">Bank</column>
+            <column name="balance">1230000</column>
+            <column name="id_users">1</column>
+        </insert>
+        <insert tableName="account">
+            <column name="name">SberBank</column>
+            <column name="balance">1000000</column>
+            <column name="id_users">1</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3" author="dzhenenko">
+        <insert tableName="type_transaction">
+            <column name="id">1</column>
+            <column name="name">Расходы</column>
+            <column name="id_users">1</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="4" author="dzhenenko">
+        <insert tableName="transaction">
+            <column name="source_account">1</column>
+            <column name="target_account">2</column>
+            <column name="id_type_transaction">1</column>
+            <column name="amount">120000</column>
+            <column name="Create_date">2020-10-10</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="dzhenenko">
+        <insert tableName="category">
+            <column name="name">Самолет</column>
+            <column name="id_users">1</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="6" author="dzhenenko">
+        <insert tableName="id_tran_to_id_category">
+            <column name="id_transaction">1</column>
+            <column name="id_category">1</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

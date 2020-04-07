@@ -23,7 +23,7 @@ public class AddNewTransactionController {
     private final AuthService authService;
 
     @GetMapping("/add-type-account")
-    public String getAccount(Model model) {
+    public String getTypeAccount(Model model) {
 
         model.addAttribute("form", new AddTypeAccountForm());
 
@@ -32,7 +32,8 @@ public class AddNewTransactionController {
     }
 
     @PostMapping("/add-type-account")
-    public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model) throws SQLException {
+    public String postTypeAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form,
+                                  BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
             UserDTO userDTO = authService.currentUser();
 

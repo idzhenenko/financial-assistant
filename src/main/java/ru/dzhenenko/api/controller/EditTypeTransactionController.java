@@ -26,7 +26,7 @@ public class EditTypeTransactionController {
 
     @PostMapping("/edit-type-account")
     public @ResponseBody
-    ResponseEntity<EditTypeTransactionResponse> deleteAccount(@RequestBody @Valid EditTypeTransactionRequest request) throws SQLException {
+    ResponseEntity<EditTypeTransactionResponse> editAccount(@RequestBody @Valid EditTypeTransactionRequest request) throws SQLException {
         UserDTO userId = authService.currentUser();
 
         AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(request.getName(), request.getId());

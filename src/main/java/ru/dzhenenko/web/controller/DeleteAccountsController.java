@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class DeleteAccountsController {
     private final AccountService accountService;
 
-    @GetMapping("delete-account")
+    @GetMapping("/delete-account")
     public String getDeleteAccount(Model model) throws SQLException {
 
         model.addAttribute("form", new DeleteAccountForm());
@@ -27,8 +27,8 @@ public class DeleteAccountsController {
         return "deleteAccountGet";
     }
 
-    @PostMapping("delete-account")
-    public String postDeleteAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, Model model) throws SQLException {
+    @PostMapping("/delete-account")
+    public String postDeleteAccount(@ModelAttribute("form") @Valid DeleteAccountForm form, Model model) throws SQLException {
 
         AccountDTO account = accountService.removeAccount(form.getId());
 

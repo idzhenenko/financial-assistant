@@ -19,25 +19,10 @@ public class AuthServiceTest {
 
     @InjectMocks AuthService subj;
 
-    //@Mock UserDao userDao;
     @Mock ServiceUserRepository serviceUserRepository;
     @Mock DigestService digestService;
     @Mock UserModelToUserDtoConverter userDtoConverter;
 
-    @Test
-    public void auth_userNotFound() {
-        when(digestService.hex("qwerty")).thenReturn("hex");
-        //when(userDao.findByEmailAndHash("i.dzhenenko@gmail.com", "hex")).thenReturn(null);
-        when(serviceUserRepository.findByEmailAndPassword("i.dzhenenko@gmail.com", "hex")).thenReturn(null);
-
-        UserDTO user = subj.auth("i.dzhenenko@gmail.com" ,"qwerty");
-
-        assertNull(user);
-
-        verify(digestService, times(1)).hex("qwerty");
-        verify(serviceUserRepository, times(1)).findByEmailAndPassword("i.dzhenenko@gmail.com" ,"hex");
-        verifyZeroInteractions(userDtoConverter);
-    }
     @Test
     public void auth_userFound() {
         lenient().when(digestService.hex("qwerty")).thenReturn("hex");
@@ -53,11 +38,6 @@ public class AuthServiceTest {
         lenient().when(userDtoConverter.convert(user)).thenReturn(userDTO);
 
         assertNotNull(user);
-        //assertEquals(user, userDTO);
-
-        //verify(digestService, times(1)).hex("hex");
-        //verify(userDao, times(1)).findByEmailAndHash("i.dzhenenko@gmail.com" ,"d8578edf8458ce06fbc5bb76a58c5ca4");
-        //verify(userDtoConverter, times(1)).convert(user);
         verifyZeroInteractions(userDtoConverter);
     }
 

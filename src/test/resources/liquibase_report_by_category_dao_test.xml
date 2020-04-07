@@ -8,15 +8,15 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <include file="liquibase.xml"/>
+    <!--<include file="liquibase.xml"/>
 
     <changeSet id="test" author="dzhenenko">
         <insert tableName="users">
             <column name="first_name">Ivan</column>
             <column name="last_name">Dzhenenko</column>
-            <column name="phone">+7900</column>
+            <column name="phone">+8800666999</column>
             <column name="email">i.dzhenenko@gmail.com</column>
-            <column name="password">8046f82d3755e422ae19b026791a5e72</column>
+            <column name="password">$2y$12$1GkGr4hhAEX0exlONRfnYu5St31AuKf5xjIEXq7GWiO91iSLzKH2e</column>
         </insert>
     </changeSet>
 
@@ -56,5 +56,5 @@
             <column name="id_transaction">1</column>
             <column name="id_category">1</column>
         </insert>
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

@@ -8,7 +8,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <include file="liquibase.xml"/>
+    <!--<include file="liquibase.xml"/>
 
     <changeSet id="test" author="dzhenenko">
         <insert tableName="transaction">
@@ -28,6 +28,6 @@
             <column name="id_type_transaction">2</column>
             <column name="amount">10000</column>
         </insert>
-    </changeSet>
+    </changeSet>-->
 
 </databaseChangeLog>

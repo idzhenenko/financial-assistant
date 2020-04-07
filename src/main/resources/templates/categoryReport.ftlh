@@ -20,7 +20,7 @@
         <div class="col-sm"></div>
         <div class="col-sm">
             <form action="/report-account-category" method="post">
-                <h1 class="display-4">${report})!</h1>
+                <#--<h1 class="display-4">${report})!</h1>-->
                 <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
             </form>
         </div>

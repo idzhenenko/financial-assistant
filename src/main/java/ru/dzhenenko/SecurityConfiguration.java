@@ -2,7 +2,9 @@ package ru.dzhenenko;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +19,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login-form", "/registration", "/api/*").permitAll()
-                .antMatchers("/personal-area", "/add-user").hasAnyRole(USER.name(), ADMIN.name())
+                .antMatchers("/", "/login-form", "/registration", "/add-user").permitAll()
+                .antMatchers("/personal-area").hasAnyRole(USER.name(), ADMIN.name())
                 .antMatchers("/add-account", "/delete-account", "/view-account").hasAnyRole(USER.name(), ADMIN.name())
                 .antMatchers("/add-type-account", "/delete-type-account", "/view-type-account", "rename-type-account").hasAnyRole(USER.name(), ADMIN.name())
                 .antMatchers("/insert-new-transaction", "/report-account-category").hasAnyRole(USER.name(), ADMIN.name())
+                .antMatchers("/api/get-user-info", "/api/view-account", "/api/delete-account",
+                        "/api/add-account", "/api/add-type-account", "/api/delete-type-account", "/api/registration",
+                        "/api/edit-type-account", "/api/view-report").hasAnyRole(USER.name(), ADMIN.name())
                 .and()
                 .formLogin()
                 .usernameParameter("email")
