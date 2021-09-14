@@ -28,11 +28,8 @@ public class AccountController {
     @PostMapping("/view-account")
     public @ResponseBody
     ResponseEntity<List<AccountResponse>> viewListAccount() throws SQLException {
-
         UserDTO userId = authService.currentUser();
-
         List<AccountDTO> accountDTO = accountService.viewAccount(userId.getId());
-
         return ok(accountDTO.stream()
                 .map(accountDTO1 -> new AccountResponse(accountDTO1.getId(), accountDTO1.getName(),
                         accountDTO1.getBalance(), accountDTO1.getUserId()))

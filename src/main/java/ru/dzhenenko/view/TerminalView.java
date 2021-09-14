@@ -1,7 +1,6 @@
 package ru.dzhenenko.view;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.dzhenenko.service.*;
 
@@ -22,7 +21,6 @@ public class TerminalView {
         while (true) {
             int userSelect = requestInt("=====Menu=====:\n1 - Регистрация \n2 - Вход\n0 - Выход\n введите цифру:\n");
             if (userSelect == 1) {
-
                 String first_name = requestString("введите имя");
                 String last1_name = requestString("введите фамилию");
                 String phone = requestString("введите номер телефона");
@@ -30,9 +28,7 @@ public class TerminalView {
                 String pass = requestString("введите пароль");
                 UserDTO userDTO = authService.registration(first_name, last1_name, phone, email, pass);
                 System.out.println("Успешная регистрация: " + userDTO);
-
             } else if (userSelect == 2) {
-
                 String email = requestString("введите email");
                 String pass = requestString("введите пароль");
                 UserDTO userDTO = authService.auth(email, pass);
@@ -44,15 +40,12 @@ public class TerminalView {
                                 "\n=====Menu=====:\n1 - Показать счета \n2 - Создать счет\n3 - Удалить счет\n4 - Редактировать счет\n" +
                                         "5 - Показать категории\n6 - Редактировать категорию\n7 - Добавить категорию\n" +
                                         "8 - Удалить категорию\n9 - Отчет по категориям\n10 - Добавить транзакцию\n0 - Выход\nвведите цифру:\n");
-
-
                         if (userSelectAuth == 1) {
                             //showAccount
                             List<AccountDTO> accountDTO = accountService.viewAccount(userDTO.getId());
                             for (AccountDTO dto : accountDTO) {
                                 System.out.println("\t" + dto.getName() + " = " + dto.getBalance() + " [id=" + dto.getId() + "]");
                             }
-
                         }
                         //**********************
                         //test JPA User findById
@@ -70,7 +63,6 @@ public class TerminalView {
                             long balance = requestLong(requestString("введите начальный остаток: 0.00"));
                             AccountDTO accountDTO = accountService.createAccount(name, balance, userDTO.getId());
                             System.out.println("Успешно добавлен: " + accountDTO);
-
                         } else if (userSelectAuth == 3) {
                             //delAccount
                             long userSelectDel = requestLong("введите id для удаления, либо 0 для выхода");
@@ -78,7 +70,6 @@ public class TerminalView {
                                 continue;
                             }
                             accountService.removeAccount(userSelectDel);
-
                         } else if (userSelectAuth == 4) {
                             //editCategory
                             int userSelectUp = requestInt("введите id для редактирования, либо 0 для выхода");
@@ -86,13 +77,11 @@ public class TerminalView {
                                 continue;
                             }
                             accountTypeService.createTypeAccount(requestString("введите новое имя категории"), userSelectUp);
-
                         } else if (userSelectAuth == 5) {
                             //addCategory
                             AccountTypeDTO accountTypeDTO = accountTypeService
                                     .createTypeAccount(requestString("введите название категории:"), userDTO.getId());
                             System.out.println(accountTypeDTO + " - успешно добавлено");
-
                         } else if (userSelectAuth == 6) {
                             //delCategory
                             int userSelectDel = requestInt("введите id для удаления, либо 0 для выхода");
@@ -100,7 +89,6 @@ public class TerminalView {
                                 continue;
                             }
                             accountTypeService.removeAccountType(userSelectDel);
-
                         } else if (userSelectAuth == 7) {
                             //report
                             List<ReportByCategoryDTO> reportDTOS = reportByCategoryService.viewReportCategory(
@@ -111,8 +99,6 @@ public class TerminalView {
                             for (ReportByCategoryDTO report : reportDTOS) {
                                 System.out.println(report.getName() + " " + report.getAmount());
                             }
-
-
                         } else if (userSelectAuth == 8) {
                             //add transaction
                             TransactionDTO transactionDTO = transactionService.insertTransaction(
@@ -123,26 +109,22 @@ public class TerminalView {
                                     requestLong("Введите id категории"),
                                     userDTO.getId()
                             );
-
                         } else if (userSelectAuth == 0) {
                             break;
                         } else {
                             System.out.println("Не верное число");
                         }
                     }
-
                 } else {
                     System.out.println("нет такого юзера");
                     break;
                 }
-
             } else if (userSelect == 0) {
                 break;
             } else {
                 System.out.println("Не верное число");
             }
         }
-
     }
 
     static String requestString(String title) {

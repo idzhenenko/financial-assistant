@@ -15,5 +15,4 @@ public class WebApplication {
     public static void main(String[] args) throws SQLException {
         SpringApplication.run(WebApplication.class, args);
     }
-
 }

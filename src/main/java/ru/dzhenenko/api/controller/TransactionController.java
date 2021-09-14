@@ -28,11 +28,9 @@ public class TransactionController {
     public @ResponseBody
     ResponseEntity<TransactionResponse> addTypeTransaction(@RequestBody @Valid TransactionRequest request) throws SQLException {
         UserDTO userDTO = authService.currentUser();
-
         TransactionDTO transactionDTO = transactionService.insertTransaction(request.getSourceAccount(),
                 request.getTargetAccount(), request.getAmount(), request.getTypeTransaction(), request.getIdCategory(),
                 userDTO.getId());
-
         if (transactionDTO != null) {
             return ok(new TransactionResponse(transactionDTO.getId(), transactionDTO.getSourceAccount(),
                     transactionDTO.getTargetAccount(), transactionDTO.getCreateDate(),

@@ -23,26 +23,20 @@ public class DeleteTypesTransactionController {
 
     @GetMapping("delete-type-account")
     public String getDeleteTypeAccount(Model model) throws SQLException {
-
         model.addAttribute("form", new AddTypeAccountForm());
-
         return "deleteTypeAccountGet";
     }
 
     @PostMapping("delete-type-account")
     public String postDeleteTypeAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, Model model) throws SQLException {
-
         UserDTO idUser = authService.currentUser();
-
         if (idUser == null) {
             return "redirect:/login";
         }
 
         AccountTypeDTO accountTypeDTO = accountTypeService.removeAccountType(form.getId());
-
         model.addAttribute("name", accountTypeDTO.getName())
                 .addAttribute("id", accountTypeDTO.getId());
-
         model.addAttribute("form", new AddTypeAccountForm());
         return "deleteTypeAccountPost";
     }

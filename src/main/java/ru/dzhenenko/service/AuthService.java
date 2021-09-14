@@ -67,5 +67,4 @@ public class AuthService {
         User user = serviceUserRepository.getOne(customUserDetails.getId());
         return userDtoConverter.convert(user);
     }
-
 }

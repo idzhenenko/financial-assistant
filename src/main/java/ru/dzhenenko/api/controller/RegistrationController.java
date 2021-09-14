@@ -20,17 +20,14 @@ import static org.springframework.http.ResponseEntity.status;
 @RestController
 @RequestMapping("/api")
 public class RegistrationController {
-    private final ServiceUserToResponseConverter converter;
     private final AuthService authService;
 
     @PostMapping("/registration")
     public @ResponseBody
     ResponseEntity<AuthResponse> registration(@RequestBody @Valid RegistrationRequest request) {
-
         UserDTO userDTO = authService.registration(request.getFirstName(),
                 request.getLastName(), request.getPhone(),
                 request.getEmail(), request.getPassword());
-
         if (userDTO == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }

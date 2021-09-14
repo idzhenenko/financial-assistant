@@ -28,9 +28,7 @@ public class EditTypeTransactionController {
     public @ResponseBody
     ResponseEntity<EditTypeTransactionResponse> editAccount(@RequestBody @Valid EditTypeTransactionRequest request) throws SQLException {
         UserDTO userId = authService.currentUser();
-
         AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(request.getName(), request.getId());
-
         if (userId != null) {
             return ok(new EditTypeTransactionResponse(accountTypeDTO.getId(), accountTypeDTO.getName()));
         }

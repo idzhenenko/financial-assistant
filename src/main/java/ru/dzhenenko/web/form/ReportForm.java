@@ -8,7 +8,6 @@ import javax.validation.constraints.NotEmpty;
 public class ReportForm {
     @NotEmpty
     private String startDay;
-
     @NotEmpty
     private String endDay;
 }

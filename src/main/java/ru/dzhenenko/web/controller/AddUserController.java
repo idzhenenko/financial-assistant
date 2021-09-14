@@ -24,17 +24,14 @@ public class AddUserController {
     @PostMapping("/add-user")
     public String postUser(@ModelAttribute("form") @Valid AddUserForm form) {
         UserDTO user = authService.registration(
-                    form.getFirstName(),
-                    form.getLastName(),
-                    form.getPhone(),
-                    form.getEmail(),
-                    form.getPassword());
-
+                form.getFirstName(),
+                form.getLastName(),
+                form.getPhone(),
+                form.getEmail(),
+                form.getPassword());
         if (user != null) {
-
             return "redirect:/login-form";
         }
-
         return "addUser";
     }
 }

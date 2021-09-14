@@ -24,9 +24,7 @@ public class InsertNewTransactionController {
 
     @GetMapping("/insert-new-transaction")
     public String getTransactionNew(Model model) {
-
         model.addAttribute("form", new InsertNewTransactionForm());
-
         return "addNewTransactionGet";
     }
 
@@ -35,7 +33,6 @@ public class InsertNewTransactionController {
                               Model model) throws SQLException {
         if (!result.hasErrors()) {
             UserDTO userId = authService.currentUser();
-
             TransactionDTO transactionDTO = transactionService.insertTransaction(
                     form.getSourceAccount(),
                     form.getTargetAccount(),
@@ -43,14 +40,11 @@ public class InsertNewTransactionController {
                     form.getIdCategory(),
                     form.getAmount(),
                     userId.getId());
-
             if (transactionDTO != null) {
-
                 return "redirect: /insert-new-transaction";
             }
         }
         model.addAttribute("form", form);
-
         return "addNewTransaction";
     }
 }

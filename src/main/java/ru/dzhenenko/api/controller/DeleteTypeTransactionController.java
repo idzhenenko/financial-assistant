@@ -27,11 +27,8 @@ public class DeleteTypeTransactionController {
     @PostMapping("/delete-type-account")
     public @ResponseBody
     ResponseEntity<DeleteTypeTransactionResponse> deleteTypeAccount(@RequestBody @Valid DeleteTypeTransactionRequest request) throws SQLException {
-
         UserDTO userId = authService.currentUser();
-
         AccountTypeDTO accountTypeDTO = accountTypeService.removeAccountType(request.getId());
-
         if (userId != null) {
             return ok(new DeleteTypeTransactionResponse(accountTypeDTO.getId(), accountTypeDTO.getName()));
         }

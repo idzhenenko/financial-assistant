@@ -24,11 +24,8 @@ public class AddNewTransactionController {
 
     @GetMapping("/add-type-account")
     public String getTypeAccount(Model model) {
-
         model.addAttribute("form", new AddTypeAccountForm());
-
         return "addTypeAccountGet";
-
     }
 
     @PostMapping("/add-type-account")
@@ -36,17 +33,12 @@ public class AddNewTransactionController {
                                   BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
             UserDTO userDTO = authService.currentUser();
-
             AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(form.getName(), userDTO.getId());
-
             model.addAttribute("name", accountTypeDTO.getName());
             model.addAttribute("id", accountTypeDTO.getId());
-
             return "addNewTypeAccount";
         }
         model.addAttribute("form", form);
-
         return "addNewTypeAccount";
     }
-
 }

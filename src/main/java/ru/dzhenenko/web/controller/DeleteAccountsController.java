@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.dzhenenko.service.AccountDTO;
 import ru.dzhenenko.service.AccountService;
-import ru.dzhenenko.web.form.AddTypeAccountForm;
 import ru.dzhenenko.web.form.DeleteAccountForm;
 
 import javax.validation.Valid;
@@ -21,21 +20,16 @@ public class DeleteAccountsController {
 
     @GetMapping("/delete-account")
     public String getDeleteAccount(Model model) throws SQLException {
-
         model.addAttribute("form", new DeleteAccountForm());
-
         return "deleteAccountGet";
     }
 
     @PostMapping("/delete-account")
     public String postDeleteAccount(@ModelAttribute("form") @Valid DeleteAccountForm form, Model model) throws SQLException {
-
         AccountDTO account = accountService.removeAccount(form.getId());
-
         model.addAttribute("name", account.getName())
                 .addAttribute("balance", account.getBalance())
                 .addAttribute("id", account.getId());
-
         model.addAttribute("form", new DeleteAccountForm());
         return "deleteAccountPost";
     }

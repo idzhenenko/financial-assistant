@@ -21,27 +21,19 @@ public class RenameTypeTransactionController {
 
     @GetMapping("/rename-type-account")
     public String getAccount(Model model) {
-
         model.addAttribute("form", new AddTypeAccountForm());
-
         return "renameTypeAccountGet";
-
     }
 
     @PostMapping("/rename-type-account")
     public String postAccount(@ModelAttribute("form") @Valid AddTypeAccountForm form, BindingResult result, Model model) throws SQLException {
         if (!result.hasErrors()) {
-
             AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(form.getName(), form.getId());
-
-
             model.addAttribute("name", accountTypeDTO.getName());
             model.addAttribute("id", accountTypeDTO.getId());
-
             return "renameTypeAccount";
         }
         model.addAttribute("form", form);
-
         return "renameTypeAccount";
     }
 }

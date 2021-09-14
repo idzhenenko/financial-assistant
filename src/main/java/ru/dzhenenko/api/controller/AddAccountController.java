@@ -27,12 +27,9 @@ public class AddAccountController {
     @PostMapping("/add-account")
     public @ResponseBody
     ResponseEntity<AddAccountResponse> addAccount(@RequestBody @Valid AddAccountRequest addAccountRequest) throws SQLException {
-
         UserDTO userId = authService.currentUser();
-
         AccountDTO accountDTO = accountService.createAccount(addAccountRequest.getName(), addAccountRequest.getBalance(),
                 addAccountRequest.getId());
-
         if (userId != null) {
             return ok(new AddAccountResponse(accountDTO.getId(), accountDTO.getName(), accountDTO.getBalance(),
                     accountDTO.getUserId()));

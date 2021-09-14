@@ -25,37 +25,30 @@ public class ReportCategoryController {
 
     @GetMapping("/report-account-category")
     public String getReport(Model model) {
-
         model.addAttribute("form", new ReportForm());
-
         return "categoryReportGet";
 
     }
 
     @PostMapping("/report-account-category")
-    public String postReport(@ModelAttribute ("form") @Valid ReportForm form, BindingResult result, Model model)
+    public String postReport(@ModelAttribute("form") @Valid ReportForm form, BindingResult result, Model model)
             throws SQLException {
+        if (!result.hasErrors()) {
+            UserDTO userDTO = authService.currentUser();
+            if (userDTO == null) {
+                return "redirect:/login-form";
+            }
 
-       if (!result.hasErrors()){
-           UserDTO userDTO = authService.currentUser();
-
-           if (userDTO == null) {
-               return "redirect:/login-form";
-           }
-
-           List<ReportByCategoryDTO> report = reportByCategoryService.viewReportCategory(userDTO.getId(),
-                   form.getStartDay(), form.getEndDay());
-
-           if (report.isEmpty()){
-               model.addAttribute("msg", "Нет данных");
-           } else {
-               model.addAttribute("report", report)
-                       .addAttribute("startDay", form.getStartDay())
-                       .addAttribute("endDay" , form.getEndDay());
-           }
-       }
-
+            List<ReportByCategoryDTO> report = reportByCategoryService.viewReportCategory(userDTO.getId(),
+                    form.getStartDay(), form.getEndDay());
+            if (report.isEmpty()) {
+                model.addAttribute("msg", "Нет данных");
+            } else {
+                model.addAttribute("report", report)
+                        .addAttribute("startDay", form.getStartDay())
+                        .addAttribute("endDay", form.getEndDay());
+            }
+        }
         return "categoryReport";
-
     }
 }

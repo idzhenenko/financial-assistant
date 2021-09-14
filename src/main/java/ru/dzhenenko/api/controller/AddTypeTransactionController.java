@@ -27,11 +27,8 @@ public class AddTypeTransactionController {
     @PostMapping("/add-type-account")
     public @ResponseBody
     ResponseEntity<AddTypeTransactionResponse> addTypeAccount(@RequestBody @Valid AddTypeTransactionRequest request) throws SQLException {
-
         UserDTO userId = authService.currentUser();
-
         AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(request.getName(), userId.getId());
-
         if (userId != null) {
             return ok(new AddTypeTransactionResponse(accountTypeDTO.getId(),
                     accountTypeDTO.getName()));

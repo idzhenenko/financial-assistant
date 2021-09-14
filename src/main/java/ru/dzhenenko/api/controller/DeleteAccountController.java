@@ -28,11 +28,8 @@ public class DeleteAccountController {
     @PostMapping("/delete-account")
     public @ResponseBody
     ResponseEntity<DeleteAccountResponse> deleteAccount(@RequestBody @Valid DeleteAccountRequest deleteAccountRequest) throws SQLException {
-
         UserDTO userId = authService.currentUser();
-
         AccountDTO accountDTO = accountService.removeAccount(deleteAccountRequest.getId());
-
         if (userId != null) {
             return ok(new DeleteAccountResponse(accountDTO.getName(), deleteAccountRequest.getBalance(),
                     accountDTO.getId()));

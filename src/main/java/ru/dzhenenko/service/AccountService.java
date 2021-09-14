@@ -22,7 +22,6 @@ public class AccountService {
     public List<AccountDTO> viewAccount(long userId) throws SQLException {
         List<AccountDTO> accountDTOS = new ArrayList<>();
         List<Account> account = accountRepository.findAllByUser_Id(userId);
-
         if (!account.isEmpty()) {
             for (Account item : account) {
                 accountDTOS.add(accountDtoConverter.convert(item));
@@ -33,24 +32,17 @@ public class AccountService {
 
     public AccountDTO createAccount(String name, long balance, long id) throws SQLException {
         Account account = new Account();
-
         User user = userRepository.getOne(id);
-
         account.setUser(user);
         account.setName(name);
         account.setBalance((int) balance);
-
         Account accountSave = accountRepository.save(account);
-
         return accountDtoConverter.convert(accountSave);
-
     }
 
     public AccountDTO removeAccount(long id) throws SQLException {
         Account account = accountRepository.getOne(id);
-
         accountRepository.delete(account);
-
         return accountDtoConverter.convert(account);
     }
 }

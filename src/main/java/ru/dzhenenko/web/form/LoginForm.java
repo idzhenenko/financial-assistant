@@ -11,10 +11,8 @@ public class LoginForm {
     @Email
     @NotEmpty
     private String email;
-
     @NotEmpty
     @Size(min = 2, max = 30)
     private String password;
-
     private String name;
 }

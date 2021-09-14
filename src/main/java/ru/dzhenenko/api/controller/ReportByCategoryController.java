@@ -29,16 +29,12 @@ public class ReportByCategoryController {
     @PostMapping("/view-report")
     public @ResponseBody
     ResponseEntity<List<ReportByCategoryResponse>> viewListReport(@RequestBody @Valid ReportByCategoryRequest request) throws SQLException {
-
         UserDTO userDTO = authService.currentUser();
-
         if (userDTO == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }
-
         List<ReportByCategoryDTO> reportByCategoryDTOS = reportByCategoryService.viewReportCategory(userDTO.getId(),
                 request.getStartDay(), request.getEndDay());
-
         return ok(reportByCategoryDTOS.stream()
                 .map(reportByCategoryDTOS1 -> new ReportByCategoryResponse(reportByCategoryDTOS1.getName(),
                         reportByCategoryDTOS1.getAmount()))
