@@ -56,18 +56,18 @@ values ('Ivan Sberbank', '9000000', '1');
 insert into account (name, balance, id_users)
 values ('Olga Sberbank', '8000000', '2');
 
-insert into type_transaction (name)
-values ('Getting');
-insert into type_transaction (name)
-values ('Consumption');
-insert into type_transaction (name)
-values ('Money transfer');
-insert into type_transaction (name)
-values ('Consumption');
-insert into type_transaction (name)
-values ('Consumption');
-insert into type_transaction (name)
-values ('Consumption');
+insert into type_transaction (name, id_users)
+values ('Getting', 1);
+insert into type_transaction (name, id_users)
+values ('Consumption', 1);
+insert into type_transaction (name, id_users)
+values ('Money transfer', 1);
+insert into type_transaction (name, id_users)
+values ('Consumption', 2);
+insert into type_transaction (name, id_users)
+values ('Consumption', 2);
+insert into type_transaction (name, id_users)
+values ('Consumption', 2);
 
 
 insert into transaction (source_account, target_account, Create_date, id_type_transaction, amount)
@@ -104,18 +104,18 @@ insert into transaction (source_account, target_account, Create_date, id_type_tr
 values ('2', NULL, '2019-09-04 3:09:09', '5', '3000');
 
 
-insert into category (name)
-values ('Products');
-insert into category (name)
-values ('Transport');
-insert into category (name)
-values ('Gym');
-insert into category (name)
-values ('Rent apartment');
-insert into category (name)
-values ('Trip');
-insert into category (name)
-values ('Salary');
+insert into category (name, id_users)
+values ('Products', 1);
+insert into category (name, id_users)
+values ('Transport', 1);
+insert into category (name, id_users)
+values ('Gym', 1);
+insert into category (name, id_users)
+values ('Rent apartment', 2);
+insert into category (name, id_users)
+values ('Trip', 2);
+insert into category (name, id_users)
+values ('Salary', 2);
 
 insert into id_tran_to_id_category (id_transaction, id_category)
 values (1, 1);

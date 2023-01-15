@@ -28,10 +28,11 @@ public class AddTypeTransactionController {
     public @ResponseBody
     ResponseEntity<AddTypeTransactionResponse> addTypeAccount(@RequestBody @Valid AddTypeTransactionRequest request) throws SQLException {
         UserDTO userId = authService.currentUser();
-        AccountTypeDTO accountTypeDTO = accountTypeService.createTypeAccount(request.getName(), userId.getId());
+        AccountTypeDTO accountType = accountTypeService.createTypeAccount(request.getName(), userId.getId());
         if (userId != null) {
-            return ok(new AddTypeTransactionResponse(accountTypeDTO.getId(),
-                    accountTypeDTO.getName()));
+            return ok(new AddTypeTransactionResponse(
+                    accountType.getId(),
+                    accountType.getName()));
         }
         return status(HttpStatus.BAD_REQUEST).build();
     }

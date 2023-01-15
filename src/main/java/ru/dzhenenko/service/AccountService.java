@@ -19,9 +19,9 @@ public class AccountService {
     private final ServiceAccountRepository accountRepository;
     private final ServiceUserRepository userRepository;
 
-    public List<AccountDTO> viewAccount(long userId) throws SQLException {
+    public List<AccountDTO> viewAccount(long userId) {
         List<AccountDTO> accountDTOS = new ArrayList<>();
-        List<Account> account = accountRepository.findAllByUser_Id(userId);
+        List<Account> account = accountRepository.findAllByUserId(userId);
         if (!account.isEmpty()) {
             for (Account item : account) {
                 accountDTOS.add(accountDtoConverter.convert(item));
@@ -30,7 +30,7 @@ public class AccountService {
         return accountDTOS;
     }
 
-    public AccountDTO createAccount(String name, long balance, long id) throws SQLException {
+    public AccountDTO createAccount(String name, long balance, long id) {
         Account account = new Account();
         User user = userRepository.getOne(id);
         account.setUser(user);
@@ -40,7 +40,7 @@ public class AccountService {
         return accountDtoConverter.convert(accountSave);
     }
 
-    public AccountDTO removeAccount(long id) throws SQLException {
+    public AccountDTO removeAccount(long id) {
         Account account = accountRepository.getOne(id);
         accountRepository.delete(account);
         return accountDtoConverter.convert(account);

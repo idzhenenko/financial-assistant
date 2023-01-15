@@ -14,7 +14,6 @@ import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.ReportForm;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,16 +30,17 @@ public class ReportCategoryController {
     }
 
     @PostMapping("/report-account-category")
-    public String postReport(@ModelAttribute("form") @Valid ReportForm form, BindingResult result, Model model)
-            throws SQLException {
+    public String postReport(@ModelAttribute("form") @Valid ReportForm form, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             UserDTO userDTO = authService.currentUser();
             if (userDTO == null) {
                 return "redirect:/login-form";
             }
 
-            List<ReportByCategoryDTO> report = reportByCategoryService.viewReportCategory(userDTO.getId(),
-                    form.getStartDay(), form.getEndDay());
+            List<ReportByCategoryDTO> report = reportByCategoryService.viewReportCategory(
+                    userDTO.getId(),
+                    form.getStartDay(),
+                    form.getEndDay());
             if (report.isEmpty()) {
                 model.addAttribute("msg", "Нет данных");
             } else {

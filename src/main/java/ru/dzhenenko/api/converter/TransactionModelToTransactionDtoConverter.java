@@ -8,13 +8,13 @@ import ru.dzhenenko.service.TransactionDTO;
 public class TransactionModelToTransactionDtoConverter implements Converter<Transaction, TransactionDTO> {
     @Override
     public TransactionDTO convert(Transaction source) {
-        TransactionDTO transactionDTO = new TransactionDTO();
-        transactionDTO.setSourceAccount(source.getSourceAccount().getId());
-        transactionDTO.setTargetAccount(source.getTargetAccount().getId());
-        transactionDTO.setCreateDate(source.getCreateDate().toString());
-        transactionDTO.setTypeTransaction(source.getTypeTransaction().getId());
-        transactionDTO.setAmount(source.getAmount());
-        return transactionDTO;
+        TransactionDTO transaction = new TransactionDTO();
+        transaction.setSourceAccount(source.getSourceAccount().getId());
+        transaction.setTargetAccount(source.getTargetAccount().getId());
+        transaction.setCreateDate(source.getCreateDate().toString());
+        transaction.setTypeTransaction(source.getTypeTransaction().getId());
+        transaction.setAmount(source.getAmount());
+        return transaction;
     }
 }
 

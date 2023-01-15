@@ -17,7 +17,7 @@ public class ViewAccountTypesController {
     private final AuthService authService;
 
     @GetMapping("/view-type-account")
-    public String getTypesAccount(Model model) throws SQLException {
+    public String getTypesAccount(Model model) {
         UserDTO userDTO = authService.currentUser();
         model.addAttribute("accountsType", accountTypeService.viewTypeAccount(userDTO.getId()));
         return "viewTypeAccountGet";

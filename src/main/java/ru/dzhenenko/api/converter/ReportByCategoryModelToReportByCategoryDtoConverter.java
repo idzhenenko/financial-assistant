@@ -8,9 +8,9 @@ import ru.dzhenenko.service.ReportByCategoryDTO;
 public class ReportByCategoryModelToReportByCategoryDtoConverter implements Converter<ReportByCategory, ReportByCategoryDTO> {
     @Override
     public ReportByCategoryDTO convert(ReportByCategory source) {
-        ReportByCategoryDTO reportByCategoryDTO = new ReportByCategoryDTO();
-        reportByCategoryDTO.setName(source.getName());
-        reportByCategoryDTO.setAmount(source.getAmount());
-        return reportByCategoryDTO;
+        ReportByCategoryDTO reportByCategory = new ReportByCategoryDTO();
+        reportByCategory.setName(source.getName());
+        reportByCategory.setAmount(source.getAmount());
+        return reportByCategory;
     }
 }

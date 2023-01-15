@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.dzhenenko.api.converter.ServiceUserToResponseConverter;
 import ru.dzhenenko.api.json.AuthResponse;
-import ru.dzhenenko.repository.ServiceUserRepository;
 import ru.dzhenenko.service.AuthService;
 import ru.dzhenenko.service.UserDTO;
 
@@ -29,7 +27,11 @@ public class AuthController {
         if (user == null) {
             return status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ok(new AuthResponse(user.getId(), user.getFirstName(),
-                user.getLastName(), user.getPhone(), user.getEmail()));
+        return ok(new AuthResponse(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
+                user.getEmail()));
     }
 }

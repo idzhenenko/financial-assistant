@@ -8,9 +8,9 @@ import ru.dzhenenko.service.AccountTypeDTO;
 public class AccountTypeModelToAccountTypeDtoConverter implements Converter<AccountType, AccountTypeDTO> {
     @Override
     public AccountTypeDTO convert(AccountType source) {
-        AccountTypeDTO accountTypeDTO = new AccountTypeDTO();
-        accountTypeDTO.setId(source.getId());
-        accountTypeDTO.setName(source.getName());
-        return accountTypeDTO;
+        AccountTypeDTO accountType = new AccountTypeDTO();
+        accountType.setId(source.getId());
+        accountType.setName(source.getName());
+        return accountType;
     }
 }

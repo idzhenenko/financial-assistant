@@ -36,8 +36,9 @@ public class ReportByCategoryController {
         List<ReportByCategoryDTO> reportByCategoryDTOS = reportByCategoryService.viewReportCategory(userDTO.getId(),
                 request.getStartDay(), request.getEndDay());
         return ok(reportByCategoryDTOS.stream()
-                .map(reportByCategoryDTOS1 -> new ReportByCategoryResponse(reportByCategoryDTOS1.getName(),
-                        reportByCategoryDTOS1.getAmount()))
+                .map(report -> new ReportByCategoryResponse(
+                        report.getName(),
+                        report.getAmount()))
                 .collect(Collectors.toList()));
     }
 }

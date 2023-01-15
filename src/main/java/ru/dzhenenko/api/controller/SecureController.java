@@ -5,4 +5,3 @@ public interface SecureController<REQ, RES> {
 
     Class<REQ> getRequestClass();
 }
-

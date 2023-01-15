@@ -4,8 +4,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import ru.dzhenenko.secuity.UserRole;
 
-import java.util.Set;
-
 @Data
 @Accessors(chain = true)
 public class ServiceUserFilter {

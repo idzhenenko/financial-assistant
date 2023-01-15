@@ -28,13 +28,17 @@ public class TransactionController {
     public @ResponseBody
     ResponseEntity<TransactionResponse> addTypeTransaction(@RequestBody @Valid TransactionRequest request) throws SQLException {
         UserDTO userDTO = authService.currentUser();
-        TransactionDTO transactionDTO = transactionService.insertTransaction(request.getSourceAccount(),
+        TransactionDTO transaction = transactionService.insertTransaction(request.getSourceAccount(),
                 request.getTargetAccount(), request.getAmount(), request.getTypeTransaction(), request.getIdCategory(),
                 userDTO.getId());
-        if (transactionDTO != null) {
-            return ok(new TransactionResponse(transactionDTO.getId(), transactionDTO.getSourceAccount(),
-                    transactionDTO.getTargetAccount(), transactionDTO.getCreateDate(),
-                    transactionDTO.getTypeTransaction(), transactionDTO.getAmount()));
+        if (transaction != null) {
+            return ok(new TransactionResponse(
+                    transaction.getId(),
+                    transaction.getSourceAccount(),
+                    transaction.getTargetAccount(),
+                    transaction.getCreateDate(),
+                    transaction.getTypeTransaction(),
+                    transaction.getAmount()));
         }
         return status(HttpStatus.BAD_REQUEST).build();
     }

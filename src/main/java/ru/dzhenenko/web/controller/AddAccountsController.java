@@ -37,9 +37,9 @@ public class AddAccountsController {
             model.addAttribute("name", account.getName());
             model.addAttribute("balance", account.getBalance());
             model.addAttribute("id", account.getId());
-            return "addNewAccount";
+            return "redirect:/view-account";
         }
         model.addAttribute("form", form);
-        return "addNewAccount";
+        return "AddNewAccount";
     }
 }

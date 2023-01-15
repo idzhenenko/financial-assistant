@@ -13,7 +13,7 @@
 <br>
 <div class="container">
     <div class="jumbotron">
-        <h3 class="text-center">Вы успешно переименновали транзакцию!</h3>
+        <h3 class="text-center">Вы успешно переименовали транзакцию!</h3>
         <br>
         <br>
     <div class="row">

@@ -8,11 +8,11 @@ import ru.dzhenenko.service.AccountDTO;
 public class AccountModelToAccountDtoConverter implements Converter<Account, AccountDTO> {
     @Override
     public AccountDTO convert(Account source) {
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.setId(source.getId());
-        accountDTO.setName(source.getName());
-        accountDTO.setBalance(source.getBalance());
-        accountDTO.setUserId(source.getUser().getId());
-        return accountDTO;
+        AccountDTO account = new AccountDTO();
+        account.setId(source.getId());
+        account.setName(source.getName());
+        account.setBalance(source.getBalance());
+        account.setUserId(source.getUser().getId());
+        return account;
     }
 }

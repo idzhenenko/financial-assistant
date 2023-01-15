@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>ru.dzhenenko.web</groupId>
-    <artifactId>jborn_web_10_dzhenenko</artifactId>
+    <artifactId>financial-assistant</artifactId>
     <version>1.0</version>
 
     <properties>

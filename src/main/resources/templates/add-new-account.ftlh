@@ -30,9 +30,9 @@
                 <@spring.formInput "form.balance" "class=\"form-control\" id=\"balance\" placeholder=\"Введите сумму\"" "text"/>
                 <@spring.showErrors "<br>"/>
                 </div>
-                <button type="submit" class="btn btn-success">Создать счет</button>
+                <button type="submit" href="/view-account" class="btn btn-success">Создать счет</button>
                 <#--<a class="btn btn-dark" href="/view-account" role="button">Создать счет</a>-->
-                <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
+                <a class="btn btn-dark" href="/personal-area" role="button">Вернуться обратно</a>
             </form>
         </div>
         </div>

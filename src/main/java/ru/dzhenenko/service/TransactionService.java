@@ -8,9 +8,11 @@ import ru.dzhenenko.entity.AccountType;
 import ru.dzhenenko.entity.Category;
 import ru.dzhenenko.entity.Transaction;
 import ru.dzhenenko.exeption.CustomExeption;
-import ru.dzhenenko.repository.*;
+import ru.dzhenenko.repository.ServiceAccountRepository;
+import ru.dzhenenko.repository.ServiceAccountTypeRepository;
+import ru.dzhenenko.repository.ServiceCategoryRepository;
+import ru.dzhenenko.repository.ServiceTransactionRepository;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,14 @@ public class TransactionService {
     private final ServiceTransactionRepository transactionRepository;
     private final ServiceCategoryRepository serviceCategoryRepository;
 
-    public TransactionDTO insertTransaction(Long sourceAccount, Long targetAccount, long amount,
-                                            long idTypeTransaction, long idCategory, long idUser) throws SQLException {
+    public TransactionDTO insertTransaction(Long sourceAccount, Long targetAccount, long idCategory,
+                                            long idTypeTransaction, long amount, long idUser) {
 
         Account source = null;
         Account target = null;
         if (sourceAccount == 0 && targetAccount == 0)
             throw new CustomExeption("no accounts found");
-        source = null;
+
         if (sourceAccount > 0) {
             source = accountRepository.getOne(sourceAccount);
             if (source == null) {
@@ -41,7 +43,7 @@ public class TransactionService {
                 throw new CustomExeption("Custom Error!!!(source)");
             }
         }
-        target = null;
+
         if (targetAccount > 0) {
             target = accountRepository.getOne(targetAccount);
             if (target == null) {
@@ -63,7 +65,7 @@ public class TransactionService {
         if (source.getId() == sourceAccount) {
             if (source.getBalance() > 0) {
                 source.setBalance((int) (source.getBalance() - amount));
-                Account accountSave = accountRepository.save(source);
+                accountRepository.save(source);
                 source.getBalance();
                 source.getId();
             } else {

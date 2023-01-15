@@ -8,7 +8,10 @@ import ru.dzhenenko.entity.Account;
 public class ServiceAccountToResponseConverter implements Converter<Account, AccountResponse> {
     @Override
     public AccountResponse convert(Account account) {
-        return new AccountResponse(account.getId(), account.getName(),
-                account.getBalance(), account.getUser());
+        return new AccountResponse(
+                account.getId(),
+                account.getName(),
+                account.getBalance(),
+                account.getUser());
     }
 }

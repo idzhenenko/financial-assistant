@@ -46,7 +46,7 @@ public class AccountTypeService {
 
     public List<AccountTypeDTO> viewTypeAccount(long id) {
         List<AccountTypeDTO> accountTypeDTOS = new ArrayList<>();
-        List<AccountType> accountTypes = accountTypeRepository.findAllByUser_Id(id);
+        List<AccountType> accountTypes = accountTypeRepository.findAllByUserId(id);
         if (!accountTypes.isEmpty()) {
             for (AccountType item : accountTypes) {
                 accountTypeDTOS.add(accountTypeModelToAccountTypeDtoConverter.convert(item));

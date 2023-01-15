@@ -14,7 +14,6 @@ import ru.dzhenenko.service.UserDTO;
 import ru.dzhenenko.web.form.InsertNewTransactionForm;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,7 +29,7 @@ public class InsertNewTransactionController {
 
     @PostMapping("/insert-new-transaction")
     public String postAccount(@ModelAttribute("form") @Valid InsertNewTransactionForm form, BindingResult result,
-                              Model model) throws SQLException {
+                              Model model) {
         if (!result.hasErrors()) {
             UserDTO userId = authService.currentUser();
             TransactionDTO transactionDTO = transactionService.insertTransaction(
@@ -41,7 +40,7 @@ public class InsertNewTransactionController {
                     form.getAmount(),
                     userId.getId());
             if (transactionDTO != null) {
-                return "redirect: /insert-new-transaction";
+                return "redirect:/personal-area";
             }
         }
         model.addAttribute("form", form);

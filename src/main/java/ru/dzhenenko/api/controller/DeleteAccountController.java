@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.dzhenenko.api.converter.ServiceAccountToResponseConverter;
 import ru.dzhenenko.api.json.DeleteAccountRequest;
 import ru.dzhenenko.api.json.DeleteAccountResponse;
 import ru.dzhenenko.service.AccountDTO;
@@ -29,10 +28,12 @@ public class DeleteAccountController {
     public @ResponseBody
     ResponseEntity<DeleteAccountResponse> deleteAccount(@RequestBody @Valid DeleteAccountRequest deleteAccountRequest) throws SQLException {
         UserDTO userId = authService.currentUser();
-        AccountDTO accountDTO = accountService.removeAccount(deleteAccountRequest.getId());
+        AccountDTO account = accountService.removeAccount(deleteAccountRequest.getId());
         if (userId != null) {
-            return ok(new DeleteAccountResponse(accountDTO.getName(), deleteAccountRequest.getBalance(),
-                    accountDTO.getId()));
+            return ok(new DeleteAccountResponse(
+                    account.getName(),
+                    deleteAccountRequest.getBalance(),
+                    account.getId()));
         }
         return status(HttpStatus.BAD_REQUEST).build();
     }

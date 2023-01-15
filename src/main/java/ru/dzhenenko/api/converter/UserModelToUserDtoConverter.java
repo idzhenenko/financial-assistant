@@ -8,11 +8,11 @@ import ru.dzhenenko.service.UserDTO;
 public class UserModelToUserDtoConverter implements Converter<User, UserDTO> {
     @Override
     public UserDTO convert(User source) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(source.getId());
-        userDTO.setEmail(source.getEmail());
-        userDTO.setFirstName(source.getFirstName());
-        userDTO.setLastName(source.getLastName());
-        return userDTO;
+        UserDTO user = new UserDTO();
+        user.setId(source.getId());
+        user.setEmail(source.getEmail());
+        user.setFirstName(source.getFirstName());
+        user.setLastName(source.getLastName());
+        return user;
     }
 }

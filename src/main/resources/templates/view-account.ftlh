@@ -16,6 +16,7 @@
         <hr class="my-4">
         <a class="btn btn-dark" href="/add-account" role="button">Создать счет</a>
         <a class="btn btn-danger" href="/delete-account" role="button">Удалить счет</a>
+        <a class="btn btn-light" href="/personal-area" role="button">Вернуться обратно</a>
     </div>
 </div>
 <script src="/js/bootstrap.min.js"></script>

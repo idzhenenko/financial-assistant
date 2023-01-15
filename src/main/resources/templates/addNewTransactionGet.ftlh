@@ -21,19 +21,23 @@
         <div class="col-sm">
             <form action="/insert-new-transaction" method="post">
                 <div class="form-group">
-                    <label for="name">Имя транзакции</label>
+                    <label for="name">Откуда</label>
                     <@spring.formInput "form.sourceAccount" "class=\"form-control\" id=\"sourceAccount\" placeholder=\"Введите счет списания\"" "text"/>
                     <@spring.showErrors "<br>"/>
                     <br>
+                    <label for="name">Куда</label>
                     <@spring.formInput "form.targetAccount" "class=\"form-control\" id=\"targetAccount\" placeholder=\"Введите счет зачисления\"" "text"/>
                     <@spring.showErrors "<br>"/>
                     <br>
+                    <label for="name">Тип транзакции</label>
                     <@spring.formInput "form.typeTransaction" "class=\"form-control\" id=\"typeTransaction\" placeholder=\"Введите id транзакции\"" "text"/>
                     <@spring.showErrors "<br>"/>
                     <br>
+                    <label for="name">Id категории</label>
                     <@spring.formInput "form.idCategory" "class=\"form-control\" id=\"idCategory\" placeholder=\"Введите id категории\"" "text"/>
                     <@spring.showErrors "<br>"/>
                     <br>
+                    <label for="name">Сумма</label>
                     <@spring.formInput "form.amount" "class=\"form-control\" id=\"amount\" placeholder=\"Введите сумму\"" "text"/>
                     <@spring.showErrors "<br>"/>
                 </div>

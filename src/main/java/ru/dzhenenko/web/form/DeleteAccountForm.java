@@ -7,7 +7,4 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class DeleteAccountForm {
     private long id;
-    private Integer balance;
-    @NotEmpty
-    private String name;
 }

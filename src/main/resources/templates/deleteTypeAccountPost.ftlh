@@ -8,6 +8,7 @@
 <#if form??>
     <h1>Удален тип транзакции: </h1>
     <p>${name}</p>
+    <a class="btn btn-dark" href="/personal-area" role="button">Вернуться обратно</a>
 <#else>
     <h1>Список счетов пуст.</h1>
 </#if>

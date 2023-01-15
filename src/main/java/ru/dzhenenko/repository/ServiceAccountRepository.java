@@ -6,5 +6,5 @@ import ru.dzhenenko.entity.Account;
 import java.util.List;
 
 public interface ServiceAccountRepository extends JpaRepository<Account, Long> {
-    List<Account> findAllByUser_Id(long userId);
+    List<Account> findAllByUserId(long userId);
 }

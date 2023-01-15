@@ -7,5 +7,4 @@ public interface ServiceUserRepository extends JpaRepository<User, Long> {
     User findByEmailAndPassword(String email, String password);
 
     User findByEmail(String email);
-
 }

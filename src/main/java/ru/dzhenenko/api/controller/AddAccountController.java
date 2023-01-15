@@ -28,11 +28,17 @@ public class AddAccountController {
     public @ResponseBody
     ResponseEntity<AddAccountResponse> addAccount(@RequestBody @Valid AddAccountRequest addAccountRequest) throws SQLException {
         UserDTO userId = authService.currentUser();
-        AccountDTO accountDTO = accountService.createAccount(addAccountRequest.getName(), addAccountRequest.getBalance(),
+        AccountDTO account = accountService.createAccount(
+                addAccountRequest.getName(),
+                addAccountRequest.getBalance(),
                 addAccountRequest.getId());
+
         if (userId != null) {
-            return ok(new AddAccountResponse(accountDTO.getId(), accountDTO.getName(), accountDTO.getBalance(),
-                    accountDTO.getUserId()));
+            return ok(new AddAccountResponse(
+                    account.getId(),
+                    account.getName(),
+                    account.getBalance(),
+                    account.getUserId()));
         }
         return status(HttpStatus.BAD_REQUEST).build();
     }

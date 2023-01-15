@@ -7,3 +7,4 @@ import java.util.List;
 public interface ServiceReportByCategoryRepositoryCustom {
     List<ReportByCategory> findByUserIdAndStartDateAndEndDate(Long userId, String startDate, String endDate);
 }
+

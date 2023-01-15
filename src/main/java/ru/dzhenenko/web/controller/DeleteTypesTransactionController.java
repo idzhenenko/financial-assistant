@@ -22,7 +22,7 @@ public class DeleteTypesTransactionController {
     private final AuthService authService;
 
     @GetMapping("delete-type-account")
-    public String getDeleteTypeAccount(Model model) throws SQLException {
+    public String getDeleteTypeAccount(Model model) {
         model.addAttribute("form", new AddTypeAccountForm());
         return "deleteTypeAccountGet";
     }

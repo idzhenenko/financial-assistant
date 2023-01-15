@@ -22,14 +22,17 @@
                         <label for="id">Id счета: </label>
                         <@spring.formInput "form.id" "class=\"form-control\" id=\"id\" placeholder=\"Введите Id счета:\"" "text"/>
                         <@spring.showErrors "<br>"/>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-success">Удалить</button>
-                        <a class="btn btn-dark" href="/personal-area" role="button">Вернуться братно</a>
+                        <a class="btn btn-dark" href="/personal-area" role="button">Вернуться обратно</a>
                     </div>
                 </form>
-                </div>
             </div>
+            <div class="col-sm"></div>
         </div>
     </div>
+</div>
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

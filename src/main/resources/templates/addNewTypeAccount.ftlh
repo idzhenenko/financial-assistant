@@ -16,18 +16,16 @@
         <h3 class="text-center">Новое имя транзакции успешно создано!</h3>
         <br>
         <br>
-    <div class="row">
-        <div class="col-sm"></div>
-        <div class="col-sm">
-            <form action="/add-type-account" method="post">
-                <h1 class="display-4">${name}- (${id})!</h1>
-                <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
-            </form>
-        </div>
+        <div class="row">
+            <div class="text-center">
+                <form action="/add-type-account" method="post">
+                    <h1 class="text-center">${name}- (${id})!</h1>
+                    <a class="btn btn-dark" href="/personal-area" role="button">Вернуться обратно</a>
+                </form>
+            </div>
         </div>
         <div class="col-sm"></div>
     </div>
-   </div>
 </div>
 <script src="js/bootstrap.min.js"/>
 </body>

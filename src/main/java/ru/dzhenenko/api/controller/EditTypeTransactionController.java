@@ -30,7 +30,9 @@ public class EditTypeTransactionController {
         UserDTO userId = authService.currentUser();
         AccountTypeDTO accountTypeDTO = accountTypeService.editingAccountType(request.getName(), request.getId());
         if (userId != null) {
-            return ok(new EditTypeTransactionResponse(accountTypeDTO.getId(), accountTypeDTO.getName()));
+            return ok(new EditTypeTransactionResponse(
+                    accountTypeDTO.getId(),
+                    accountTypeDTO.getName()));
         }
         return status(HttpStatus.BAD_REQUEST).build();
     }

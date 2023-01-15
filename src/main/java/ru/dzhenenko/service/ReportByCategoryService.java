@@ -18,12 +18,13 @@ public class ReportByCategoryService {
     private final ServiceReportByCategoryRepository serviceReportByCategoryRepository;
     private final Converter<ReportByCategory, ReportByCategoryDTO> reportByCategoryDtoConverter;
 
-    public List<ReportByCategoryDTO> viewReportCategory(long idUser, String startDay, String endDay) throws SQLException {
+    public List<ReportByCategoryDTO> viewReportCategory(long idUser, String startDay, String endDay) {
         List<ReportByCategoryDTO> reportByCategoryDTOS = new ArrayList<>();
         List<ReportByCategory> reportByCategories = serviceReportByCategoryRepository.findByUserIdAndStartDateAndEndDate(
                 idUser, startDay, endDay);
         if (!reportByCategories.isEmpty()) {
-            reportByCategoryDTOS = reportByCategories.stream().map(reportByCategoryDtoConverter::convert)
+            reportByCategoryDTOS = reportByCategories.stream()
+                    .map(reportByCategoryDtoConverter::convert)
                     .collect(Collectors.toList());
         }
         return reportByCategoryDTOS;

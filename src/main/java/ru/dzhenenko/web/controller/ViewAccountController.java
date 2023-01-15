@@ -20,6 +20,6 @@ public class ViewAccountController {
     public String getAccount(Model model) throws SQLException {
         UserDTO userDTO = authService.currentUser();
         model.addAttribute("accounts", accountService.viewAccount(userDTO.getId()));
-        return "viewAccount";
+        return "view-account";
     }
 }

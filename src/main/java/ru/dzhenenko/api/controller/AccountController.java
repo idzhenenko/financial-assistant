@@ -31,8 +31,11 @@ public class AccountController {
         UserDTO userId = authService.currentUser();
         List<AccountDTO> accountDTO = accountService.viewAccount(userId.getId());
         return ok(accountDTO.stream()
-                .map(accountDTO1 -> new AccountResponse(accountDTO1.getId(), accountDTO1.getName(),
-                        accountDTO1.getBalance(), accountDTO1.getUserId()))
+                .map(account -> new AccountResponse(
+                        account.getId(),
+                        account.getName(),
+                        account.getBalance(),
+                        account.getUserId()))
                 .collect(Collectors.toList()));
     }
 }

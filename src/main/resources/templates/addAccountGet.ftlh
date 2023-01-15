@@ -19,7 +19,7 @@
         <div class="col-sm">
             <form action="/add-account" method="post">
                 <button type="submit" class="btn btn-success">Создать счет</button>
-                <a class="btn btn-dark" href="/login-form" role="button">Вернуться братно</a>
+                <a class="btn btn-dark" href="/login-form" role="button">Вернуться обратно</a>
             </form>
         </div>
         <div class="col-sm"></div>

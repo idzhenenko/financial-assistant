@@ -13,7 +13,7 @@ public class AuthRequest {
     private String email;
 
     @NotNull
-    @Size(min =5, max = 30)
+    @Size(min = 5, max = 30)
     private String password;
 
     private String name;
